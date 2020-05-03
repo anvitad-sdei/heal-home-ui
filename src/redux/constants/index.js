@@ -1,0 +1,10 @@
+const constants = {
+  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+  SIGNUP_SUCCESS: 'SIGNUP_SUCCESS',
+  GET_SUCCESS: 'GET_SUCCESS',
+  ERROR: 'ERROR',
+  IS_LOADING: 'IS_LOADING',
+  CLEAR: 'CLEAR',
+};
+
+export default constants;
