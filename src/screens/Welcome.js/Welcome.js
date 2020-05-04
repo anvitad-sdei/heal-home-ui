@@ -322,9 +322,11 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     flexDirection: 'row',
-    marginTop: hp(16),
+    //marginTop: hp(16),
     justifyContent: 'space-around',
     width: '80%',
+    position: 'absolute',
+    bottom: 0,
     //  borderWidth: 1,
   },
   backArrowButton: {
