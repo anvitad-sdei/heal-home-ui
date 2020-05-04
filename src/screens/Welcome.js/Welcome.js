@@ -33,7 +33,7 @@ class Welcome extends Component {
       const {active} = this.state;
       const buttonTitle = active === 3 ? 'DONE' : 'NEXT';
       return (
-        <View style={{backgroundColor: colors.WHITE, height: '100%'}}>
+        <View>
           {/* Goal Screen*/}
 
           {active === 1 ? (
@@ -41,7 +41,7 @@ class Welcome extends Component {
               <View>
                 <View style={styles.backLightImage}>
                   <CustomImage
-                    source={require('../../assets/goalBackground.png')}
+                    source={require('../../assets/backgroundBlue.png')}
                   />
                 </View>
                 <View style={styles.goalImageStyle}>
@@ -64,7 +64,7 @@ class Welcome extends Component {
                   style={{
                     ...styles.dotOne,
                     backgroundColor: `${
-                      active === 1 ? colors.BLUE_TEXT : colors.DARK_DOT_COLOR
+                      active === 1 ? colors.BLUE : colors.GRAY_THIRD
                     }`,
                   }}
                 />
@@ -72,7 +72,7 @@ class Welcome extends Component {
                   style={{
                     ...styles.dotSecond,
                     backgroundColor: `${
-                      active === 2 ? colors.BLUE_TEXT : colors.DARK_DOT_COLOR
+                      active === 2 ? colors.BLUE : colors.GRAY_THIRD
                     }`,
                   }}
                 />
@@ -80,7 +80,7 @@ class Welcome extends Component {
                   style={{
                     ...styles.dotOne,
                     backgroundColor: `${
-                      active === 3 ? colors.BLUE_TEXT : colors.DARK_DOT_COLOR
+                      active === 3 ? colors.BLUE : colors.GRAY_THIRD
                     }`,
                   }}
                 />
@@ -105,7 +105,7 @@ class Welcome extends Component {
               <View>
                 <View style={styles.backLightImage}>
                   <CustomImage
-                    source={require('../../assets/goalBackground.png')}
+                    source={require('../../assets/backgroundBlue.png')}
                   />
                 </View>
                 <View style={styles.videoImageStyle}>
@@ -129,7 +129,7 @@ class Welcome extends Component {
                   style={{
                     ...styles.dotOne,
                     backgroundColor: `${
-                      active === 1 ? colors.BLUE_TEXT : colors.DARK_DOT_COLOR
+                      active === 1 ? colors.BLUE : colors.GRAY_THIRD
                     }`,
                   }}
                 />
@@ -137,7 +137,7 @@ class Welcome extends Component {
                   style={{
                     ...styles.dotSecond,
                     backgroundColor: `${
-                      active === 2 ? colors.BLUE_TEXT : colors.DARK_DOT_COLOR
+                      active === 2 ? colors.BLUE : colors.GRAY_THIRD
                     }`,
                   }}
                 />
@@ -145,7 +145,7 @@ class Welcome extends Component {
                   style={{
                     ...styles.dotOne,
                     backgroundColor: `${
-                      active === 3 ? colors.BLUE_TEXT : colors.DARK_DOT_COLOR
+                      active === 3 ? colors.BLUE : colors.GRAY_THIRD
                     }`,
                   }}
                 />
@@ -184,7 +184,7 @@ class Welcome extends Component {
               <View>
                 <View style={styles.backLightImage}>
                   <CustomImage
-                    source={require('../../assets/goalBackground.png')}
+                    source={require('../../assets/backgroundBlue.png')}
                   />
                 </View>
                 <View style={styles.journalImageStyle}>
@@ -210,7 +210,7 @@ class Welcome extends Component {
                   style={{
                     ...styles.dotOne,
                     backgroundColor: `${
-                      active === 1 ? colors.BLUE_TEXT : colors.DARK_DOT_COLOR
+                      active === 1 ? colors.BLUE : colors.GRAY_THIRD
                     }`,
                   }}
                 />
@@ -218,7 +218,7 @@ class Welcome extends Component {
                   style={{
                     ...styles.dotSecond,
                     backgroundColor: `${
-                      active === 2 ? colors.BLUE_TEXT : colors.DARK_DOT_COLOR
+                      active === 2 ? colors.BLUE : colors.GRAY_THIRD
                     }`,
                   }}
                 />
@@ -226,7 +226,7 @@ class Welcome extends Component {
                   style={{
                     ...styles.dotOne,
                     backgroundColor: `${
-                      active === 3 ? colors.BLUE_TEXT : colors.DARK_DOT_COLOR
+                      active === 3 ? colors.BLUE : colors.GRAY_THIRD
                     }`,
                   }}
                 />
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'relative',
     borderBottomWidth: 1,
-    borderColor: colors.BLUE_TEXT,
+    borderColor: colors.BLUE,
     marginTop: hp(8),
     marginBottom: hp(6),
   },
@@ -325,11 +325,13 @@ const styles = StyleSheet.create({
     marginTop: hp(16),
     justifyContent: 'space-around',
     width: '80%',
+    //  borderWidth: 1,
   },
   backArrowButton: {
-    marginVertical: hp(0.6),
+    marginTop: 7,
+    // borderWidth: 1,
     borderRadius: 20,
-    backgroundColor: colors.BLUE_TEXT,
+    backgroundColor: colors.BLUE,
     color: colors.WHITE,
   },
   buttonStyle: {
@@ -337,7 +339,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: colors.WHITE,
     borderWidth: 1,
-    borderColor: colors.BLUE_TEXT,
+    borderColor: colors.BLUE,
     marginTop: hp(16),
     alignSelf: 'center',
   },
@@ -346,23 +348,23 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: colors.WHITE,
     borderWidth: 1,
-    borderColor: colors.BLUE_TEXT,
+    borderColor: colors.BLUE,
   },
 
   titleStyle: {
-    color: colors.BLUE_TEXT,
+    color: colors.BLUE,
     fontSize: normalize(14),
     fontFamily: 'Poppins-SemiBold',
   },
   heading: {
     fontSize: normalize(20),
     marginBottom: hp(2),
-    color: colors.TEXT_COLOR,
+    color: colors.GRAY_FIVE,
     fontFamily: 'Poppins-SemiBold',
   },
   subHeading: {
     fontSize: normalize(14),
-    color: colors.TEXT_COLOR,
+    color: colors.GRAY_FIVE,
     fontFamily: 'Poppins-Light',
   },
   textAlign: {textAlign: 'center'},

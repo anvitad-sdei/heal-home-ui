@@ -1,8 +1,13 @@
 import React from 'react';
 import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
-import {Icon} from 'react-native-elements';
+import {Icon, Avatar} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import normalize from '../../helpers/ResponsiveFont';
+import colors from '../../constants/colors';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 const HeaderComponent = props => {
   const {
     leftIcon,
@@ -16,10 +21,19 @@ const HeaderComponent = props => {
       <View style={styles.container}>
         <View style={styles.leftComponent}>
           <TouchableOpacity onPress={leftIconPress}>
-            <Icon
+            {/* <Icon
               name={leftIcon}
               size={normalize(22)}
               // style={styles.leftIconStyle}
+            /> */}
+            <Avatar
+              source={leftIcon}
+              overlayContainerStyle={{backgroundColor: colors.BLUE}}
+              containerStyle={{
+                height: normalize(20),
+                width: normalize(30),
+                marginLeft: '10%',
+              }}
             />
           </TouchableOpacity>
         </View>

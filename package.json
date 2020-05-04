@@ -43,5 +43,18 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anvitad-sdei/heal-home-ui.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anvitad-sdei/heal-home-ui/issues"
+  },
+  "homepage": "https://github.com/anvitad-sdei/heal-home-ui#readme",
+  "description": ""
 }
