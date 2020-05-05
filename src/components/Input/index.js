@@ -15,6 +15,7 @@ const InputField = props => {
     inputContainerStyle,
     inputStyle,
     value,
+    autoCapitalize,
   } = props;
   return (
     <View style={styles.container}>
@@ -32,6 +33,7 @@ const InputField = props => {
         inputContainerStyle={inputContainerStyle}
         inputStyle={inputStyle}
         value={value}
+        autoCapitalize={autoCapitalize || 'none'}
       />
     </View>
   );
