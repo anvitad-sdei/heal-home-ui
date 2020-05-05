@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Platform, Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import {login} from '../../redux/actions';
@@ -13,7 +13,8 @@ import RoundedButton from '../../components/Buttons/RoundedButton';
 import normalize from '../../helpers/ResponsiveFont';
 import InputField from '../../components/Input';
 import CustomImage from '../../components/Image';
-
+import {regex} from '../../helpers/regex';
+import {apiConstants} from '../../redux/api/Constants';
 const isIOS = Platform.OS === 'ios' ? true : false;
 class SignIn extends React.Component {
   constructor(props) {
@@ -21,11 +22,29 @@ class SignIn extends React.Component {
     this.state = {
       email: '',
       password: '',
+      validEmail: false,
+      validPassword: false,
     };
   }
-  loginHandler = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
-    this.props.login();
+  loginHandler = () => {
+    const {email, password, validEmail, validPassword} = this.state;
+
+    if (validEmail) {
+      if (password.length > 4) {
+        let data = {
+          emailId: email,
+          password: password,
+          userType: apiConstants.USER_TYPE,
+        };
+        this.props.login(data);
+      } else {
+        Alert.alert(
+          'Password must contain upper case,special characters and alphanumeric',
+        );
+      }
+    } else {
+      Alert.alert('Enter email is not valid');
+    }
   };
 
   // loginHandler = () => {
@@ -38,14 +57,21 @@ class SignIn extends React.Component {
   //   this.props.login(data);
   // };
   onChangeEmail = email => {
-    this.setState({email: email});
+    this.setState({
+      email: email,
+      validEmail: regex.validateEmail(email) || false,
+    });
   };
 
   onChangePassword = password => {
-    this.setState({password: password});
+    this.setState({
+      password: password,
+      validPassword: regex.validatePassword(password) || false,
+    });
   };
   render() {
-    console.log(this.state);
+    const {email, password} = this.state;
+
     return (
       <MasterLayout>
         <View style={styles.wrapperView}>
@@ -70,7 +96,7 @@ class SignIn extends React.Component {
               containerStyle={styles.containerStyle}
               inputContainerStyle={styles.inputContainerStyle}
               inputStyle={styles.inputStyle}
-              value={this.state.email}
+              value={email}
             />
             <InputField
               placeholder="anvi"
@@ -80,7 +106,8 @@ class SignIn extends React.Component {
               secureTextEntry={true}
               inputContainerStyle={styles.inputContainerStyle}
               inputStyle={styles.inputStyle}
-              value={this.state.password}
+              value={password}
+              autoCapitalize="characters"
             />
           </View>
           <View style={styles.buttonView}>
