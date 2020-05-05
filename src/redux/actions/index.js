@@ -1,20 +1,22 @@
 import NavigationService from '../services/navigation';
 import constants from '../constants';
 import axios from 'axios';
-import BASE_URL from '../api/Config';
-export const login = () => async dispatch => {
+import {apiUrls} from '../api/constants';
+export const login = data => async dispatch => {
   try {
     dispatch(loadingHandler(true));
-    let res = await axios.post(`{BASE_URL}/access/login`, {...data});
+    let res = await axios.post(`${apiUrls.BASE_URL}/access/login`, {...data});
     if (res) {
+      console.log(res);
       dispatch(loadingHandler(false));
       dispatch(successResponseHandler(constants.LOGIN_SUCCESS, res.data));
       dispatch(() => navigateToRoute('App', {data: res.data}));
     }
   } catch (err) {
+    console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
     dispatch(errorHandler(err));
-    alert('error');
+    alert('Something went wrong');
   }
 };
 
