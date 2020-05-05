@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({loading, error}) => {
   const {isLoading} = loading;
   const {err} = error;
-
   return {isLoading, err};
 };
 export default connect(
