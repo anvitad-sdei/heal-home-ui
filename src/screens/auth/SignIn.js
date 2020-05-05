@@ -14,6 +14,7 @@ import normalize from '../../helpers/ResponsiveFont';
 import InputField from '../../components/Input';
 import CustomImage from '../../components/Image';
 
+const isIOS = Platform.OS === 'ios' ? true : false;
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
@@ -105,8 +106,9 @@ const styles = StyleSheet.create({
   },
   healHomeImageView: {
     height: normalize(40),
-    //  borderWidth: 1,
+    //borderWidth: 1,
     width: normalize(190),
+    // width: normalize(isIOS ? 190 : 200),
     position: 'absolute',
     top: hp(10),
     left: wp(5),
@@ -114,7 +116,8 @@ const styles = StyleSheet.create({
   headingView: {
     height: normalize(40),
     //  borderWidth: 1,
-    width: normalize(190),
+    // width: normalize(190),
+    width: normalize(isIOS ? 190 : 200),
     position: 'absolute',
     top: hp(20),
     left: wp(8),
@@ -143,6 +146,7 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     width: normalize(245),
+    height: normalize(36),
     borderBottomColor: colors.WHITE,
     // borderWidth: 1,
   },

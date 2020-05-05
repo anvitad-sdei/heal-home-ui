@@ -31,7 +31,7 @@ const HeaderComponent = props => {
               overlayContainerStyle={{backgroundColor: colors.BLUE}}
               containerStyle={{
                 height: normalize(20),
-                width: normalize(30),
+                width: normalize(25),
                 marginLeft: '10%',
               }}
             />
@@ -44,10 +44,19 @@ const HeaderComponent = props => {
 
         <View style={styles.rightComponent}>
           <TouchableOpacity onPress={rightIconPress}>
-            <Icon
+            {/* <Icon
               name={rightIcon}
               size={normalize(22)}
               //style={styles.rightIconStyle}
+            /> */}
+            <Avatar
+              source={rightIcon}
+              overlayContainerStyle={{backgroundColor: colors.BLUE}}
+              containerStyle={{
+                height: normalize(22),
+                width: normalize(25),
+                marginLeft: '10%',
+              }}
             />
           </TouchableOpacity>
         </View>

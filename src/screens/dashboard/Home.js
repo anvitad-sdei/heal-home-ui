@@ -18,9 +18,9 @@ export default class Home extends React.Component {
       <MasterLayout>
         <View style={styles.topView}>
           <HeaderComponent
-            //leftIcon={require('../../assets/menu.png')}
+            leftIcon={require('../../assets/menu.png')}
             centerTitle="Dashboard"
-            rightIcon="bell"
+            rightIcon={require('../../assets/bell.png')}
             leftIconPress={() => alert('left')}
             rightIconPress={() => alert('right')}
           />

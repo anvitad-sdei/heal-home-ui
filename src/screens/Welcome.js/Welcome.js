@@ -11,6 +11,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {Icon} from 'react-native-elements';
+const isIOS = Platform.OS === 'ios' ? true : false;
 class Welcome extends Component {
   constructor(props) {
     super(props);
@@ -305,7 +306,8 @@ const styles = StyleSheet.create({
   },
   headingView: {marginVertical: 2},
   dotView: {
-    marginTop: hp(3),
+    //marginTop: hp(3),
+    marginTop: hp(isIOS ? 3 : 1),
     flexDirection: 'row',
     justifyContent: 'center',
   },
@@ -322,11 +324,10 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     flexDirection: 'row',
-    //marginTop: hp(16),
+    // marginTop: hp(16),
+    marginTop: hp(isIOS ? 16 : 12),
     justifyContent: 'space-around',
     width: '80%',
-    position: 'absolute',
-    bottom: 0,
     //  borderWidth: 1,
   },
   backArrowButton: {
@@ -342,7 +343,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE,
     borderWidth: 1,
     borderColor: colors.BLUE,
-    marginTop: hp(16),
+    //  marginTop: hp(16),
+    marginTop: hp(isIOS ? 16 : 12),
     alignSelf: 'center',
   },
   buttonStyleSecond: {
