@@ -1,10 +1,11 @@
 import NavigationService from '../services/navigation';
 import constants from '../constants';
 import axios from 'axios';
+import BASE_URL from '../api/Config';
 export const login = () => async dispatch => {
   try {
     dispatch(loadingHandler(true));
-    let res = await axios('https://jsonplaceholder.typicode.com/todos/1');
+    let res = await axios.post(`{BASE_URL}/access/login`, {...data});
     if (res) {
       dispatch(loadingHandler(false));
       dispatch(successResponseHandler(constants.LOGIN_SUCCESS, res.data));

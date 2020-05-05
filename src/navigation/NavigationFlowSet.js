@@ -6,9 +6,14 @@ import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import TabNavigator from './TabNavigator';
 import Welcome from '../screens/Welcome.js/Welcome';
 import DrawerNavigator from './DrawerNavigator';
+import Journaling from '../screens/dashboard/Journaling';
 
 const AuthStack = createStackNavigator(
-  {SignIn: SignIn, Welcome: Welcome},
+  {
+    SignIn: SignIn,
+    Welcome: Welcome,
+    Journaling: Journaling,
+  },
 
   {
     headerMode: 'none',

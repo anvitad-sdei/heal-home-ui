@@ -1,6 +1,4 @@
 import React from 'react';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import Profile from '../screens/profile/Profile';
 import {
@@ -17,7 +15,6 @@ import {
 } from 'react-native';
 import Handouts from '../screens/handouts/Handouts';
 import Assessment from '../screens/assessments/Assessment';
-import Home from '../screens/dashboard/Home';
 import TabNavigator from '../navigation/TabNavigator';
 const DashBoardItems = ({handler, title}) => {
   return (

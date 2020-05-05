@@ -14,6 +14,7 @@ const InputField = props => {
     containerStyle,
     inputContainerStyle,
     inputStyle,
+    value,
   } = props;
   return (
     <View style={styles.container}>
@@ -30,6 +31,7 @@ const InputField = props => {
         containerStyle={containerStyle}
         inputContainerStyle={inputContainerStyle}
         inputStyle={inputStyle}
+        value={value}
       />
     </View>
   );

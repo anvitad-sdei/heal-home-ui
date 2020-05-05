@@ -23,12 +23,35 @@ class SignIn extends React.Component {
       password: '',
     };
   }
-  loginHandler = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
-    this.props.login();
+  // loginHandler = async () => {
+  //   // await AsyncStorage.setItem('userToken', 'abc');
+  //   // this.props.login();
+  //   const data = {
+  //     emailId: this.state.email,
+  //     password: this.state.password,
+  //     userType: 'Customer',
+  //   };
+  //  //
+  // };
+
+  loginHandler = () => {
+    const data = {
+      emailId: this.state.email,
+      password: this.state.password,
+      userType: 'Customer',
+    };
+    console.log(data);
+    this.props.login(data);
   };
-  onChangeEmail = () => {};
+  onChangeEmail = email => {
+    this.setState({email: email});
+  };
+
+  onChangePassword = password => {
+    this.setState({password: password});
+  };
   render() {
+    console.log(this.state);
     return (
       <MasterLayout>
         <View style={styles.wrapperView}>
@@ -48,20 +71,22 @@ class SignIn extends React.Component {
           <View style={styles.inputView}>
             <InputField
               placeholder="johndoe@mail.com"
-              onChangeText={() => this.onChangeEmail()}
+              onChangeText={this.onChangeEmail}
               source={require('../../assets/name3X.png')}
               containerStyle={styles.containerStyle}
               inputContainerStyle={styles.inputContainerStyle}
               inputStyle={styles.inputStyle}
+              value={this.state.email}
             />
             <InputField
               placeholder="anvi"
-              onChangeText={() => this.onChangeEmail()}
+              onChangeText={this.onChangePassword}
               source={require('../../assets/lock3X.png')}
               containerStyle={styles.containerStyle}
               secureTextEntry={true}
               inputContainerStyle={styles.inputContainerStyle}
               inputStyle={styles.inputStyle}
+              value={this.state.password}
             />
           </View>
           <View style={styles.buttonView}>

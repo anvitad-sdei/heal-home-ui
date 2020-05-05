@@ -53,9 +53,9 @@ const HeaderComponent = props => {
               source={rightIcon}
               overlayContainerStyle={{backgroundColor: colors.BLUE}}
               containerStyle={{
-                height: normalize(22),
-                width: normalize(25),
-                marginLeft: '10%',
+                height: normalize(24),
+                width: normalize(20),
+                //marginLeft: '5%',
               }}
             />
           </TouchableOpacity>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   leftComponent: {
     // borderWidth: 1,
-    width: '20%',
+    width: '13%',
   },
   leftIconStyle: {fontSize: normalize(20)},
   centerComponent: {
@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
     width: '60%',
   },
   rightComponent: {
-    //borderWidth: 1,
-    width: '20%',
+    // borderWidth: 1,
+    width: '12%',
   },
   rightIconStyle: {fontSize: normalize(20)},
   centerText: {textAlign: 'center', fontSize: normalize(20)},
