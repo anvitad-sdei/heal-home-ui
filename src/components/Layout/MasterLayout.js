@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
+import Loader from '../Loader';
 
 class MasterLayout extends Component {
   render() {
@@ -10,7 +11,8 @@ class MasterLayout extends Component {
       <SafeAreaView style={{...styles.container, ...masterStyle}}>
         <StatusBar backgroundColor={colors.BLUE} />
         <View>{this.props.children}</View>
-        {isLoading ? <Text>Loading.....</Text> : null}
+        {/* {isLoading ? <Text>Loading.....</Text> : null} */}
+        {isLoading ? <Loader /> : null}
       </SafeAreaView>
     );
   }

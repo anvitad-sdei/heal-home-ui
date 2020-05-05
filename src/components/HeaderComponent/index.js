@@ -85,7 +85,11 @@ const styles = StyleSheet.create({
     width: '12%',
   },
   rightIconStyle: {fontSize: normalize(20)},
-  centerText: {textAlign: 'center', fontSize: normalize(20)},
+  centerText: {
+    textAlign: 'center',
+    fontSize: normalize(20),
+    color: colors.WHITE,
+  },
 });
 
 export default HeaderComponent;

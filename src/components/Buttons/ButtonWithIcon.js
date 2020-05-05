@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    marginVertical: hp(1),
+    marginVertical: hp(1.5),
   },
   avatarTextView: {flexDirection: 'row', alignItems: 'center'},
   imageView: {height: normalize(24), width: normalize(23)},

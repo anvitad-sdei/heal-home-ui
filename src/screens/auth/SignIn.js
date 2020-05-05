@@ -23,26 +23,20 @@ class SignIn extends React.Component {
       password: '',
     };
   }
-  // loginHandler = async () => {
-  //   // await AsyncStorage.setItem('userToken', 'abc');
-  //   // this.props.login();
+  loginHandler = async () => {
+    await AsyncStorage.setItem('userToken', 'abc');
+    this.props.login();
+  };
+
+  // loginHandler = () => {
   //   const data = {
   //     emailId: this.state.email,
   //     password: this.state.password,
   //     userType: 'Customer',
   //   };
-  //  //
+  //   console.log(data);
+  //   this.props.login(data);
   // };
-
-  loginHandler = () => {
-    const data = {
-      emailId: this.state.email,
-      password: this.state.password,
-      userType: 'Customer',
-    };
-    console.log(data);
-    this.props.login(data);
-  };
   onChangeEmail = email => {
     this.setState({email: email});
   };
