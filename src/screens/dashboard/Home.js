@@ -30,12 +30,12 @@ export default class Home extends React.Component {
 
           <View style={styles.dateView}>
             <Text style={styles.dateText}>Pick the Date</Text>
-            {/* <Text style={styles.datePick} onPress={() => alert('date pick')}>
+            <Text style={styles.datePick} onPress={() => alert('date pick')}>
               05/05/2020
-            </Text> */}
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            </Text>
+            {/* <View style={{justifyContent: 'center', alignItems: 'center'}}>
               <CustomModal date={'06/05/2020'} />
-            </View>
+            </View> */}
           </View>
           <GradientButton
             colors={[colors.LIGHT_PINK, colors.PINK]}

@@ -7,12 +7,11 @@ import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 import ButtonWithIcon from '../../components/Buttons/ButtonWithIcon';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 
 export default class Journaling extends Component {
   render() {
     return (
-      <MasterLayout>
+      <MasterLayout masterStyle={styles.masterStyle}>
         <View style={styles.topView}>
           <HeaderComponent
             leftIcon={require('../../assets/menu.png')}
@@ -24,14 +23,18 @@ export default class Journaling extends Component {
           <CustomTabBar />
         </View>
         <View style={styles.buttonView}>
-          <ButtonWithIcon />
-          <CustomTextArea />
+          <ButtonWithIcon
+            onPress={() => this.props.navigation.navigate('JournalingQuestion')}
+          />
         </View>
       </MasterLayout>
     );
   }
 }
 const styles = StyleSheet.create({
+  masterStyle: {
+    backgroundColor: '#F5F5F5',
+  },
   topView: {
     height: normalize(80),
     backgroundColor: colors.BLUE,
