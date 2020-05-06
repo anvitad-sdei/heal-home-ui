@@ -10,6 +10,7 @@ import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
 import CustomView from '../../components/CustomView.js';
 import CustomTabBar from '../../components/WeekTabbar';
+import {ScrollView} from 'react-native-gesture-handler';
 class DrinkingLogs extends Component {
   render() {
     return (
@@ -21,9 +22,11 @@ class DrinkingLogs extends Component {
         leftIconPress={() => this.props.navigation.navigate('Home')}
         rightIconPress={() => alert('right')}>
         <CustomTabBar />
-        <View style={styles.drinkViewBox}>
-          <CustomView />
-        </View>
+        <ScrollView>
+          <View style={styles.drinkViewBox}>
+            <CustomView />
+          </View>
+        </ScrollView>
       </MasterLayout>
     );
   }

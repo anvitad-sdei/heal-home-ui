@@ -20,17 +20,7 @@ const GradientButton = props => {
     iconColor,
   } = props;
   return (
-    <View
-      style={{
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-        elevation: 3,
-      }}>
+    <View style={styles.shadowButton}>
       <TouchableOpacity onPress={onPress}>
         <LinearGradient
           start={{x: 0, y: 1}}
@@ -55,12 +45,22 @@ const GradientButton = props => {
 export default GradientButton;
 
 const styles = StyleSheet.create({
+  shadowButton: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
   buttonView: {
     height: hp(6.5),
-    width: wp(85),
+    width: wp(90),
     // borderWidth: 1,
-    // height: normalize(45),
-    // width: normalize(300),
+    // height: normalize(40),
+    // width: normalize(290),
     borderRadius: normalize(30),
     alignSelf: 'center',
     backgroundColor: colors.PINK,
@@ -68,11 +68,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    // marginVertical: hp(1.5),
     marginVertical: normalize(7),
+    // marginBottom: normalize(15),
   },
   avatarTextView: {flexDirection: 'row', alignItems: 'center'},
-  imageView: {height: normalize(24), width: normalize(23)},
+  //imageView: {height: hp(5), width: wp(10)},
   imageStyle: {height: '100%', width: '100%'},
   title: {
     color: colors.WHITE,

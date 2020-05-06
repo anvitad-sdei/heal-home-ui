@@ -7,6 +7,7 @@ import colors from '../../constants/colors';
 import CustomTabBar from '../../components/WeekTabbar';
 import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 import RoundedButton from '../../components/Buttons/RoundedButton';
+import {ScrollView} from 'react-native-gesture-handler';
 export default class JournalQuestion extends Component {
   render() {
     return (
@@ -19,16 +20,20 @@ export default class JournalQuestion extends Component {
         rightIconPress={() => alert('right')}>
         <CustomTabBar />
 
-        <View style={styles.questionView}>
-          <CustomTextArea />
-        </View>
-        <View style={styles.buttonView}>
-          <RoundedButton
-            title="Save"
-            buttonStyle={styles.buttonStyle}
-            titleStyle={styles.titleStyle}
-          />
-        </View>
+        <ScrollView>
+          <View style={styles.questionView}>
+            <CustomTextArea title={'What am I grateful for today?'} />
+            <CustomTextArea title="What would make today great?" />
+            <CustomTextArea title="What's one thing I must accomplish today?" />
+          </View>
+          <View style={styles.buttonView}>
+            <RoundedButton
+              title="Save"
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.titleStyle}
+            />
+          </View>
+        </ScrollView>
       </MasterLayout>
     );
   }

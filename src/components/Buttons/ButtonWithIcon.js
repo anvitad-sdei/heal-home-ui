@@ -2,16 +2,19 @@ import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements';
 import normalize from '../../helpers/ResponsiveFont';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import colors from '../../constants/colors';
 
 const ButtonWithIcon = props => {
-  const {onPress} = props;
+  const {onPress, date} = props;
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.wrapper}>
         <View>
-          <Text style={styles.textStyle}>06-05-2020</Text>
+          <Text style={styles.textStyle}>{date}</Text>
         </View>
         <View>
           <Icon name="arrow-forward" color={colors.WHITE} type="FontAwesome" />
@@ -27,8 +30,10 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: normalize(300),
-    height: normalize(45),
+    // width: normalize(300),
+    // height: normalize(45),
+    width: wp(90),
+    height: hp(6.5),
     alignSelf: 'center',
     //borderWidth: 1,
     alignItems: 'center',
@@ -43,6 +48,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
+    marginBottom: normalize(20),
   },
   textStyle: {
     color: colors.WHITE,

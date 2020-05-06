@@ -29,6 +29,8 @@ const colors = {
   BLACK_THIRD: '#25394F',
   GRAY_LIGHT: '#00000017', //border color
   GRAY_PLACE: '#A4A4A4',
+  GREEN: '#46E54C',
+  GRAY_LINE: '#707070',
 };
 
 export default colors;

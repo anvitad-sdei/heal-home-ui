@@ -1,11 +1,9 @@
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator, BottomTabBar} from 'react-navigation-tabs';
 import Home from '../screens/dashboard/Home';
 import Profile from '../screens/profile/Profile';
 import Assessment from '../screens/assessments/Assessment';
 import Handouts from '../screens/handouts/Handouts';
-import {Icon} from 'react-native-elements';
 import normalize from '../helpers/ResponsiveFont';
 import colors from '../constants/colors';
 import {Avatar} from 'react-native-elements';
@@ -22,7 +20,6 @@ const RootStackHome = createStackNavigator(
     Home: Home,
     Journaling: Journaling,
     JournalQuestion: JournalQuestion,
-    // Details: DetailsScreen,
   },
   {
     initialRouteName: 'Home',
@@ -35,7 +32,7 @@ const TabNavigator = createBottomTabNavigator(
     Dashboard: {
       screen: RootStackHome,
       navigationOptions: {
-        tabBarIcon: ({tintColor, focused}) => {
+        tabBarIcon: ({focused}) => {
           let url = focused
             ? require('../assets/dashboard-focused.png')
             : require('../assets/dashboard.png');
@@ -51,25 +48,52 @@ const TabNavigator = createBottomTabNavigator(
     Handouts: {
       screen: Handouts,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
-          <Icon name="book" color={tintColor} size={normalize(20)} />
-        ),
+        // tabBarIcon: ({tintColor}) => (
+        //   <Icon name="book" color={tintColor} size={normalize(20)} />
+        // ),
+        tabBarIcon: ({focused}) => {
+          let url = focused
+            ? require('../assets/files.png')
+            : require('../assets/files.png');
+          return (
+            <Avatar
+              source={url}
+              containerStyle={{width: normalize(10), height: normalize(13)}}
+            />
+          );
+        },
       },
     },
     Assessments: {
       screen: Assessment,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
-          <Icon name="book" color={tintColor} size={normalize(20)} />
-        ),
+        tabBarIcon: ({focused}) => {
+          let url = focused
+            ? require('../assets/assessment.png')
+            : require('../assets/assessment.png');
+          return (
+            <Avatar
+              source={url}
+              containerStyle={{width: normalize(14), height: normalize(14)}}
+            />
+          );
+        },
       },
     },
     Profile: {
       screen: Profile,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
-          <Icon name="settings" color={tintColor} size={normalize(20)} />
-        ),
+        tabBarIcon: ({focused}) => {
+          let url = focused
+            ? require('../assets/setting.png')
+            : require('../assets/setting.png');
+          return (
+            <Avatar
+              source={url}
+              containerStyle={{width: normalize(13), height: normalize(13)}}
+            />
+          );
+        },
       },
     },
   },

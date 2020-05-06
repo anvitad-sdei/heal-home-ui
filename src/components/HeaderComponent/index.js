@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, SafeAreaView, StyleSheet, Image} from 'react-native';
-import {Icon, Avatar} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
@@ -66,7 +65,8 @@ const styles = StyleSheet.create({
   rightIconStyle: {
     width: normalize(20), //38
     height: normalize(25), //19
-    marginLeft: normalize(15),
+    //marginRight: normalize(8),
+    // borderWidth: 1,
   },
   centerComponent: {
     paddingTop: normalize(12),
