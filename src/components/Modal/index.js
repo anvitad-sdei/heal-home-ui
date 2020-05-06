@@ -23,7 +23,7 @@ const CustomModal = props => {
           Alert.alert('Modal has been closed.');
         }}>
         <View style={styles.modalView}>
-          {content}
+          <View style={{width: '100%'}}>{content}</View>
 
           <View style={styles.buttonView}>
             <TouchableHighlight
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    height: '30%',
+    height: '50%',
     marginTop: normalize(180),
   },
   // openButton: {

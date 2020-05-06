@@ -15,18 +15,68 @@ import {Avatar, Icon} from 'react-native-elements';
 import CustomModal from '../../components/Modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import moment from 'moment';
 export default class Home extends React.Component {
   constructor() {
     super();
     this.state = {
       modal: false,
+      defaultDate: Date.now(),
     };
   }
   modalHandler = () => {
     this.setState({modal: !this.state.modal});
   };
+  dateHandler = (event, selectedDate) => {
+    console.log(selectedDate);
+    this.setState({date: selectedDate});
+  };
   render() {
-    const {modal} = this.state;
+    const {modal, defaultDate} = this.state;
+
+    const dateContent = (
+      <>
+        <DateTimePicker
+          testID="dateTimePicker"
+          timeZoneOffsetInMinutes={0}
+          value={new Date(defaultDate)}
+          mode={'date'}
+          is24Hour={true}
+          display="default"
+          // onChange={this.dateHandler}
+        />
+        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+          <View
+            style={{
+              width: '45%',
+              height: normalize(35),
+              borderWidth: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: normalize(100),
+              backgroundColor: '#95B4FD',
+            }}>
+            <Text style={{color: colors.WHITE, fontFamily: 'Poppins-Regular'}}>
+              CANCEL
+            </Text>
+          </View>
+          <View
+            style={{
+              width: '45%',
+              height: normalize(35),
+              borderWidth: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: normalize(100),
+              backgroundColor: '#6E78F7',
+            }}>
+            <Text style={{color: colors.WHITE, fontFamily: 'Poppins-Regular'}}>
+              SET
+            </Text>
+          </View>
+        </View>
+      </>
+    );
 
     return (
       <MasterLayout
@@ -118,7 +168,7 @@ export default class Home extends React.Component {
           <CustomModal
             visible={modal}
             handler={() => this.modalHandler()}
-            content={<Text>Hello</Text>}
+            content={dateContent}
           />
         ) : null}
       </MasterLayout>
