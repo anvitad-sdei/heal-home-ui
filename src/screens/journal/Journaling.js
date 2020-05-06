@@ -11,17 +11,16 @@ import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 export default class Journaling extends Component {
   render() {
     return (
-      <MasterLayout masterStyle={styles.masterStyle}>
+      <MasterLayout
+        leftIcon={require('../../assets/back-arrow.png')}
+        centerTitle="Journaling"
+        rightIcon={require('../../assets/bell.png')}
+        leftIconPress={() => this.props.navigation.navigate('Home')}
+        rightIconPress={() => alert('right')}>
         <View style={styles.topView}>
-          <HeaderComponent
-            leftIcon={require('../../assets/menu.png')}
-            centerTitle="Journaling"
-            rightIcon={require('../../assets/bell.png')}
-            leftIconPress={() => this.props.navigation.navigate('Home')}
-            rightIconPress={() => alert('right')}
-          />
           <CustomTabBar />
         </View>
+
         <View style={styles.buttonView}>
           <ButtonWithIcon
             onPress={() => this.props.navigation.navigate('JournalingQuestion')}
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
   },
   topView: {
     height: normalize(80),
-    backgroundColor: colors.BLUE,
+    // backgroundColor: colors.BLUE,
     borderBottomLeftRadius: normalize(25),
     borderBottomRightRadius: normalize(25),
     marginBottom: 10,

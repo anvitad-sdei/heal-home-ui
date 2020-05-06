@@ -8,19 +8,42 @@ import Handouts from '../screens/handouts/Handouts';
 import {Icon} from 'react-native-elements';
 import normalize from '../helpers/ResponsiveFont';
 import colors from '../constants/colors';
+import {Avatar} from 'react-native-elements';
+import {createStackNavigator} from 'react-navigation-stack';
+import Journaling from '../screens/journal/Journaling';
 
 const TabBarComponent = props => {
   return <BottomTabBar {...props} />;
 };
 
+const RootStackHome = createStackNavigator(
+  {
+    Home: Home,
+    Journaling: Journaling,
+    // Details: DetailsScreen,
+  },
+  {
+    initialRouteName: 'Home',
+    headerMode: false,
+  },
+);
+
 const TabNavigator = createBottomTabNavigator(
   {
     Dashboard: {
-      screen: Home,
+      screen: RootStackHome,
       navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
-          <Icon name="home" color={tintColor} size={normalize(20)} />
-        ),
+        tabBarIcon: ({tintColor, focused}) => {
+          let url = focused
+            ? require('../assets/dashboard-focused.png')
+            : require('../assets/dashboard.png');
+          return (
+            <Avatar
+              source={url}
+              containerStyle={{width: normalize(12), height: normalize(12)}}
+            />
+          );
+        },
       },
     },
     Handouts: {
@@ -53,7 +76,7 @@ const TabNavigator = createBottomTabNavigator(
     tabBarOptions: {
       activeTintColor: colors.BLUE,
       inactiveTintColor: colors.GRAY,
-      labelStyle: {fontSize: normalize(12)},
+      labelStyle: {fontSize: normalize(8)},
     },
     tabBarComponent: props => (
       <TabBarComponent
