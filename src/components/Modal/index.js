@@ -10,46 +10,35 @@ import {
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 const CustomModal = props => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const {date} = props;
+  const {handler, visible, content} = props;
+  // const [modalVisible, setModalVisible] = useState(false);
+  // const {date} = props;
   return (
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={visible}
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
         }}>
         <View style={styles.modalView}>
-          <Text style={styles.modalText}>Pick the Date</Text>
+          {content}
 
           <View style={styles.buttonView}>
             <TouchableHighlight
               style={{...styles.openButton, backgroundColor: '#2196F3'}}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}>
+              onPress={handler}>
               <Text style={styles.textStyle}>Hide Modal</Text>
             </TouchableHighlight>
             <TouchableHighlight
               style={{...styles.openButton, backgroundColor: '#2196F3'}}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}>
+              onPress={handler}>
               <Text style={styles.textStyle}>Hide Modal</Text>
             </TouchableHighlight>
           </View>
         </View>
       </Modal>
-
-      <TouchableHighlight
-        style={styles.openButton}
-        onPress={() => {
-          setModalVisible(true);
-        }}>
-        <Text style={styles.datePick}>{date}</Text>
-      </TouchableHighlight>
     </View>
   );
 };
@@ -58,7 +47,9 @@ const styles = StyleSheet.create({
   centeredView: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
+    alignContent: 'center',
+    backgroundColor: 'red',
+    flexDirection: 'column',
   },
   modalView: {
     margin: 20,
@@ -75,13 +66,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    height: '30%',
+    marginTop: normalize(180),
   },
-  //   openButton: {
-  //     backgroundColor: '#F194FF',
-  //     borderRadius: 20,
-  //     padding: 10,
-  //     elevation: 2,
-  //   },
+  // openButton: {
+  //   backgroundColor: '#F194FF',
+  //   borderRadius: 20,
+  //   padding: 10,
+  //   elevation: 2,
+  // },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
