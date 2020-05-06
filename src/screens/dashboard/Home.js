@@ -14,7 +14,17 @@ import Carousel from '../../components/Carousel.js';
 import {Avatar, Icon} from 'react-native-elements';
 import CustomModal from '../../components/Modal';
 export default class Home extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      modal: true,
+    };
+  }
+  modalHandler = () => {
+    this.setState({modal: !this.state.modal});
+  };
   render() {
+    const {modal} = this.state;
     return (
       <MasterLayout
         leftIcon={require('../../assets/menu.png')}
@@ -27,10 +37,14 @@ export default class Home extends React.Component {
             <Text style={styles.dateText}>Pick the Date</Text>
             <Text style={styles.datePick} onPress={() => alert('date pick')}>
               05/05/2020
-            </Text>
-            {/* <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <CustomModal date={'06/05/2020'} />
-            </View> */}
+            </Text>{' '}
+            */}
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              {/* <CustomModal date={'06/05/2020'} /> */}
+              <Text style={styles.datePick} onPress={() => this.modalHandler()}>
+                05/05/2020
+              </Text>
+            </View>
           </View>
           <GradientButton
             colors={[colors.LIGHT_PINK, colors.PINK]}
@@ -91,6 +105,17 @@ export default class Home extends React.Component {
             </View>
           </View>
         </View>
+        {modal ? (
+          <CustomModal
+            visible={modal}
+            handler={() => this.modalHandler()}
+            content={
+              <Text>
+                Hello this is modal for Any conetnt use here like picker
+              </Text>
+            }
+          />
+        ) : null}
       </MasterLayout>
     );
   }
