@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     borderRadius: normalize(20),
     //borderWidth: 1,
     position: 'absolute',
-    top: 73,
+    top: -33,
     left: normalize(12),
     flexDirection: 'row',
     justifyContent: 'space-around',

@@ -13,17 +13,14 @@ import CustomTabBar from '../../components/WeekTabbar';
 class DrinkingLogs extends Component {
   render() {
     return (
-      <MasterLayout masterStyle={{backgroundColor: colors.GRAY_SECOND}}>
-        <View style={styles.topView}>
-          <HeaderComponent
-            leftIcon={require('../../assets/menu.png')}
-            centerTitle="Drinking Logs"
-            rightIcon={require('../../assets/bell.png')}
-            leftIconPress={() => alert('left')}
-            rightIconPress={() => alert('right')}
-          />
-          <CustomTabBar />
-        </View>
+      <MasterLayout
+        masterStyle={{backgroundColor: colors.GRAY_SECOND}}
+        leftIcon={require('../../assets/back-arrow.png')}
+        centerTitle="Drinking Logs"
+        rightIcon={require('../../assets/bell.png')}
+        leftIconPress={() => this.props.navigation.navigate('Home')}
+        rightIconPress={() => alert('right')}>
+        <CustomTabBar />
         <View style={styles.drinkViewBox}>
           <CustomView />
         </View>

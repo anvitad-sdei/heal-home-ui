@@ -16,14 +16,17 @@ export default class Journaling extends Component {
         centerTitle="Journaling"
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.navigate('Home')}
-        rightIconPress={() => alert('right')}>
-        <View style={styles.topView}>
-          <CustomTabBar />
-        </View>
+        rightIconPress={() => alert('right')}
+        //leftStyle={{width: normalize(16), height: normalize(15)}}
+      >
+        <CustomTabBar />
+        {/* <View style={styles.topView}>
+         
+        </View> */}
 
         <View style={styles.buttonView}>
           <ButtonWithIcon
-            onPress={() => this.props.navigation.navigate('JournalingQuestion')}
+            onPress={() => this.props.navigation.navigate('JournalQuestion')}
           />
         </View>
       </MasterLayout>

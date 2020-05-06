@@ -10,29 +10,25 @@ import RoundedButton from '../../components/Buttons/RoundedButton';
 export default class JournalQuestion extends Component {
   render() {
     return (
-      <MasterLayout masterStyle={styles.masterStyle}>
-        <KeyboardAvoidingView>
-          <View style={styles.topView}>
-            <HeaderComponent
-              leftIcon={require('../../assets/menu.png')}
-              centerTitle="Journaling"
-              rightIcon={require('../../assets/bell.png')}
-              leftIconPress={() => this.props.navigation.navigate('Journaling')}
-              rightIconPress={() => alert('right')}
-            />
-            <CustomTabBar />
-          </View>
-          <View style={styles.questionView}>
-            <CustomTextArea />
-          </View>
-          <View style={styles.buttonView}>
-            <RoundedButton
-              title="Save"
-              buttonStyle={styles.buttonStyle}
-              titleStyle={styles.titleStyle}
-            />
-          </View>
-        </KeyboardAvoidingView>
+      <MasterLayout
+        masterStyle={styles.masterStyle}
+        leftIcon={require('../../assets/back-arrow.png')}
+        centerTitle="Journaling"
+        rightIcon={require('../../assets/bell.png')}
+        leftIconPress={() => this.props.navigation.navigate('Journaling')}
+        rightIconPress={() => alert('right')}>
+        <CustomTabBar />
+
+        <View style={styles.questionView}>
+          <CustomTextArea />
+        </View>
+        <View style={styles.buttonView}>
+          <RoundedButton
+            title="Save"
+            buttonStyle={styles.buttonStyle}
+            titleStyle={styles.titleStyle}
+          />
+        </View>
       </MasterLayout>
     );
   }

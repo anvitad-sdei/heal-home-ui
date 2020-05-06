@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, Image} from 'react-native';
 import {Icon, Avatar} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import normalize from '../../helpers/ResponsiveFont';
@@ -15,26 +15,14 @@ const HeaderComponent = props => {
     centerTitle,
     leftIconPress,
     rightIconPress,
+    leftStyle,
   } = props;
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <View style={styles.leftComponent}>
           <TouchableOpacity onPress={leftIconPress}>
-            {/* <Icon
-              name={leftIcon}
-              size={normalize(22)}
-              // style={styles.leftIconStyle}
-            /> */}
-            <Avatar
-              source={leftIcon}
-              overlayContainerStyle={{backgroundColor: colors.BLUE}}
-              containerStyle={{
-                height: normalize(20),
-                width: normalize(25),
-                marginLeft: '10%',
-              }}
-            />
+            <Image source={leftIcon} style={styles.leftIconStyle} />
           </TouchableOpacity>
         </View>
 
@@ -44,20 +32,15 @@ const HeaderComponent = props => {
 
         <View style={styles.rightComponent}>
           <TouchableOpacity onPress={rightIconPress}>
-            {/* <Icon
-              name={rightIcon}
-              size={normalize(22)}
-              //style={styles.rightIconStyle}
-            /> */}
-            <Avatar
+            {/* <Avatar
               source={rightIcon}
               overlayContainerStyle={{backgroundColor: colors.BLUE}}
               containerStyle={{
                 height: normalize(24),
                 width: normalize(20),
-                //marginLeft: '5%',
               }}
-            />
+            /> */}
+            <Image source={rightIcon} style={styles.rightIconStyle} />
           </TouchableOpacity>
         </View>
       </View>
@@ -72,19 +55,29 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   leftComponent: {
-    // borderWidth: 1,
     width: '13%',
-  },
-  leftIconStyle: {fontSize: normalize(20)},
-  centerComponent: {
     //borderWidth: 1,
+  },
+  leftIconStyle: {
+    width: normalize(24), //38
+    height: normalize(15), //19
+    marginLeft: normalize(15),
+  },
+  rightIconStyle: {
+    width: normalize(20), //38
+    height: normalize(25), //19
+    marginLeft: normalize(15),
+  },
+  centerComponent: {
+    paddingTop: normalize(12),
     width: '60%',
+    // borderWidth: 1,
   },
   rightComponent: {
-    // borderWidth: 1,
+    //borderWidth: 1,
     width: '12%',
   },
-  rightIconStyle: {fontSize: normalize(20)},
+
   centerText: {
     textAlign: 'center',
     fontSize: normalize(20),

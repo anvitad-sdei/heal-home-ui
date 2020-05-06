@@ -11,6 +11,7 @@ import colors from '../constants/colors';
 import {Avatar} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation-stack';
 import Journaling from '../screens/journal/Journaling';
+import JournalQuestion from '../screens/journal/JournalQuestion';
 
 const TabBarComponent = props => {
   return <BottomTabBar {...props} />;
@@ -20,6 +21,7 @@ const RootStackHome = createStackNavigator(
   {
     Home: Home,
     Journaling: Journaling,
+    JournalQuestion: JournalQuestion,
     // Details: DetailsScreen,
   },
   {

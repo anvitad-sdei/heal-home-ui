@@ -23,16 +23,6 @@ export default class Home extends React.Component {
         leftIconPress={() => alert('left')}
         rightIconPress={() => alert('right')}>
         <View style={{backgroundColor: colors.GRAY_SECOND, height: '100%'}}>
-          {/* <View style={styles.topView}>
-            <HeaderComponent
-              leftIcon={require('../../assets/menu.png')}
-              centerTitle="Dashboard"
-              rightIcon={require('../../assets/bell.png')}
-              leftIconPress={() => alert('left')}
-              rightIconPress={() => alert('right')}
-            />
-          </View> */}
-
           <View style={styles.dateView}>
             <Text style={styles.dateText}>Pick the Date</Text>
             <Text style={styles.datePick} onPress={() => alert('date pick')}>
