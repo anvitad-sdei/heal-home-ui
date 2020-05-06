@@ -11,6 +11,8 @@ import {
 } from 'react-native-responsive-screen';
 import GradientButton from '../../components/Buttons/GradientButton';
 import Carousel from '../../components/Carousel.js';
+import {Avatar, Icon} from 'react-native-elements';
+import CustomModal from '../../components/Modal';
 export default class Home extends React.Component {
   render() {
     return (
@@ -28,9 +30,12 @@ export default class Home extends React.Component {
 
           <View style={styles.dateView}>
             <Text style={styles.dateText}>Pick the Date</Text>
-            <Text style={styles.datePick} onPress={() => alert('date pick')}>
+            {/* <Text style={styles.datePick} onPress={() => alert('date pick')}>
               05/05/2020
-            </Text>
+            </Text> */}
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <CustomModal date={'06/05/2020'} />
+            </View>
           </View>
           <GradientButton
             colors={[colors.LIGHT_PINK, colors.PINK]}
@@ -60,8 +65,31 @@ export default class Home extends React.Component {
             <Text style={styles.sessionTitle}>Upcoming Sessions</Text>
             {/* <Carousel /> */}
             <View style={styles.sliderView}>
-              <View styles={styles.leftView} />
-              <View styles={styles.rightView} />
+              <View style={{flexDirection: 'row'}}>
+                <View style={{padding: normalize(10)}}>
+                  <Avatar
+                    size="large"
+                    source={require('../../assets/goal.png')}
+                  />
+                </View>
+                <View style={{padding: normalize(10)}}>
+                  <Text style={styles.userName}>Rejina Freak</Text>
+                  <View style={styles.introView}>
+                    <Text style={styles.textColor}>MBBS,DOMS,MS</Text>
+                    <Text style={styles.textColor}>Therapists</Text>
+                    <Text style={styles.textColor}>26 years of experience</Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View style={styles.leftView}>
+                  <Text>9:30AM - 8:00PM</Text>
+                </View>
+                <View style={styles.rightView}>
+                  <View />
+                </View>
+              </View>
             </View>
           </View>
         </View>
@@ -108,13 +136,40 @@ const styles = StyleSheet.create({
     marginTop: hp(1),
   },
   sliderView: {
-    borderWidth: 1,
     borderRadius: normalize(5),
+    backgroundColor: colors.WHITE,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    padding: normalize(10),
+  },
+  userName: {
+    fontSize: normalize(14),
+    fontFamily: 'Poppins-Medium',
+    color: colors.GRAY_FIVE,
   },
   leftView: {
-    width: normalize(20),
+    padding: normalize(10),
   },
   rightView: {
-    width: normalize(80),
+    paddingRight: normalize(5),
+  },
+  introView: {
+    borderWidth: 1,
+    width: normalize(155),
+    borderRadius: normalize(4),
+    paddingVertical: normalize(3),
+    paddingHorizontal: normalize(8),
+    borderColor: colors.GRAY_LIGHT,
+  },
+  textColor: {
+    color: colors.GRAY_PLACE,
+    fontSize: normalize(10),
+    fontFamily: 'Poppins-Regular',
   },
 });

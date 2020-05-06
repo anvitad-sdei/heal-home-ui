@@ -7,6 +7,7 @@ import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 import ButtonWithIcon from '../../components/Buttons/ButtonWithIcon';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 
 export default class Journaling extends Component {
   render() {
@@ -17,13 +18,14 @@ export default class Journaling extends Component {
             leftIcon={require('../../assets/menu.png')}
             centerTitle="Journaling"
             rightIcon={require('../../assets/bell.png')}
-            leftIconPress={() => alert('left')}
+            leftIconPress={() => this.props.navigation.navigate('Home')}
             rightIconPress={() => alert('right')}
           />
           <CustomTabBar />
         </View>
         <View style={styles.buttonView}>
           <ButtonWithIcon />
+          <CustomTextArea />
         </View>
       </MasterLayout>
     );
