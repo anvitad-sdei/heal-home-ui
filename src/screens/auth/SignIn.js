@@ -26,31 +26,32 @@ class SignIn extends React.Component {
       validPassword: false,
     };
   }
-  loginHandler = () => {
-    const {email, password, validEmail, validPassword} = this.state;
+  // loginHandler = () => {
+  //   const {email, password, validEmail, validPassword} = this.state;
 
-    if (validEmail) {
-      if (password.length > 4) {
-        let data = {
-          emailId: email,
-          password: password,
-          userType: apiConstants.USER_TYPE,
-        };
-        this.props.login(data);
-      } else {
-        Alert.alert(
-          'Password must contain upper case,special characters and alphanumeric',
-        );
-      }
-    } else {
-      Alert.alert('Enter email is not valid');
-    }
-  };
-
-  // loginHandler = async () => {
-  //   await AsyncStorage.setItem('userToken', 'abc');
-  //   this.props.login();
+  //   if (validEmail) {
+  //     if (password.length > 4) {
+  //       let data = {
+  //         emailId: email,
+  //         password: password,
+  //         userType: apiConstants.USER_TYPE,
+  //       };
+  //       this.props.login(data);
+  //     } else {
+  //       Alert.alert(
+  //         'Password must contain upper case,special characters and alphanumeric',
+  //       );
+  //     }
+  //   } else {
+  //     Alert.alert('Enter email is not valid');
+  //   }
   // };
+
+  loginHandler = async () => {
+    await AsyncStorage.setItem('userToken', 'abc');
+    this.props.navigation.navigate('App');
+    // this.props.login();
+  };
 
   onChangeEmail = email => {
     this.setState({
