@@ -26,13 +26,13 @@ export default class CustomTabBar extends Component {
 const styles = StyleSheet.create({
   weekView: {
     height: normalize(40),
-    width: normalize(280),
+    width: normalize(300),
     backgroundColor: colors.WHITE,
     borderRadius: normalize(20),
     //borderWidth: 1,
     position: 'absolute',
     top: 73,
-    left: 27,
+    left: normalize(12),
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',

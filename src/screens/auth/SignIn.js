@@ -14,7 +14,7 @@ import normalize from '../../helpers/ResponsiveFont';
 import InputField from '../../components/Input';
 import CustomImage from '../../components/Image';
 import {regex} from '../../helpers/regex';
-import {apiConstants} from '../../redux/api/Constants';
+import {apiConstants} from '../../redux/api/constants';
 const isIOS = Platform.OS === 'ios' ? true : false;
 class SignIn extends React.Component {
   constructor(props) {
@@ -47,15 +47,11 @@ class SignIn extends React.Component {
     }
   };
 
-  // loginHandler = () => {
-  //   const data = {
-  //     emailId: this.state.email,
-  //     password: this.state.password,
-  //     userType: 'Customer',
-  //   };
-  //   console.log(data);
-  //   this.props.login(data);
+  // loginHandler = async () => {
+  //   await AsyncStorage.setItem('userToken', 'abc');
+  //   this.props.login();
   // };
+
   onChangeEmail = email => {
     this.setState({
       email: email,

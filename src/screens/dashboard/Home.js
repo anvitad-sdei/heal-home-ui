@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, StyleSheet, Text, Button} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import HeaderComponent from '../../components/HeaderComponent';
 import colors from '../../constants/colors';
@@ -10,7 +9,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import ButtonWithIcon from '../../components/Buttons/ButtonWithIcon';
+import GradientButton from '../../components/Buttons/GradientButton';
 import Carousel from '../../components/Carousel.js';
 export default class Home extends React.Component {
   render() {
@@ -27,36 +26,35 @@ export default class Home extends React.Component {
             />
           </View>
 
-          {/* <Button
-            title="Actually, sign me out :)"
-            onPress={this._signOutAsync}
-          /> */}
           <View style={styles.dateView}>
             <Text style={styles.dateText}>Pick the Date</Text>
             <Text style={styles.datePick} onPress={() => alert('date pick')}>
               05/05/2020
             </Text>
           </View>
-          <ButtonWithIcon
+          <GradientButton
             colors={[colors.LIGHT_PINK, colors.PINK]}
             title="Drinking Log"
             source={require('../../assets/drinks.png')}
             imageView={styles.imageView}
-            onPress={() => alert('Drinking')}
+            onPress={() => this.props.navigation.navigate('DrinkingLogs')}
+            iconColor={colors.WHITE}
           />
-          <ButtonWithIcon
+          <GradientButton
             colors={[colors.LIGHT_BLUE, colors.LIGHT_BLUE_THIRD]}
             title="Journaling"
             source={require('../../assets/interface.png')}
-            imageView={styles.imageView}
+            imageView={{width: normalize(24), height: normalize(21)}}
             onPress={() => this.props.navigation.navigate('Journaling')}
+            iconColor={colors.WHITE}
           />
-          <ButtonWithIcon
+          <GradientButton
             colors={[colors.LIGHT_BLUE_ONE, colors.LIGHT_BLUE_SECOND]}
             title="My Therapists"
             source={require('../../assets/people.png')}
-            imageView={styles.imageView}
+            imageView={{width: normalize(24), height: normalize(27)}}
             titleStyle={{color: colors.DARK_TEXT_BLUE}}
+            iconColor={colors.BLACK}
           />
           <View style={styles.upcomingSessionView}>
             <Text style={styles.sessionTitle}>Upcoming Sessions</Text>
@@ -70,11 +68,6 @@ export default class Home extends React.Component {
       </MasterLayout>
     );
   }
-
-  _signOutAsync = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate('Auth');
-  };
 }
 
 const styles = StyleSheet.create({
