@@ -14,7 +14,7 @@ const AuthStack = createStackNavigator(
     SignIn: SignIn,
     Welcome: Welcome,
     DrinkingLogs: DrinkingLogs,
-    Journaling: Journaling,
+    // Journaling: Journaling,
   },
 
   {
