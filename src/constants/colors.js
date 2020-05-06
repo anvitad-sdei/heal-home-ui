@@ -27,6 +27,8 @@ const colors = {
   GRAY_NINE: '#D9D9D9', /// border color of drinks view
   LIGHT_GRAY: '#CCCCCC', //text color of drink
   BLACK_THIRD: '#25394F',
+  GRAY_LIGHT: '#00000017', //border color
+  GRAY_PLACE: '#A4A4A4',
 };
 
 export default colors;
