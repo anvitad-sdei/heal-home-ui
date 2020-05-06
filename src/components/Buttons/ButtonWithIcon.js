@@ -1,45 +1,19 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
-import {Icon, Image} from 'react-native-elements';
-import colors from '../../constants/colors';
+import {Text, View, StyleSheet} from 'react-native';
+import {Icon} from 'react-native-elements';
 import normalize from '../../helpers/ResponsiveFont';
-import LinearGradient from 'react-native-linear-gradient';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import colors from '../../constants/colors';
 
-const ButtonWithIcon = props => {
-  const {title, source, colors, imageView, titleStyle, onPress} = props;
+const ButtonWithIcon = () => {
   return (
-    <View
-      style={{
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-        elevation: 3,
-      }}>
-      <TouchableOpacity onPress={onPress}>
-        <LinearGradient
-          start={{x: 0, y: 1}}
-          end={{x: 1, y: 0}}
-          colors={colors}
-          style={styles.buttonView}>
-          <View style={styles.avatarTextView}>
-            <View style={{...styles.imageView, ...imageView}}>
-              <Image source={source} style={styles.imageStyle} />
-            </View>
-            <Text style={{...styles.title, ...titleStyle}}>{title}</Text>
-          </View>
-          <View>
-            <Icon name="arrow-forward" size={25} color={colors.WHITE} />
-          </View>
-        </LinearGradient>
-      </TouchableOpacity>
+    <View style={styles.wrapper}>
+      <View>
+        <Text style={styles.textStyle}>06-05-2020</Text>
+      </View>
+      <View>
+        <Icon name="arrow-forward" color={colors.WHITE} type="FontAwesome" />
+      </View>
     </View>
   );
 };
@@ -47,26 +21,21 @@ const ButtonWithIcon = props => {
 export default ButtonWithIcon;
 
 const styles = StyleSheet.create({
-  buttonView: {
-    height: hp(6.5),
-    width: wp(85),
-    // borderWidth: 1,
-    borderRadius: normalize(30),
-    alignSelf: 'center',
-    backgroundColor: colors.PINK,
+  wrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: normalize(300),
+    height: normalize(45),
+    alignSelf: 'center',
+    //borderWidth: 1,
     alignItems: 'center',
-    paddingHorizontal: 20,
-    marginVertical: hp(1.5),
+    borderRadius: normalize(30),
+    paddingHorizontal: normalize(20),
+    backgroundColor: colors.LIGHT_BLUE,
   },
-  avatarTextView: {flexDirection: 'row', alignItems: 'center'},
-  imageView: {height: normalize(24), width: normalize(23)},
-  imageStyle: {height: '100%', width: '100%'},
-  title: {
+  textStyle: {
     color: colors.WHITE,
-    marginHorizontal: 15,
-    fontSize: normalize(16),
+    fontSize: normalize(14),
     fontFamily: 'Poppins-Regular',
   },
 });
