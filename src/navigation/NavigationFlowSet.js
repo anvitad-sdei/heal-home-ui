@@ -6,12 +6,14 @@ import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import TabNavigator from './TabNavigator';
 import Welcome from '../screens/Welcome.js/Welcome';
 import DrawerNavigator from './DrawerNavigator';
-import Journaling from '../screens/dashboard/Journaling';
+import DrinkingLogs from '../screens/drinkingLogs/DrinkingLogs';
+import Journaling from '../screens/journal/Journaling';
 
 const AuthStack = createStackNavigator(
   {
     SignIn: SignIn,
     Welcome: Welcome,
+    DrinkingLogs: DrinkingLogs,
     Journaling: Journaling,
   },
 
