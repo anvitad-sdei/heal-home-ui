@@ -20,12 +20,9 @@ class Journaling extends Component {
   }
   render() {
     const {data} = this.props;
-    //console.log(Object.keys(data).length);
     const week = Object.keys(data).length
       ? Object.keys(data).map((item, i) => {
-          console.log('inner cobject===>');
-          // console.log(item);
-          console.log(data.item);
+          let weekData = Object.values(data)[item - 1];
           return (
             <View>
               <ButtonWithIcon
@@ -34,6 +31,9 @@ class Journaling extends Component {
                   this.props.navigation.navigate('JournalQuestion')
                 }
               />
+              {weekData.map(item => (
+                <Text>{item.loggedDate}</Text>
+              ))}
             </View>
           );
         })
