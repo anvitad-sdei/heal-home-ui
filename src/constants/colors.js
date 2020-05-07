@@ -31,6 +31,11 @@ const colors = {
   GRAY_PLACE: '#A4A4A4',
   GREEN: '#46E54C',
   GRAY_LINE: '#707070',
+  YELLOW: '#FFFB91',
+  DARK_PINK: '#FF9FFF',
+  BORDER_PINK: '#FFAAF2',
+  SKY_BLUE: '#9FFFF5',
+  SKY_LIGHT_BLUE: '#95B4FD',
 };
 
 export default colors;
