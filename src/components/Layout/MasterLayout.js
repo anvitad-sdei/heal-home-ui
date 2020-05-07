@@ -11,42 +11,43 @@ class MasterLayout extends Component {
   render() {
     const {
       isLoading,
-      masterStyle,
       leftIcon,
       rightIcon,
       leftIconPress,
       rightIconPress,
       centerTitle,
+      masterStyle,
     } = this.props;
     return (
       <SafeAreaView style={{...styles.container, ...masterStyle}}>
-        <StatusBar backgroundColor={colors.BLUE} />
-        {leftIcon || rightIcon ? (
-          <View style={styles.topView}>
-            <HeaderComponent
-              leftIcon={leftIcon || null}
-              centerTitle={centerTitle || null}
-              rightIcon={rightIcon || null}
-              leftIconPress={leftIconPress}
-              rightIconPress={rightIconPress}
-            />
-          </View>
-        ) : null}
-        <View>{this.props.children}</View>
-        {/* {isLoading ? <Text>Loading.....</Text> : null} */}
+        <View>
+          {leftIcon || rightIcon ? (
+            <View style={styles.topView}>
+              <HeaderComponent
+                leftIcon={leftIcon || null}
+                centerTitle={centerTitle || null}
+                rightIcon={rightIcon || null}
+                leftIconPress={leftIconPress}
+                rightIconPress={rightIconPress}
+              />
+            </View>
+          ) : null}
+        </View>
+
+        <View style={styles.innerContainer}>{this.props.children}</View>
         {isLoading ? <Loader /> : null}
       </SafeAreaView>
     );
   }
 }
+
 const styles = StyleSheet.create({
-  container: {backgroundColor: colors.WHITE, height: '100%'},
-  topView: {
-    height: normalize(80),
+  container: {
     backgroundColor: colors.BLUE,
-    borderBottomLeftRadius: normalize(25),
-    borderBottomRightRadius: normalize(25),
-    marginBottom: 10,
+  },
+  innerContainer: {backgroundColor: colors.GRAY_SECOND, height: '100%'},
+  topView: {
+    backgroundColor: colors.GRAY_SECOND,
   },
 });
 
