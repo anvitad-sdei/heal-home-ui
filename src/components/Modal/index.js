@@ -25,7 +25,7 @@ const CustomModal = props => {
         <View style={styles.modalView}>
           <View style={{width: '100%'}}>{content}</View>
 
-          <View style={styles.buttonView}>
+          {/* <View style={styles.buttonView}>
             <TouchableHighlight
               style={{...styles.openButton, backgroundColor: '#2196F3'}}
               onPress={handler}>
@@ -36,7 +36,7 @@ const CustomModal = props => {
               onPress={handler}>
               <Text style={styles.textStyle}>Hide Modal</Text>
             </TouchableHighlight>
-          </View>
+          </View> */}
         </View>
       </Modal>
     </View>

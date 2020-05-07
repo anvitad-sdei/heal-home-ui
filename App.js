@@ -9,7 +9,6 @@ const App = () => {
   return (
     <>
       <Provider store={store}>
-        <StatusBar barStyle="dark-content" />
         <NavigationFlowSet
           ref={navigatorRef => {
             AppNavigation.setTopLevelNavigator(navigatorRef);

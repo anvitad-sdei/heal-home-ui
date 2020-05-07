@@ -17,21 +17,20 @@ const HeaderComponent = props => {
     leftStyle,
   } = props;
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
-        <View style={styles.leftComponent}>
-          <TouchableOpacity onPress={leftIconPress}>
-            <Image source={leftIcon} style={styles.leftIconStyle} />
-          </TouchableOpacity>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.leftComponent}>
+        <TouchableOpacity onPress={leftIconPress}>
+          <Image source={leftIcon} style={styles.leftIconStyle} />
+        </TouchableOpacity>
+      </View>
 
-        <View style={styles.centerComponent}>
-          <Text style={styles.centerText}>{centerTitle}</Text>
-        </View>
+      <View style={styles.centerComponent}>
+        <Text style={styles.centerText}>{centerTitle}</Text>
+      </View>
 
-        <View style={styles.rightComponent}>
-          <TouchableOpacity onPress={rightIconPress}>
-            {/* <Avatar
+      <View style={styles.rightComponent}>
+        <TouchableOpacity onPress={rightIconPress}>
+          {/* <Avatar
               source={rightIcon}
               overlayContainerStyle={{backgroundColor: colors.BLUE}}
               containerStyle={{
@@ -39,11 +38,10 @@ const HeaderComponent = props => {
                 width: normalize(20),
               }}
             /> */}
-            <Image source={rightIcon} style={styles.rightIconStyle} />
-          </TouchableOpacity>
-        </View>
+          <Image source={rightIcon} style={styles.rightIconStyle} />
+        </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -51,11 +49,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    paddingTop: 10,
+    backgroundColor: colors.BLUE,
+    height: normalize(80),
+    alignItems: 'center',
+    borderBottomLeftRadius: normalize(35),
+    borderBottomRightRadius: normalize(35),
   },
   leftComponent: {
     width: '13%',
-    //borderWidth: 1,
   },
   leftIconStyle: {
     width: normalize(24), //38
@@ -65,11 +66,8 @@ const styles = StyleSheet.create({
   rightIconStyle: {
     width: normalize(20), //38
     height: normalize(25), //19
-    //marginRight: normalize(8),
-    // borderWidth: 1,
   },
   centerComponent: {
-    paddingTop: normalize(12),
     width: '60%',
     // borderWidth: 1,
   },
