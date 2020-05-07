@@ -22,6 +22,7 @@ export default class Home extends React.Component {
     this.state = {
       modal: false,
       defaultDate: Date.now(),
+      date: '',
     };
   }
   modalHandler = () => {
@@ -29,7 +30,7 @@ export default class Home extends React.Component {
   };
   dateHandler = (event, selectedDate) => {
     console.log(selectedDate);
-    this.setState({date: selectedDate});
+    this.setState({date: selectedDate, modal: !this.state.modal});
   };
   render() {
     const {modal, defaultDate} = this.state;
@@ -43,44 +44,28 @@ export default class Home extends React.Component {
           mode={'date'}
           is24Hour={true}
           display="default"
-          // onChange={this.dateHandler}
+          //onChange={this.dateHandler}
         />
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-          <View
-            style={{
-              width: '45%',
-              height: normalize(35),
-              borderWidth: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: normalize(100),
-              backgroundColor: '#95B4FD',
-            }}>
-            <Text style={{color: colors.WHITE, fontFamily: 'Poppins-Regular'}}>
-              CANCEL
-            </Text>
-          </View>
-          <View
-            style={{
-              width: '45%',
-              height: normalize(35),
-              borderWidth: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: normalize(100),
-              backgroundColor: '#6E78F7',
-            }}>
-            <Text style={{color: colors.WHITE, fontFamily: 'Poppins-Regular'}}>
-              SET
-            </Text>
-          </View>
+        <View style={styles.calendarView}>
+          <TouchableOpacity onPress={() => this.modalHandler()}>
+            <View
+              style={{...styles.calendarButton, backgroundColor: '#95B4FD'}}>
+              <Text style={styles.calendarButtonText}>CANCEL</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => this.modalHandler()}>
+            <View
+              style={{...styles.calendarButton, backgroundColor: '#6E78F7'}}>
+              <Text style={styles.calendarButtonText}>SET</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </>
     );
 
     return (
       <MasterLayout
-        masterStyle={{backgroundColor: colors.GRAY_SECOND}}
         leftIcon={require('../../assets/menu.png')}
         centerTitle="Dashboard"
         rightIcon={require('../../assets/bell.png')}
@@ -138,11 +123,7 @@ export default class Home extends React.Component {
                 </View>
               </View>
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-              }}>
+            <View style={styles.socialView}>
               <View style={styles.leftView}>
                 <Text style={styles.timing}>9:30AM - 8:00PM</Text>
               </View>
@@ -185,6 +166,18 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: normalize(20),
     marginBottom: 10,
   },
+  calendarView: {flexDirection: 'row', justifyContent: 'space-around'},
+  calendarButton: {
+    // width: '45%',
+    width: normalize(100),
+    height: normalize(35),
+    // borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: normalize(10),
+    borderRadius: normalize(100),
+  },
+  calendarButtonText: {color: colors.WHITE, fontFamily: 'Poppins-Regular'},
   dateView: {
     marginVertical: hp(1),
     alignSelf: 'center',
@@ -226,6 +219,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
+  },
+  socialView: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   sessionView: {flexDirection: 'row'},
   userName: {
