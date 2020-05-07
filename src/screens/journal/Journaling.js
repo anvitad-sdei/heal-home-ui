@@ -20,16 +20,23 @@ class Journaling extends Component {
   }
   render() {
     const {data} = this.props;
-    console.log(Object.keys(data).length);
+    //console.log(Object.keys(data).length);
     const week = Object.keys(data).length
-      ? Object.keys(data).map((item, i) => (
-          <View>
-            <ButtonWithIcon
-              date={`week ${item}`}
-              onPress={() => this.props.navigation.navigate('JournalQuestion')}
-            />
-          </View>
-        ))
+      ? Object.keys(data).map((item, i) => {
+          console.log('inner cobject===>');
+          // console.log(item);
+          console.log(data.item);
+          return (
+            <View>
+              <ButtonWithIcon
+                date={`week ${item}`}
+                onPress={() =>
+                  this.props.navigation.navigate('JournalQuestion')
+                }
+              />
+            </View>
+          );
+        })
       : null;
     return (
       <MasterLayout

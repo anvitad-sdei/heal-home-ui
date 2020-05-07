@@ -311,12 +311,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({user}) => {
-  const {journaling} = user;
-  return {data: journaling};
-};
+// const mapStateToProps = ({user}) => {
+//   const {journaling} = user;
+//   return {data: journaling};
+// };
 
-export default connect(
-  mapStateToProps,
-  {journalingSave},
-)(JournalQuestion);
+// export default connect(
+//   mapStateToProps,
+//   {journalingSave},
+// )(JournalQuestion);
+
+export default JournalQuestion;

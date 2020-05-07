@@ -23,10 +23,10 @@ export const login = data => async dispatch => {
 };
 
 /*************************GET JOURNALING API********************** */
-export const journaling = data => async dispatch => {
+export const journaling = () => async dispatch => {
   try {
     dispatch(loadingHandler(true));
-    let res = await axios.post(`${apiUrls.BASE_URL}/journaling`, {...data});
+    let res = await axios(`${apiUrls.BASE_URL}/journaling`);
     if (res) {
       console.log(res);
       dispatch(loadingHandler(false));
@@ -54,7 +54,6 @@ export const journalingSave = data => async dispatch => {
       console.log(res);
       dispatch(loadingHandler(false));
       dispatch(successResponseHandler(constants.SAVE_JOURNALING, res.data));
-      dispatch(() => navigateToRoute('App', {data: res.data}));
     }
   } catch (err) {
     console.log(JSON.stringify(err.response));

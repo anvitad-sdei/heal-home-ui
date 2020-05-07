@@ -1,7 +1,6 @@
 import constants from '../constants';
 const iState = {
   login: {},
-  signup: {},
 };
 const auth = (state = iState, action) => {
   switch (action.type) {
@@ -9,11 +8,6 @@ const auth = (state = iState, action) => {
       return {
         ...state,
         login: action.payload,
-      };
-    case constants.SIGNUP_SUCCESS:
-      return {
-        ...state,
-        signup: action.payload,
       };
 
     default:
