@@ -7,16 +7,22 @@ import colors from '../../constants/colors';
 import CustomTabBar from '../../components/WeekTabbar';
 import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 import RoundedButton from '../../components/Buttons/RoundedButton';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import LinearGradient from 'react-native-linear-gradient';
 export default class JournalQuestion extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: 1,
+    };
+  }
   render() {
     return (
       <MasterLayout
-        masterStyle={styles.masterStyle}
         leftIcon={require('../../assets/back-arrow.png')}
         centerTitle="Journaling"
         rightIcon={require('../../assets/bell.png')}
@@ -28,39 +34,106 @@ export default class JournalQuestion extends Component {
           <View style={styles.questionView}>
             <View
               style={{
-                flexDirection: 'row',
-                borderWidth: 1,
-                width: normalize(252),
-                height: normalize(36),
-                borderRadius: normalize(20),
-                justifyContent: 'space-around',
-                //   alignItems: 'center',
+                ...styles.morningEveningView,
+                borderColor:
+                  this.state.active === 1
+                    ? colors.BORDER_PINK
+                    : colors.SKY_LIGHT_BLUE,
               }}>
-              <View
-                style={{
-                  borderRightWidth: 1,
-                  width: normalize(115),
-                  height: normalize(36),
-                  borderRadius: normalize(20),
-                  alignItems: 'center',
-                  //  alignSelf: 'center',
-                  backgroundColor: colors.PINK,
-                }}>
-                <Text style={{textAlign: 'center'}}>Morning</Text>
-              </View>
-              <View>
-                <Text>Evening</Text>
-              </View>
+              {this.state.active === 1 ? (
+                <>
+                  <TouchableOpacity onPress={() => this.setState({active: 1})}>
+                    <LinearGradient
+                      start={{x: 0, y: 1}}
+                      end={{x: 1, y: 0}}
+                      style={styles.morningActiveOne}
+                      colors={[colors.YELLOW, colors.DARK_PINK]}>
+                      <View>
+                        <Text style={styles.morningText}>Morning</Text>
+                      </View>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.setState({active: 2})}>
+                    <View style={styles.eveningActiveOne}>
+                      <Text style={styles.morningText}>Evening</Text>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              ) : null}
+
+              {this.state.active === 2 ? (
+                <>
+                  <TouchableOpacity onPress={() => this.setState({active: 1})}>
+                    <View style={styles.morningActiveTwo}>
+                      <Text style={styles.morningText}>Morning</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.setState({active: 2})}>
+                    <LinearGradient
+                      style={styles.eveningActiveTwo}
+                      start={{x: 0, y: 1}}
+                      end={{x: 1, y: 0}}
+                      colors={[colors.BLUE, colors.SKY_BLUE]}>
+                      <View>
+                        <Text style={styles.morningText}>Evening</Text>
+                      </View>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </>
+              ) : null}
             </View>
-            <CustomTextArea title="What am I grateful for today?" />
-            <CustomTextArea title="What would make today great?" />
-            <CustomTextArea title="What's ONE Thing I must accomplish today?" />
+
+            {this.state.active === 1 ? (
+              <View>
+                <CustomTextArea
+                  title="What am I grateful for today?"
+                  onChangeText={() => this.changeText()}
+                  value=""
+                />
+                <CustomTextArea
+                  title="What would make today great?"
+                  onChangeText={() => this.changeText()}
+                  value=""
+                />
+                <CustomTextArea
+                  title="What's ONE Thing I must accomplish today?"
+                  onChangeText={() => this.changeText()}
+                  value=""
+                />
+              </View>
+            ) : null}
+
+            {this.state.active === 2 ? (
+              <View>
+                <CustomTextArea
+                  title="What did I achieve today?"
+                  onChangeText={() => this.changeText()}
+                  value=""
+                />
+                <CustomTextArea
+                  title="What lessons did I learn?"
+                  onChangeText={() => this.changeText()}
+                  value=""
+                />
+                <CustomTextArea
+                  title="What am I thankful for right now?"
+                  onChangeText={() => this.changeText()}
+                  value=""
+                />
+                <CustomTextArea
+                  title="How am I feeling right now?"
+                  onChangeText={() => this.changeText()}
+                  value=""
+                />
+              </View>
+            ) : null}
           </View>
           <View style={styles.buttonView}>
             <RoundedButton
               title="Save"
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.titleStyle}
+              onPress={() => alert('submit')}
             />
           </View>
         </ScrollView>
@@ -73,12 +146,50 @@ const styles = StyleSheet.create({
   masterStyle: {
     backgroundColor: colors.GRAY_SECOND,
   },
-  topView: {
-    height: normalize(80),
+  morningEveningView: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    height: normalize(36),
+    borderRadius: normalize(20),
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  morningActiveOne: {
+    height: normalize(35),
+    width: normalize(140),
+    alignItems: 'center',
+    borderRadius: normalize(20),
+    paddingTop: normalize(8),
+    backgroundColor: colors.PINK,
+    //alignSelf: 'center',
+  },
+  eveningActiveOne: {
+    // borderWidth: 1,
+    height: normalize(35),
+    width: normalize(110),
+    alignItems: 'center',
+    paddingTop: normalize(8),
+    // borderRadius: normalize(20),
+  },
+  morningActiveTwo: {
+    height: normalize(35),
+    width: normalize(110),
+    alignItems: 'center',
+    paddingTop: normalize(8),
+  },
+  eveningActiveTwo: {
+    // borderWidth: 1,
+    height: normalize(35),
+    width: normalize(140),
+    alignItems: 'center',
+    borderRadius: normalize(20),
+    paddingTop: normalize(8),
     backgroundColor: colors.BLUE,
-    borderBottomLeftRadius: normalize(25),
-    borderBottomRightRadius: normalize(25),
-    marginBottom: 10,
+  },
+  morningText: {
+    fontSize: normalize(14),
+    fontFamily: 'Poppins-Regular',
+    color: colors.DARK_TEXT_BLUE,
   },
   questionView: {
     //  borderWidth: 1,

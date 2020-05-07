@@ -16,8 +16,7 @@ export default class Journaling extends Component {
         centerTitle="Journaling"
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.navigate('Home')}
-        rightIconPress={() => alert('right')}
-        masterStyle={{backgroundColor: colors.GRAY_SECOND}}>
+        rightIconPress={() => alert('right')}>
         <CustomTabBar />
 
         <View style={styles.buttonView}>
