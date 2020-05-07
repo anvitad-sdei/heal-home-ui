@@ -21,44 +21,44 @@ import normalize from '../../helpers/ResponsiveFont';
 import InputField from '../../components/Input';
 import CustomImage from '../../components/Image';
 import {regex} from '../../helpers/regex';
-
+import {apiConstants} from '../../redux/api/constants';
 const isIOS = Platform.OS === 'ios' ? true : false;
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-      validEmail: false,
-      validPassword: false,
+      email: 'alcohol@healathome.co',
+      password: '@Heal12',
+      validEmail: true,
+      validPassword: true,
     };
   }
-  // loginHandler = () => {
-  //   const {email, password, validEmail, validPassword} = this.state;
+  loginHandler = () => {
+    const {email, password, validEmail, validPassword} = this.state;
 
-  //   if (validEmail) {
-  //     if (password.length > 4) {
-  //       let data = {
-  //         emailId: email,
-  //         password: password,
-  //         userType: apiConstants.USER_TYPE,
-  //       };
-  //       this.props.login(data);
-  //     } else {
-  //       Alert.alert(
-  //         'Password must contain upper case,special characters and alphanumeric',
-  //       );
-  //     }
-  //   } else {
-  //     Alert.alert('Enter email is not valid');
-  //   }
-  // };
-
-  loginHandler = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
-    this.props.navigation.navigate('App');
-    // this.props.login();
+    if (validEmail) {
+      if (password.length > 4) {
+        let data = {
+          emailId: email,
+          password: password,
+          userType: apiConstants.USER_TYPE,
+        };
+        this.props.login(data);
+      } else {
+        Alert.alert(
+          'Password must contain upper case,special characters and alphanumeric',
+        );
+      }
+    } else {
+      Alert.alert('Enter email is not valid');
+    }
   };
+
+  // loginHandler = async () => {
+  //   await AsyncStorage.setItem('userToken', 'abc');
+  //   this.props.navigation.navigate('App');
+  //   // this.props.login();
+  // };
 
   onChangeEmail = email => {
     this.setState({

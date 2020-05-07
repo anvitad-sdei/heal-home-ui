@@ -10,7 +10,7 @@ const auth = (state = iState, action) => {
         ...state,
         login: action.payload,
       };
-    case constants.SIGNUPs_SUCCESS:
+    case constants.SIGNUP_SUCCESS:
       return {
         ...state,
         signup: action.payload,

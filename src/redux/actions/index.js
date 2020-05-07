@@ -2,6 +2,8 @@ import NavigationService from '../services/navigation';
 import constants from '../constants';
 import axios from 'axios';
 import {apiUrls} from '../api/constants';
+
+/*********************LOGIN API ************************* */
 export const login = data => async dispatch => {
   try {
     dispatch(loadingHandler(true));
@@ -10,6 +12,48 @@ export const login = data => async dispatch => {
       console.log(res);
       dispatch(loadingHandler(false));
       dispatch(successResponseHandler(constants.LOGIN_SUCCESS, res.data));
+      dispatch(() => navigateToRoute('App', {data: res.data}));
+    }
+  } catch (err) {
+    console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    dispatch(errorHandler(err));
+    alert('Something went wrong');
+  }
+};
+
+/*************************GET JOURNALING API********************** */
+export const journaling = () => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios(`${apiUrls.BASE_URL}/journaling`);
+    if (res) {
+      console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.GET_JOURNALING_SUCCESS,
+          res.data.response,
+        ),
+      );
+    }
+  } catch (err) {
+    console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    dispatch(errorHandler(err));
+    alert('Something went wrong');
+  }
+};
+
+/**********************************POST JOURNALING API ***********************/
+export const journalingSave = data => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios.post(`${apiUrls.BASE_URL}/journaling`, {...data});
+    if (res) {
+      console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(successResponseHandler(constants.SAVE_JOURNALING, res.data));
       dispatch(() => navigateToRoute('App', {data: res.data}));
     }
   } catch (err) {
@@ -33,6 +77,8 @@ export const getUserData = () => async dispatch => {
     dispatch(errorHandler(err));
   }
 };
+
+/********************************************************* */
 const navigateToRoute = (routeName, params) => {
   /*
     routeName="String",

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, KeyboardAvoidingView} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import HeaderComponent from '../../components/HeaderComponent';
 import normalize from '../../helpers/ResponsiveFont';
@@ -18,9 +18,44 @@ export default class JournalQuestion extends Component {
     super(props);
     this.state = {
       active: 1,
+      gratefulToday: '',
+      makeTodayGreat: '',
+      accomplishToday: '',
+      achieveToday: '',
+      ilearnToday: '',
+      thankfulNowToday: '',
+      feelingRightNow: '',
+      amazeHappenToday: '',
+      betterToday: '',
+      triggerToday: '',
+      cravingExperience: '',
+      medicationToday: '',
+      anyComments: '',
     };
   }
+  onGratefulToday = gratefulToday => {
+    console.log(gratefulToday);
+    this.setState({gratefulToday: gratefulToday});
+  };
+
+ 
   render() {
+    const {
+      gratefulToday,
+      makeTodayGreat,
+      accomplishToday,
+      achieveToday,
+      ilearnToday,
+      thankfulNowToday,
+      feelingRightNow,
+      amazeHappenToday,
+      betterToday,
+      triggerToday,
+      cravingExperience,
+      medicationToday,
+      anyComments,
+    } = this.state;
+    console.log(this.state);
     return (
       <MasterLayout
         leftIcon={require('../../assets/back-arrow.png')}
@@ -87,18 +122,18 @@ export default class JournalQuestion extends Component {
               <View>
                 <CustomTextArea
                   title="What am I grateful for today?"
-                  onChangeText={() => this.changeText()}
-                  value=""
+                  onChangeText={(text)=>this.onGratefulToday(text)}
+                  value={gratefulToday}
                 />
                 <CustomTextArea
                   title="What would make today great?"
-                  onChangeText={() => this.changeText()}
-                  value=""
+                  onChangeText={() => this.makeTodayGreat()}
+                  value={makeTodayGreat}
                 />
                 <CustomTextArea
                   title="What's ONE Thing I must accomplish today?"
                   onChangeText={() => this.changeText()}
-                  value=""
+                  value={accomplishToday}
                 />
               </View>
             ) : null}
@@ -108,22 +143,53 @@ export default class JournalQuestion extends Component {
                 <CustomTextArea
                   title="What did I achieve today?"
                   onChangeText={() => this.changeText()}
-                  value=""
+                  value={achieveToday}
                 />
                 <CustomTextArea
                   title="What lessons did I learn?"
                   onChangeText={() => this.changeText()}
-                  value=""
+                  value={ilearnToday}
                 />
                 <CustomTextArea
                   title="What am I thankful for right now?"
                   onChangeText={() => this.changeText()}
-                  value=""
+                  value={thankfulNowToday}
                 />
                 <CustomTextArea
                   title="How am I feeling right now?"
+                 // onChangeText={() => this.changeText()}
+                  value={feelingRightNow}
+                />
+
+                <CustomTextArea
+                  title="What are 3 amazing things that happened today?"
                   onChangeText={() => this.changeText()}
-                  value=""
+                  value={amazeHappenToday}
+                />
+                <CustomTextArea
+                  title="How could I have made today better"
+                  onChangeText={() => this.changeText()}
+                  value={betterToday}
+                />
+                <CustomTextArea
+                  title="Have you identified �triggers� to use today? Please explain. How did you manage? What coping skills you used?"
+                  onChangeText={() => this.changeText()}
+                  value={triggerToday}
+                />
+                <CustomTextArea
+                  title=" Did you experience cravings? Physical? Psychological? Please describe."
+                  onChangeText={() => this.changeText()}
+                  value={cravingExperience}
+                />
+                <CustomTextArea
+                  title=" Did you take medication today? If not why?"
+                  onChangeText={() => this.changeText()}
+                  value={medicationToday}
+                />
+                <CustomTextArea
+                  title="Anything you would like to add?"
+                  onChangeText={() => this.changeText()}
+                  value={anyComments}
                 />
               </View>
             ) : null}
@@ -133,7 +199,7 @@ export default class JournalQuestion extends Component {
               title="Save"
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.titleStyle}
-              onPress={() => alert('submit')}
+              onPress={() => alert("hello")}
             />
           </View>
         </ScrollView>
