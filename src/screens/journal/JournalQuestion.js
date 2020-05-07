@@ -13,7 +13,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
-export default class JournalQuestion extends Component {
+import {journalingSave} from '../../redux/actions';
+import {connect} from 'react-redux';
+class JournalQuestion extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,8 +39,27 @@ export default class JournalQuestion extends Component {
     console.log(gratefulToday);
     this.setState({gratefulToday: gratefulToday});
   };
+  submitJournalingData = () => {
+    const {anyComments} = this.state;
 
- 
+    let data = {
+      accomplishToday: 'string',
+      achieveToday: 'string',
+      amazeHappenToday: 'string',
+      anyComments: 'string',
+      betterToday: 'string',
+      cravingExperience: 'string',
+      feelingRightNow: 'string',
+      gratefulToday: 'string',
+      id: 'long',
+      ilearnToday: 'string',
+      makeTodayGreat: 'string',
+      medicationToday: 'string',
+      thankfulNowToday: 'string',
+      triggerToday: 'string',
+    };
+    //  this.props.journalingSave(data);
+  };
   render() {
     const {
       gratefulToday,
@@ -122,7 +143,7 @@ export default class JournalQuestion extends Component {
               <View>
                 <CustomTextArea
                   title="What am I grateful for today?"
-                  onChangeText={(text)=>this.onGratefulToday(text)}
+                  onChangeText={text => this.onGratefulToday(text)}
                   value={gratefulToday}
                 />
                 <CustomTextArea
@@ -157,7 +178,7 @@ export default class JournalQuestion extends Component {
                 />
                 <CustomTextArea
                   title="How am I feeling right now?"
-                 // onChangeText={() => this.changeText()}
+                  // onChangeText={() => this.changeText()}
                   value={feelingRightNow}
                 />
 
@@ -199,7 +220,7 @@ export default class JournalQuestion extends Component {
               title="Save"
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.titleStyle}
-              onPress={() => alert("hello")}
+              onPress={() => alert('hello')}
             />
           </View>
         </ScrollView>
@@ -289,3 +310,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
   },
 });
+
+const mapStateToProps = ({user}) => {
+  const {journaling} = user;
+  return {data: journaling};
+};
+
+export default connect(
+  mapStateToProps,
+  {journalingSave},
+)(JournalQuestion);

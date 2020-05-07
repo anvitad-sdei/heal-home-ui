@@ -53,10 +53,7 @@ class Journaling extends Component {
   }
 }
 const mapStateToProps = ({user}) => {
-  // console.log(user);
   const {journaling} = user;
-  // const {isLoading} = loading;
-  // const {err} = error;
   return {data: journaling};
 };
 
