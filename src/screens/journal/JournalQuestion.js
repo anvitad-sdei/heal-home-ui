@@ -8,6 +8,10 @@ import CustomTabBar from '../../components/WeekTabbar';
 import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import {ScrollView} from 'react-native-gesture-handler';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 export default class JournalQuestion extends Component {
   render() {
     return (
@@ -20,11 +24,37 @@ export default class JournalQuestion extends Component {
         rightIconPress={() => alert('right')}>
         <CustomTabBar />
 
-        <ScrollView>
+        <ScrollView contentContainerStyle={{paddingBottom: hp(40)}}>
           <View style={styles.questionView}>
-            <CustomTextArea title={'What am I grateful for today?'} />
+            <View
+              style={{
+                flexDirection: 'row',
+                borderWidth: 1,
+                width: normalize(252),
+                height: normalize(36),
+                borderRadius: normalize(20),
+                justifyContent: 'space-around',
+                //   alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  borderRightWidth: 1,
+                  width: normalize(115),
+                  height: normalize(36),
+                  borderRadius: normalize(20),
+                  alignItems: 'center',
+                  //  alignSelf: 'center',
+                  backgroundColor: colors.PINK,
+                }}>
+                <Text style={{textAlign: 'center'}}>Morning</Text>
+              </View>
+              <View>
+                <Text>Evening</Text>
+              </View>
+            </View>
+            <CustomTextArea title="What am I grateful for today?" />
             <CustomTextArea title="What would make today great?" />
-            <CustomTextArea title="What's one thing I must accomplish today?" />
+            <CustomTextArea title="What's ONE Thing I must accomplish today?" />
           </View>
           <View style={styles.buttonView}>
             <RoundedButton
@@ -66,6 +96,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
+    paddingVertical: hp(5),
   },
   buttonView: {
     width: normalize(250),

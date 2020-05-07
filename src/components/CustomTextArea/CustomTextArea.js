@@ -2,17 +2,15 @@ import React from 'react';
 import {Text, View, StyleSheet, TextInput, Platform} from 'react-native';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
-import {Input} from 'react-native-elements';
 
 const CustomTextArea = props => {
-  const {value, onChangeText, title} = {props};
+  const {value, onChangeText, title} = props;
   return (
     <View style={styles.textAreaView}>
-      <Text style={styles.question}>{title}</Text>
-
-      <View style={styles.MainContainer}>
+      <View style={styles.mainContainer}>
+        <Text style={{...styles.question, ...styles.titleStyle}}>{title}</Text>
         <TextInput
-          style={styles.TextInputStyleClass}
+          style={styles.textInputStyleClass}
           underlineColorAndroid="transparent"
           placeholder={'Type your answer here'}
           placeholderTextColor={colors.GRAY_PLACE}
@@ -29,7 +27,7 @@ export default CustomTextArea;
 
 const styles = StyleSheet.create({
   textAreaView: {
-    width: normalize(262),
+    width: normalize(270),
     alignSelf: 'center',
     padding: normalize(10),
   },
@@ -40,15 +38,16 @@ const styles = StyleSheet.create({
     marginBottom: normalize(5),
     marginTop: normalize(10),
   },
-  MainContainer: {
+  mainContainer: {
     paddingTop: Platform.OS === 'ios' ? 5 : 0,
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
 
-  TextInputStyleClass: {
+  textInputStyleClass: {
     borderWidth: 1,
     borderColor: colors.GRAY_LINE,
     borderRadius: normalize(5),
     height: normalize(69),
+    paddingLeft: normalize(10),
   },
 });

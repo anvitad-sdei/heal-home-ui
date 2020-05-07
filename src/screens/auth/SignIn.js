@@ -15,6 +15,7 @@ import InputField from '../../components/Input';
 import CustomImage from '../../components/Image';
 import {regex} from '../../helpers/regex';
 import {apiConstants} from '../../redux/api/constants';
+import {ScrollView} from 'react-native-gesture-handler';
 const isIOS = Platform.OS === 'ios' ? true : false;
 class SignIn extends React.Component {
   constructor(props) {
