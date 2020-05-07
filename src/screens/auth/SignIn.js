@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Text, Platform, Alert} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Platform,
+  Alert,
+  KeyboardAvoidingView,
+} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import {login} from '../../redux/actions';
@@ -14,8 +21,7 @@ import normalize from '../../helpers/ResponsiveFont';
 import InputField from '../../components/Input';
 import CustomImage from '../../components/Image';
 import {regex} from '../../helpers/regex';
-import {apiConstants} from '../../redux/api/constants';
-import {ScrollView} from 'react-native-gesture-handler';
+
 const isIOS = Platform.OS === 'ios' ? true : false;
 class SignIn extends React.Component {
   constructor(props) {
@@ -72,63 +78,67 @@ class SignIn extends React.Component {
 
     return (
       <MasterLayout>
-        <View style={styles.wrapperView}>
-          <View style={styles.topView}>
-            <View style={styles.healHomeImageView}>
-              <CustomImage source={require('../../assets/healhome.png')} />
+        <KeyboardAvoidingView behavior="position">
+          <View style={styles.wrapperView}>
+            <View style={styles.topView}>
+              <View style={styles.healHomeImageView}>
+                <CustomImage source={require('../../assets/healhome.png')} />
+              </View>
+              <View style={styles.headingView}>
+                <Text style={[styles.subHeading, styles.headingStyle]}>
+                  Welcome back!
+                </Text>
+                <Text style={[styles.subHeading, styles.subHeadingStyle]}>
+                  Log in to your existing account{' '}
+                </Text>
+              </View>
             </View>
-            <View style={styles.headingView}>
-              <Text style={[styles.subHeading, styles.headingStyle]}>
-                Welcome back!
-              </Text>
-              <Text style={[styles.subHeading, styles.subHeadingStyle]}>
-                Log in to your existing account{' '}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.inputView}>
-            <InputField
-              placeholder="johndoe@mail.com"
-              onChangeText={this.onChangeEmail}
-              source={require('../../assets/name3X.png')}
-              containerStyle={styles.containerStyle}
-              inputContainerStyle={styles.inputContainerStyle}
-              inputStyle={styles.inputStyle}
-              value={email}
-            />
-            <InputField
-              placeholder="anvi"
-              onChangeText={this.onChangePassword}
-              source={require('../../assets/lock3X.png')}
-              containerStyle={styles.containerStyle}
-              secureTextEntry={true}
-              inputContainerStyle={styles.inputContainerStyle}
-              inputStyle={styles.inputStyle}
-              value={password}
-              autoCapitalize="characters"
-            />
-          </View>
-          <View style={styles.buttonView}>
-            <RoundedButton
-              title="Login"
-              buttonStyle={styles.buttonStyle}
-              titleStyle={styles.titleStyle}
-              onPress={() => this.loginHandler()}
-            />
-          </View>
-          <View style={styles.bottomTextView}>
-            <Text style={[styles.textStyle, styles.textFontFamily]}>
-              Do you have an account?
-            </Text>
 
-            <Text
-              style={[styles.textStyle, styles.boldFamily]}
-              onPress={() => alert('hello')}>
-              {' '}
-              Sign Up
-            </Text>
+            <View style={styles.inputView}>
+              <InputField
+                placeholder="johndoe@mail.com"
+                onChangeText={this.onChangeEmail}
+                source={require('../../assets/name3X.png')}
+                containerStyle={styles.containerStyle}
+                inputContainerStyle={styles.inputContainerStyle}
+                inputStyle={styles.inputStyle}
+                value={email}
+              />
+              <InputField
+                placeholder="anvi"
+                onChangeText={this.onChangePassword}
+                source={require('../../assets/lock3X.png')}
+                containerStyle={styles.containerStyle}
+                secureTextEntry={true}
+                inputContainerStyle={styles.inputContainerStyle}
+                inputStyle={styles.inputStyle}
+                value={password}
+                autoCapitalize="characters"
+              />
+            </View>
+
+            <View style={styles.buttonView}>
+              <RoundedButton
+                title="Login"
+                buttonStyle={styles.buttonStyle}
+                titleStyle={styles.titleStyle}
+                onPress={() => this.loginHandler()}
+              />
+            </View>
+            <View style={styles.bottomTextView}>
+              <Text style={[styles.textStyle, styles.textFontFamily]}>
+                Do you have an account?
+              </Text>
+
+              <Text
+                style={[styles.textStyle, styles.boldFamily]}
+                onPress={() => alert('hello')}>
+                {' '}
+                Sign Up
+              </Text>
+            </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </MasterLayout>
     );
   }
@@ -140,7 +150,11 @@ export default connect(
 )(SignIn);
 
 const styles = StyleSheet.create({
-  wrapperView: {position: 'relative', height: '100%'},
+  wrapperView: {
+    position: 'relative',
+    height: '100%',
+    backgroundColor: colors.WHITE,
+  },
   topView: {
     height: hp(40),
     //  borderWidth: 1,
@@ -186,6 +200,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: hp(25),
     alignSelf: 'center',
+    backgroundColor: colors.WHITE,
+    // width: normalize(300),
     //borderWidth: 1,
   },
   containerStyle: {
