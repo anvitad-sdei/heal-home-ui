@@ -34,7 +34,7 @@ class Welcome extends Component {
       const {active} = this.state;
       const buttonTitle = active === 3 ? 'DONE' : 'NEXT';
       return (
-        <View>
+        <View style={{backgroundColor: colors.WHITE, height: '100%'}}>
           {/* Goal Screen*/}
 
           {active === 1 ? (
