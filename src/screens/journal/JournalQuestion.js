@@ -18,7 +18,9 @@ import {connect} from 'react-redux';
 class JournalQuestion extends Component {
   constructor(props) {
     super(props);
+    const {navigation} = this.props;
     this.state = {
+      id: navigation.getParam('id'),
       active: 1,
       gratefulToday: '',
       makeTodayGreat: '',
@@ -36,29 +38,80 @@ class JournalQuestion extends Component {
     };
   }
   onGratefulToday = gratefulToday => {
-    console.log(gratefulToday);
     this.setState({gratefulToday: gratefulToday});
   };
+  onTodayGreat = makeTodayGreat => {
+    this.setState({makeTodayGreat: makeTodayGreat});
+  };
+  onAccomplishToday = accomplishToday => {
+    this.setState({accomplishToday: accomplishToday});
+  };
+  onAchieveToday = achieveToday => {
+    this.setState({achieveToday: achieveToday});
+  };
+  onLearnToday = ilearnToday => {
+    this.setState({ilearnToday: ilearnToday});
+  };
+  onThankfulNow = thankfulNowToday => {
+    this.setState({thankfulNowToday: thankfulNowToday});
+  };
+  onFeelingRightNow = feelingRightNow => {
+    this.setState({feelingRightNow: feelingRightNow});
+  };
+  onAmazeHappen = amazeHappenToday => {
+    this.setState({amazeHappenToday: amazeHappenToday});
+  };
+  onBetterToday = betterToday => {
+    this.setState({betterToday: betterToday});
+  };
+  onTriggerToday = triggerToday => {
+    this.setState({triggerToday: triggerToday});
+  };
+  onCraving = cravingExperience => {
+    this.setState({cravingExperience: cravingExperience});
+  };
+  onMedicationToday = medicationToday => {
+    this.setState({medicationToday: medicationToday});
+  };
+  onAnyComments = anyComments => {
+    this.setState({anyComments: anyComments});
+  };
+
   submitJournalingData = () => {
-    const {anyComments} = this.state;
+    const {
+      anyComments,
+      accomplishToday,
+      achieveToday,
+      amazeHappenToday,
+      betterToday,
+      cravingExperience,
+      feelingRightNow,
+      gratefulToday,
+      ilearnToday,
+      makeTodayGreat,
+      medicationToday,
+      thankfulNowToday,
+      triggerToday,
+    } = this.state;
 
     let data = {
-      accomplishToday: 'string',
-      achieveToday: 'string',
-      amazeHappenToday: 'string',
-      anyComments: 'string',
-      betterToday: 'string',
-      cravingExperience: 'string',
-      feelingRightNow: 'string',
-      gratefulToday: 'string',
-      id: 'long',
-      ilearnToday: 'string',
-      makeTodayGreat: 'string',
-      medicationToday: 'string',
-      thankfulNowToday: 'string',
-      triggerToday: 'string',
+      accomplishToday: accomplishToday,
+      achieveToday: achieveToday,
+      amazeHappenToday: amazeHappenToday,
+      anyComments: anyComments,
+      betterToday: betterToday,
+      cravingExperience: cravingExperience,
+      feelingRightNow: feelingRightNow,
+      gratefulToday: gratefulToday,
+      id: this.state.id,
+      ilearnToday: ilearnToday,
+      makeTodayGreat: makeTodayGreat,
+      medicationToday: medicationToday,
+      thankfulNowToday: thankfulNowToday,
+      triggerToday: triggerToday,
     };
-    //  this.props.journalingSave(data);
+    console.log('data============>', data);
+    this.props.journalingSave(data);
   };
   render() {
     const {
@@ -86,7 +139,7 @@ class JournalQuestion extends Component {
         rightIconPress={() => alert('right')}>
         <CustomTabBar />
 
-        <ScrollView contentContainerStyle={{paddingBottom: hp(40)}}>
+        <ScrollView contentContainerStyle={{paddingBottom: normalize(440)}}>
           <View style={styles.questionView}>
             <View
               style={{
@@ -148,12 +201,12 @@ class JournalQuestion extends Component {
                 />
                 <CustomTextArea
                   title="What would make today great?"
-                  onChangeText={() => this.makeTodayGreat()}
+                  onChangeText={text => this.onTodayGreat(text)}
                   value={makeTodayGreat}
                 />
                 <CustomTextArea
                   title="What's ONE Thing I must accomplish today?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onAccomplishToday(text)}
                   value={accomplishToday}
                 />
               </View>
@@ -163,53 +216,53 @@ class JournalQuestion extends Component {
               <View>
                 <CustomTextArea
                   title="What did I achieve today?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onAchieveToday(text)}
                   value={achieveToday}
                 />
                 <CustomTextArea
                   title="What lessons did I learn?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onLearnToday(text)}
                   value={ilearnToday}
                 />
                 <CustomTextArea
                   title="What am I thankful for right now?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onThankfulNow(text)}
                   value={thankfulNowToday}
                 />
                 <CustomTextArea
                   title="How am I feeling right now?"
-                  // onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onFeelingRightNow(text)}
                   value={feelingRightNow}
                 />
 
                 <CustomTextArea
                   title="What are 3 amazing things that happened today?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onAmazeHappen(text)}
                   value={amazeHappenToday}
                 />
                 <CustomTextArea
                   title="How could I have made today better"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onBetterToday(text)}
                   value={betterToday}
                 />
                 <CustomTextArea
                   title="Have you identified �triggers� to use today? Please explain. How did you manage? What coping skills you used?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onTriggerToday(text)}
                   value={triggerToday}
                 />
                 <CustomTextArea
                   title=" Did you experience cravings? Physical? Psychological? Please describe."
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onCraving(text)}
                   value={cravingExperience}
                 />
                 <CustomTextArea
                   title=" Did you take medication today? If not why?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onMedicationToday(text)}
                   value={medicationToday}
                 />
                 <CustomTextArea
                   title="Anything you would like to add?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onAnyComments(text)}
                   value={anyComments}
                 />
               </View>
@@ -220,7 +273,7 @@ class JournalQuestion extends Component {
               title="Save"
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.titleStyle}
-              onPress={() => alert('hello')}
+              onPress={() => this.submitJournalingData()}
             />
           </View>
         </ScrollView>
@@ -311,14 +364,14 @@ const styles = StyleSheet.create({
   },
 });
 
-// const mapStateToProps = ({user}) => {
-//   const {journaling} = user;
-//   return {data: journaling};
-// };
+const mapStateToProps = ({user}) => {
+  const {journaling} = user;
+  return {data: journaling};
+};
 
-// export default connect(
-//   mapStateToProps,
-//   {journalingSave},
-// )(JournalQuestion);
+export default connect(
+  mapStateToProps,
+  {journalingSave},
+)(JournalQuestion);
 
-export default JournalQuestion;
+//export default JournalQuestion;

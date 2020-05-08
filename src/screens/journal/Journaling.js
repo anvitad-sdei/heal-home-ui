@@ -10,6 +10,7 @@ import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {connect} from 'react-redux';
 import {journaling} from '../../redux/actions';
 import {ScrollView} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native';
 class Journaling extends Component {
   constructor(props) {
     super(props);
@@ -27,12 +28,22 @@ class Journaling extends Component {
             <View>
               <ButtonWithIcon
                 date={`week ${item}`}
-                onPress={() =>
-                  this.props.navigation.navigate('JournalQuestion')
-                }
+                // onPress={() =>
+                //   this.props.navigation.navigate('JournalQuestion')
+                // }
               />
               {weekData.map(item => (
-                <Text>{item.loggedDate}</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate('JournalQuestion', {
+                      id: item.id,
+                    })
+                  }>
+                  <View>
+                    <Text>{item.id}</Text>
+                    <Text>{item.loggedDate}</Text>
+                  </View>
+                </TouchableOpacity>
               ))}
             </View>
           );

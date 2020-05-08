@@ -53,7 +53,9 @@ export const journalingSave = data => async dispatch => {
     if (res) {
       console.log(res);
       dispatch(loadingHandler(false));
-      dispatch(successResponseHandler(constants.SAVE_JOURNALING, res.data));
+      dispatch(
+        successResponseHandler(constants.SAVE_JOURNALING_SUCCESS, res.data),
+      );
     }
   } catch (err) {
     console.log(JSON.stringify(err.response));
