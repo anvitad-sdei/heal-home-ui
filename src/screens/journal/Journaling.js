@@ -26,10 +26,10 @@ class Journaling extends Component {
           let weekData = Object.values(data)[item - 1];
           return (
             <View>
-              <ButtonWithIcon date={`week ${item}`} />
+              {/* <ButtonWithIcon date={`week ${item}`} /> */}
               {weekData.map(item => (
                 <ButtonWithIcon
-                  date={item.loggedDate}
+                  date={item.loggedDate.split(' ')[0]}
                   onPress={() =>
                     this.props.navigation.navigate('JournalQuestion', {
                       id: item.id,

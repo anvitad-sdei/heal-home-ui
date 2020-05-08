@@ -2,6 +2,21 @@ import NavigationService from '../services/navigation';
 import constants from '../constants';
 import axios from 'axios';
 import {apiUrls} from '../api/constants';
+import {Alert} from 'react-native';
+
+const errorHandling = error => {
+  if (error.response) {
+    return error.response.data.message || 'Response not found';
+  } else if (error.request) {
+    return 'Request Failed';
+  } else {
+    return 'Try after sometime';
+  }
+};
+
+const errorResHandler = err => {
+  Alert.alert(errorHandling(err));
+};
 
 /*********************LOGIN API ************************* */
 export const login = data => async dispatch => {
@@ -9,17 +24,13 @@ export const login = data => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios.post(`${apiUrls.BASE_URL}/access/login`, {...data});
     if (res) {
-      console.log('logine respo=====================');
-      console.log(res);
       dispatch(loadingHandler(false));
       dispatch(successResponseHandler(constants.LOGIN_SUCCESS, res.data));
       dispatch(() => navigateToRoute('App', {data: res.data}));
     }
   } catch (err) {
-    console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
-    dispatch(errorHandler(err));
-    alert('Something went wrong');
+    errorResHandler(err);
   }
 };
 
@@ -41,8 +52,7 @@ export const journaling = () => async dispatch => {
   } catch (err) {
     console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
-    dispatch(errorHandler(err));
-    alert('Something went wrong');
+    errorResHandler(err);
   }
 };
 
@@ -64,8 +74,7 @@ export const getJournalingById = id => async dispatch => {
   } catch (err) {
     console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
-    dispatch(errorHandler(err));
-    alert('Something went wrong');
+    errorResHandler(err);
   }
 };
 
@@ -85,8 +94,9 @@ export const journalingSave = data => async dispatch => {
   } catch (err) {
     console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
-    dispatch(errorHandler(err));
-    alert('Something went wrong');
+    // dispatch(errorHandler(err));
+    // alert('Something went wrong');
+    errorResHandler(err);
   }
 };
 
@@ -102,7 +112,8 @@ export const getUserData = () => async dispatch => {
     }
   } catch (err) {
     dispatch(loadingHandler(false));
-    dispatch(errorHandler(err));
+    errorResHandler(err);
+    // dispatch(errorHandler(err));
   }
 };
 
