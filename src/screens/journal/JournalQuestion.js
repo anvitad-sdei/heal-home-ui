@@ -12,7 +12,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
-import {journalingSave} from '../../redux/actions';
+import {journalingSave, getJournalingById} from '../../redux/actions';
 import {connect} from 'react-redux';
 class JournalQuestion extends Component {
   constructor(props) {
@@ -35,6 +35,15 @@ class JournalQuestion extends Component {
       medicationToday: '',
       anyComments: '',
     };
+  }
+
+  componentDidMount() {
+    const {navigation} = this.props;
+    if (navigation.state.params.id) {
+      console.log('id==========', navigation.state.params.id);
+      const id = navigation.state.params.id;
+      this.props.getJournalingById(id);
+    }
   }
   onGratefulToday = gratefulToday => {
     this.setState({gratefulToday: gratefulToday});
@@ -128,7 +137,12 @@ class JournalQuestion extends Component {
       medicationToday,
       anyComments,
     } = this.state;
-    console.log(this.state);
+    const {dataById} = this.props;
+    console.log(dataById);
+    /**      {"accomplishToday": null, "achieveToday": null, "amazeHappenToday": null, "anyComments": null, "betterToday": null,
+     * "cravingExperience": null, "day_no": 2, "feelingRightNow": null, "gratefulToday": null, "id": 1807, "ilearnToday": null,
+     *  "loggedDate": "2020-03-14 15:22:03", "makeTodayGreat": null, "medicationToday": null, "thankfulNowToday": null, "triggerToday": null, "week_no": 1}
+     */
     return (
       <MasterLayout
         leftIcon={require('../../assets/backArrow.png')}
@@ -197,16 +211,19 @@ class JournalQuestion extends Component {
                   title="What am I grateful for today?"
                   onChangeText={text => this.onGratefulToday(text)}
                   value={gratefulToday}
+                  placeholder={gratefulToday || dataById.gratefulToday}
                 />
                 <CustomTextArea
                   title="What would make today great?"
                   onChangeText={text => this.onTodayGreat(text)}
                   value={makeTodayGreat}
+                  placeholder={makeTodayGreat || dataById.makeTodayGreat}
                 />
                 <CustomTextArea
                   title="What's ONE Thing I must accomplish today?"
                   onChangeText={text => this.onAccomplishToday(text)}
                   value={accomplishToday}
+                  placeholder={accomplishToday || dataById.accomplishToday}
                 />
               </View>
             ) : null}
@@ -217,52 +234,62 @@ class JournalQuestion extends Component {
                   title="What did I achieve today?"
                   onChangeText={text => this.onAchieveToday(text)}
                   value={achieveToday}
+                  placeholder={achieveToday || dataById.achieveToday}
                 />
                 <CustomTextArea
                   title="What lessons did I learn?"
                   onChangeText={text => this.onLearnToday(text)}
                   value={ilearnToday}
+                  placeholder={ilearnToday || dataById.ilearnToday}
                 />
                 <CustomTextArea
                   title="What am I thankful for right now?"
                   onChangeText={text => this.onThankfulNow(text)}
                   value={thankfulNowToday}
+                  placeholder={thankfulNowToday || dataById.thankfulNowToday}
                 />
                 <CustomTextArea
                   title="How am I feeling right now?"
                   onChangeText={text => this.onFeelingRightNow(text)}
                   value={feelingRightNow}
+                  placeholder={feelingRightNow || dataById.feelingRightNow}
                 />
 
                 <CustomTextArea
                   title="What are 3 amazing things that happened today?"
                   onChangeText={text => this.onAmazeHappen(text)}
                   value={amazeHappenToday}
+                  placeholder={amazeHappenToday || dataById.amazeHappenToday}
                 />
                 <CustomTextArea
                   title="How could I have made today better"
                   onChangeText={text => this.onBetterToday(text)}
                   value={betterToday}
+                  placeholder={betterToday || dataById.betterToday}
                 />
                 <CustomTextArea
                   title="Have you identified �triggers� to use today? Please explain. How did you manage? What coping skills you used?"
                   onChangeText={text => this.onTriggerToday(text)}
                   value={triggerToday}
+                  placeholder={triggerToday || dataById.triggerToday}
                 />
                 <CustomTextArea
                   title=" Did you experience cravings? Physical? Psychological? Please describe."
                   onChangeText={text => this.onCraving(text)}
                   value={cravingExperience}
+                  placeholder={cravingExperience || dataById.cravingExperience}
                 />
                 <CustomTextArea
                   title=" Did you take medication today? If not why?"
                   onChangeText={text => this.onMedicationToday(text)}
                   value={medicationToday}
+                  placeholder={medicationToday || dataById.medicationToday}
                 />
                 <CustomTextArea
                   title="Anything you would like to add?"
                   onChangeText={text => this.onAnyComments(text)}
                   value={anyComments}
+                  placeholder={anyComments || dataById.anyComments}
                 />
               </View>
             ) : null}
@@ -364,11 +391,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({user}) => {
-  const {journaling} = user;
-  return {data: journaling};
+  const {journaling, getJournalingRes} = user;
+  return {data: journaling, dataById: getJournalingRes};
 };
 
 export default connect(
   mapStateToProps,
-  {journalingSave},
+  {journalingSave, getJournalingById},
 )(JournalQuestion);

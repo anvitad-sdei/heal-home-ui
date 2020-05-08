@@ -4,7 +4,7 @@ import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 
 const CustomTextArea = props => {
-  const {value, onChangeText, title} = props;
+  const {value, onChangeText, title, placeholder} = props;
   return (
     <View style={styles.textAreaView}>
       <View style={styles.mainContainer}>
@@ -12,7 +12,8 @@ const CustomTextArea = props => {
         <TextInput
           style={styles.textInputStyleClass}
           underlineColorAndroid="transparent"
-          placeholder={'Type your answer here'}
+          // placeholder={'Type your answer here'}
+          placeholder={placeholder || 'Type your answer here'}
           placeholderTextColor={colors.GRAY_PLACE}
           numberOfLines={10}
           multiline={true}
