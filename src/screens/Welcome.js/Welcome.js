@@ -262,7 +262,7 @@ class Welcome extends Component {
       );
     };
     return (
-      <MasterLayout>
+      <MasterLayout masterStyle={{backgroundColor: colors.WHITE}}>
         <Carousel />
       </MasterLayout>
     );
