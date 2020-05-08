@@ -18,6 +18,19 @@ const errorResHandler = err => {
   Alert.alert(errorHandling(err));
 };
 
+const successResHandler = (msg, route, params) => {
+  Alert.alert(
+    'Success',
+    msg,
+    [
+      {
+        text: 'OK',
+        onPress: () => NavigationService.navigate(route, params),
+      },
+    ],
+    {cancelable: false},
+  );
+};
 /*********************LOGIN API ************************* */
 export const login = data => async dispatch => {
   try {
@@ -27,6 +40,7 @@ export const login = data => async dispatch => {
       dispatch(loadingHandler(false));
       dispatch(successResponseHandler(constants.LOGIN_SUCCESS, res.data));
       dispatch(() => navigateToRoute('App', {data: res.data}));
+      // successResHandler('Sachin', 'App');
     }
   } catch (err) {
     dispatch(loadingHandler(false));
@@ -88,8 +102,8 @@ export const journalingSave = data => async dispatch => {
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(constants.SAVE_JOURNALING_SUCCESS, res.data),
-        dispatch(() => navigateToRoute('Home')),
       );
+      successResHandler('Data save successfully', 'Journaling'); //check path name
     }
   } catch (err) {
     console.log(JSON.stringify(err.response));
