@@ -66,7 +66,7 @@ export default class Home extends React.Component {
         leftIcon={require('../../assets/menu.png')}
         centerTitle="Dashboard"
         rightIcon={require('../../assets/bell.png')}
-        leftIconPress={() => alert('left')}
+        leftIconPress={() => this.props.navigation.openDrawer()}
         rightIconPress={() => alert('right')}>
         <ScrollView contentContainerStyle={{paddingBottom: hp(30)}}>
           <View style={styles.dateView}>

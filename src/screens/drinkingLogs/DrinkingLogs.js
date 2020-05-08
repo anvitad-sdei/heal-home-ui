@@ -14,7 +14,7 @@ class DrinkingLogs extends Component {
   render() {
     return (
       <MasterLayout
-        leftIcon={require('../../assets/back-arrow.png')}
+        leftIcon={require('../../assets/backArrow.png')}
         centerTitle="Drinking Logs"
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.navigate('Home')}

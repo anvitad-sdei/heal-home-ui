@@ -131,7 +131,7 @@ class JournalQuestion extends Component {
     console.log(this.state);
     return (
       <MasterLayout
-        leftIcon={require('../../assets/back-arrow.png')}
+        leftIcon={require('../../assets/backArrow.png')}
         centerTitle="Journaling"
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.navigate('Journaling')}

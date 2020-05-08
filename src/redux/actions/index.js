@@ -55,6 +55,7 @@ export const journalingSave = data => async dispatch => {
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(constants.SAVE_JOURNALING_SUCCESS, res.data),
+        dispatch(() => navigateToRoute('Home')),
       );
     }
   } catch (err) {

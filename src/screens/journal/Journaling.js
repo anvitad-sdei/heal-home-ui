@@ -9,7 +9,6 @@ import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {connect} from 'react-redux';
 import {journaling} from '../../redux/actions';
 import {ScrollView} from 'react-native-gesture-handler';
-import {TouchableOpacity} from 'react-native';
 
 class Journaling extends Component {
   constructor(props) {
@@ -19,6 +18,7 @@ class Journaling extends Component {
   componentDidMount() {
     this.props.journaling();
   }
+
   render() {
     const {data} = this.props;
     const week = Object.keys(data).length
@@ -26,24 +26,16 @@ class Journaling extends Component {
           let weekData = Object.values(data)[item - 1];
           return (
             <View>
-              <ButtonWithIcon
-                date={`week ${item}`}
-                // onPress={() =>
-                //   this.props.navigation.navigate('JournalQuestion')
-                // }
-              />
+              <ButtonWithIcon date={`week ${item}`} />
               {weekData.map(item => (
-                <TouchableOpacity
+                <ButtonWithIcon
+                  date={item.loggedDate}
                   onPress={() =>
                     this.props.navigation.navigate('JournalQuestion', {
                       id: item.id,
                     })
-                  }>
-                  <View style={{padding: 10}}>
-                    <Text>{item.id}</Text>
-                    <Text>{item.loggedDate}</Text>
-                  </View>
-                </TouchableOpacity>
+                  }
+                />
               ))}
             </View>
           );
@@ -51,7 +43,7 @@ class Journaling extends Component {
       : null;
     return (
       <MasterLayout
-        leftIcon={require('../../assets/back-arrow.png')}
+        leftIcon={require('../../assets/backArrow.png')}
         centerTitle="Journaling"
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.navigate('Home')}
