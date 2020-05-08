@@ -9,6 +9,7 @@ export const login = data => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios.post(`${apiUrls.BASE_URL}/access/login`, {...data});
     if (res) {
+      console.log('logine respo=====================');
       console.log(res);
       dispatch(loadingHandler(false));
       dispatch(successResponseHandler(constants.LOGIN_SUCCESS, res.data));

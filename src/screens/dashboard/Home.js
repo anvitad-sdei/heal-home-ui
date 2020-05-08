@@ -68,7 +68,7 @@ export default class Home extends React.Component {
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.openDrawer()}
         rightIconPress={() => alert('right')}>
-        <ScrollView contentContainerStyle={{paddingBottom: hp(30)}}>
+        <ScrollView contentContainerStyle={{paddingBottom: hp(35)}}>
           <View style={styles.dateView}>
             <Text style={styles.dateText}>Pick the Date</Text>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
