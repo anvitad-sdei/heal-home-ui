@@ -69,7 +69,7 @@ const TabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({focused}) => {
           let url = focused
-            ? require('../assets/assessment.png')
+            ? require('../assets/assessment-focused.png')
             : require('../assets/assessment.png');
           return (
             <Avatar

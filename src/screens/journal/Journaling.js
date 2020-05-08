@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
-import HeaderComponent from '../../components/HeaderComponent';
 import CustomTabBar from '../../components/WeekTabbar';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
@@ -11,6 +10,7 @@ import {connect} from 'react-redux';
 import {journaling} from '../../redux/actions';
 import {ScrollView} from 'react-native-gesture-handler';
 import {TouchableOpacity} from 'react-native';
+
 class Journaling extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +39,7 @@ class Journaling extends Component {
                       id: item.id,
                     })
                   }>
-                  <View>
+                  <View style={{padding: 10}}>
                     <Text>{item.id}</Text>
                     <Text>{item.loggedDate}</Text>
                   </View>
@@ -58,13 +58,7 @@ class Journaling extends Component {
         rightIconPress={() => alert('right')}>
         <CustomTabBar />
         <ScrollView contentContainerStyle={{paddingBottom: hp(40)}}>
-          <View style={styles.buttonView}>
-            {week}
-            {/* <ButtonWithIcon
-            date="12-05-2020"
-            onPress={() => this.props.navigation.navigate('JournalQuestion')}
-          /> */}
-          </View>
+          <View style={styles.weekView}>{week}</View>
         </ScrollView>
       </MasterLayout>
     );
@@ -84,14 +78,7 @@ const styles = StyleSheet.create({
   masterStyle: {
     backgroundColor: '#F5F5F5',
   },
-  topView: {
-    height: normalize(80),
-    // backgroundColor: colors.BLUE,
-    borderBottomLeftRadius: normalize(25),
-    borderBottomRightRadius: normalize(25),
-    marginBottom: 10,
-  },
-  buttonView: {
+  weekView: {
     marginTop: normalize(40),
   },
 });

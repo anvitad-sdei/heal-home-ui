@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
-import HeaderComponent from '../../components/HeaderComponent';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 import CustomTabBar from '../../components/WeekTabbar';
@@ -373,5 +372,3 @@ export default connect(
   mapStateToProps,
   {journalingSave},
 )(JournalQuestion);
-
-//export default JournalQuestion;

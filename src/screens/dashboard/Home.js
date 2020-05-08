@@ -1,20 +1,17 @@
 import React from 'react';
-import {View, StyleSheet, Text, Button, Image} from 'react-native';
+import {View, StyleSheet, Text, Image} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
-import HeaderComponent from '../../components/HeaderComponent';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
-import CustomImage from '../../components/Image';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import GradientButton from '../../components/Buttons/GradientButton';
-import Carousel from '../../components/Carousel.js';
-import {Avatar, Icon} from 'react-native-elements';
+import {Avatar} from 'react-native-elements';
 import CustomModal from '../../components/Modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
 import moment from 'moment';
 export default class Home extends React.Component {
   constructor() {
@@ -71,87 +68,89 @@ export default class Home extends React.Component {
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => alert('left')}
         rightIconPress={() => alert('right')}>
-        <View style={styles.dateView}>
-          <Text style={styles.dateText}>Pick the Date</Text>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={styles.datePick} onPress={() => this.modalHandler()}>
-              05/05/2020
-            </Text>
+        <ScrollView contentContainerStyle={{paddingBottom: hp(30)}}>
+          <View style={styles.dateView}>
+            <Text style={styles.dateText}>Pick the Date</Text>
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={styles.datePick} onPress={() => this.modalHandler()}>
+                05/05/2020
+              </Text>
+            </View>
           </View>
-        </View>
-        <GradientButton
-          colors={[colors.LIGHT_PINK, colors.PINK]}
-          title="Drinking Log"
-          source={require('../../assets/drinks.png')}
-          imageView={{height: normalize(22), width: normalize(22)}}
-          onPress={() => this.props.navigation.navigate('DrinkingLogs')}
-          iconColor={colors.WHITE}
-        />
-        <GradientButton
-          colors={[colors.LIGHT_BLUE, colors.LIGHT_BLUE_THIRD]}
-          title="Journaling"
-          source={require('../../assets/interface.png')}
-          imageView={{width: normalize(24), height: normalize(21)}}
-          onPress={() => this.props.navigation.navigate('Journaling')}
-          iconColor={colors.WHITE}
-        />
-        <GradientButton
-          colors={[colors.LIGHT_BLUE_ONE, colors.LIGHT_BLUE_SECOND]}
-          title="My Therapists"
-          source={require('../../assets/people.png')}
-          imageView={{width: normalize(24), height: normalize(27)}}
-          titleStyle={{color: colors.DARK_TEXT_BLUE}}
-          iconColor={colors.BLACK}
-        />
+          <GradientButton
+            colors={[colors.LIGHT_PINK, colors.PINK]}
+            title="Drinking Log"
+            source={require('../../assets/drinks.png')}
+            imageView={{height: normalize(22), width: normalize(22)}}
+            onPress={() => this.props.navigation.navigate('DrinkingLogs')}
+            iconColor={colors.WHITE}
+          />
+          <GradientButton
+            colors={[colors.LIGHT_BLUE, colors.LIGHT_BLUE_THIRD]}
+            title="Journaling"
+            source={require('../../assets/interface.png')}
+            imageView={{width: normalize(24), height: normalize(21)}}
+            onPress={() => this.props.navigation.navigate('Journaling')}
+            iconColor={colors.WHITE}
+          />
+          <GradientButton
+            colors={[colors.LIGHT_BLUE_ONE, colors.LIGHT_BLUE_SECOND]}
+            title="My Therapists"
+            source={require('../../assets/people.png')}
+            imageView={{width: normalize(24), height: normalize(27)}}
+            titleStyle={{color: colors.DARK_TEXT_BLUE}}
+            iconColor={colors.BLACK}
+          />
 
-        <View style={styles.upcomingSessionView}>
-          <Text style={styles.sessionTitle}>Upcoming Sessions</Text>
-          <View style={styles.sliderView}>
-            <View style={styles.sessionView}>
-              <View style={styles.userImageView}>
-                <Avatar
-                  size="large"
-                  source={require('../../assets/goal.png')}
-                />
+          <View style={styles.upcomingSessionView}>
+            <Text style={styles.sessionTitle}>Upcoming Sessions</Text>
+            <View style={styles.sliderView}>
+              <View style={styles.sessionView}>
+                <View style={styles.userImageView}>
+                  <Avatar
+                    size="large"
+                    source={require('../../assets/goal.png')}
+                  />
+                </View>
+                <View style={{padding: normalize(10)}}>
+                  <Text style={styles.userName}>Rejina Freak</Text>
+                  <View style={styles.introView}>
+                    <Text style={styles.textColor}>MBBS,DOMS,MS</Text>
+                    <Text style={styles.textColor}>Therapists</Text>
+                    <Text style={styles.textColor}>26 years of experience</Text>
+                  </View>
+                </View>
               </View>
-              <View style={{padding: normalize(10)}}>
-                <Text style={styles.userName}>Rejina Freak</Text>
-                <View style={styles.introView}>
-                  <Text style={styles.textColor}>MBBS,DOMS,MS</Text>
-                  <Text style={styles.textColor}>Therapists</Text>
-                  <Text style={styles.textColor}>26 years of experience</Text>
+              <View style={styles.socialView}>
+                <View style={styles.leftView}>
+                  <Text style={styles.timing}>9:30AM - 8:00PM</Text>
+                </View>
+                <View style={styles.rightView}>
+                  <TouchableOpacity onPress={() => alert('message')}>
+                    <Image
+                      source={require('../../assets/message3x.png')}
+                      style={styles.socialImage}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => alert('video')}>
+                    <Image
+                      source={require('../../assets/video3x.png')}
+                      style={styles.socialImageVideo}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
-            <View style={styles.socialView}>
-              <View style={styles.leftView}>
-                <Text style={styles.timing}>9:30AM - 8:00PM</Text>
-              </View>
-              <View style={styles.rightView}>
-                <TouchableOpacity onPress={() => alert('message')}>
-                  <Image
-                    source={require('../../assets/message3x.png')}
-                    style={styles.socialImage}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => alert('video')}>
-                  <Image
-                    source={require('../../assets/video3x.png')}
-                    style={styles.socialImageVideo}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
           </View>
-        </View>
 
-        {modal ? (
-          <CustomModal
-            visible={modal}
-            handler={() => this.modalHandler()}
-            content={dateContent}
-          />
-        ) : null}
+          {modal ? (
+            <CustomModal
+              visible={modal}
+              handler={() => this.modalHandler()}
+              content={dateContent}
+            />
+          ) : null}
+        </ScrollView>
       </MasterLayout>
     );
   }
