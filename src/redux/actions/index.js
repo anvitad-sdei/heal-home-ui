@@ -9,6 +9,7 @@ export const login = data => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios.post(`${apiUrls.BASE_URL}/access/login`, {...data});
     if (res) {
+      console.log('logine respo=====================');
       console.log(res);
       dispatch(loadingHandler(false));
       dispatch(successResponseHandler(constants.LOGIN_SUCCESS, res.data));
@@ -45,15 +46,20 @@ export const journaling = () => async dispatch => {
   }
 };
 
-/**********************************POST JOURNALING API ***********************/
-export const journalingSave = data => async dispatch => {
+/*************************GET JOURNALING BY ID API********************** */
+export const getJournalingById = id => async dispatch => {
   try {
     dispatch(loadingHandler(true));
-    let res = await axios.post(`${apiUrls.BASE_URL}/journaling`, {...data});
+    let res = await axios(`${apiUrls.BASE_URL}/journaling/${id}`);
     if (res) {
       console.log(res);
       dispatch(loadingHandler(false));
-      dispatch(successResponseHandler(constants.SAVE_JOURNALING, res.data));
+      dispatch(
+        successResponseHandler(
+          constants.GET_JOURNALING_ID_SUCCESS,
+          res.data.response,
+        ),
+      );
     }
   } catch (err) {
     console.log(JSON.stringify(err.response));
@@ -62,6 +68,29 @@ export const journalingSave = data => async dispatch => {
     alert('Something went wrong');
   }
 };
+
+/**********************************POST JOURNALING API ***********************/
+export const journalingSave = data => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios.post(`${apiUrls.BASE_URL}/journaling`, {...data});
+    if (res) {
+      console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(constants.SAVE_JOURNALING_SUCCESS, res.data),
+        dispatch(() => navigateToRoute('Home')),
+      );
+    }
+  } catch (err) {
+    console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    dispatch(errorHandler(err));
+    alert('Something went wrong');
+  }
+};
+
+/*********************************************************************** */
 
 export const getUserData = () => async dispatch => {
   try {

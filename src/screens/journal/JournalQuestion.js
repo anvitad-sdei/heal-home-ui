@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
-import HeaderComponent from '../../components/HeaderComponent';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 import CustomTabBar from '../../components/WeekTabbar';
@@ -13,12 +12,14 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
-import {journalingSave} from '../../redux/actions';
+import {journalingSave, getJournalingById} from '../../redux/actions';
 import {connect} from 'react-redux';
 class JournalQuestion extends Component {
   constructor(props) {
     super(props);
+    const {navigation} = this.props;
     this.state = {
+      id: navigation.getParam('id'),
       active: 1,
       gratefulToday: '',
       makeTodayGreat: '',
@@ -35,30 +36,90 @@ class JournalQuestion extends Component {
       anyComments: '',
     };
   }
+
+  componentDidMount() {
+    const {navigation} = this.props;
+    if (navigation.state.params.id) {
+      console.log('id==========', navigation.state.params.id);
+      const id = navigation.state.params.id;
+      this.props.getJournalingById(id);
+    }
+  }
   onGratefulToday = gratefulToday => {
-    console.log(gratefulToday);
     this.setState({gratefulToday: gratefulToday});
   };
+  onTodayGreat = makeTodayGreat => {
+    this.setState({makeTodayGreat: makeTodayGreat});
+  };
+  onAccomplishToday = accomplishToday => {
+    this.setState({accomplishToday: accomplishToday});
+  };
+  onAchieveToday = achieveToday => {
+    this.setState({achieveToday: achieveToday});
+  };
+  onLearnToday = ilearnToday => {
+    this.setState({ilearnToday: ilearnToday});
+  };
+  onThankfulNow = thankfulNowToday => {
+    this.setState({thankfulNowToday: thankfulNowToday});
+  };
+  onFeelingRightNow = feelingRightNow => {
+    this.setState({feelingRightNow: feelingRightNow});
+  };
+  onAmazeHappen = amazeHappenToday => {
+    this.setState({amazeHappenToday: amazeHappenToday});
+  };
+  onBetterToday = betterToday => {
+    this.setState({betterToday: betterToday});
+  };
+  onTriggerToday = triggerToday => {
+    this.setState({triggerToday: triggerToday});
+  };
+  onCraving = cravingExperience => {
+    this.setState({cravingExperience: cravingExperience});
+  };
+  onMedicationToday = medicationToday => {
+    this.setState({medicationToday: medicationToday});
+  };
+  onAnyComments = anyComments => {
+    this.setState({anyComments: anyComments});
+  };
+
   submitJournalingData = () => {
-    const {anyComments} = this.state;
+    const {
+      anyComments,
+      accomplishToday,
+      achieveToday,
+      amazeHappenToday,
+      betterToday,
+      cravingExperience,
+      feelingRightNow,
+      gratefulToday,
+      ilearnToday,
+      makeTodayGreat,
+      medicationToday,
+      thankfulNowToday,
+      triggerToday,
+    } = this.state;
 
     let data = {
-      accomplishToday: 'string',
-      achieveToday: 'string',
-      amazeHappenToday: 'string',
-      anyComments: 'string',
-      betterToday: 'string',
-      cravingExperience: 'string',
-      feelingRightNow: 'string',
-      gratefulToday: 'string',
-      id: 'long',
-      ilearnToday: 'string',
-      makeTodayGreat: 'string',
-      medicationToday: 'string',
-      thankfulNowToday: 'string',
-      triggerToday: 'string',
+      accomplishToday: accomplishToday,
+      achieveToday: achieveToday,
+      amazeHappenToday: amazeHappenToday,
+      anyComments: anyComments,
+      betterToday: betterToday,
+      cravingExperience: cravingExperience,
+      feelingRightNow: feelingRightNow,
+      gratefulToday: gratefulToday,
+      id: this.state.id,
+      ilearnToday: ilearnToday,
+      makeTodayGreat: makeTodayGreat,
+      medicationToday: medicationToday,
+      thankfulNowToday: thankfulNowToday,
+      triggerToday: triggerToday,
     };
-    //  this.props.journalingSave(data);
+    console.log('data============>', data);
+    this.props.journalingSave(data);
   };
   render() {
     const {
@@ -76,17 +137,22 @@ class JournalQuestion extends Component {
       medicationToday,
       anyComments,
     } = this.state;
-    console.log(this.state);
+    const {dataById} = this.props;
+    console.log(dataById);
+    /**      {"accomplishToday": null, "achieveToday": null, "amazeHappenToday": null, "anyComments": null, "betterToday": null,
+     * "cravingExperience": null, "day_no": 2, "feelingRightNow": null, "gratefulToday": null, "id": 1807, "ilearnToday": null,
+     *  "loggedDate": "2020-03-14 15:22:03", "makeTodayGreat": null, "medicationToday": null, "thankfulNowToday": null, "triggerToday": null, "week_no": 1}
+     */
     return (
       <MasterLayout
-        leftIcon={require('../../assets/back-arrow.png')}
+        leftIcon={require('../../assets/backArrow.png')}
         centerTitle="Journaling"
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.navigate('Journaling')}
         rightIconPress={() => alert('right')}>
         <CustomTabBar />
 
-        <ScrollView contentContainerStyle={{paddingBottom: hp(40)}}>
+        <ScrollView contentContainerStyle={{paddingBottom: normalize(440)}}>
           <View style={styles.questionView}>
             <View
               style={{
@@ -145,16 +211,19 @@ class JournalQuestion extends Component {
                   title="What am I grateful for today?"
                   onChangeText={text => this.onGratefulToday(text)}
                   value={gratefulToday}
+                  placeholder={gratefulToday || dataById.gratefulToday}
                 />
                 <CustomTextArea
                   title="What would make today great?"
-                  onChangeText={() => this.makeTodayGreat()}
+                  onChangeText={text => this.onTodayGreat(text)}
                   value={makeTodayGreat}
+                  placeholder={makeTodayGreat || dataById.makeTodayGreat}
                 />
                 <CustomTextArea
                   title="What's ONE Thing I must accomplish today?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onAccomplishToday(text)}
                   value={accomplishToday}
+                  placeholder={accomplishToday || dataById.accomplishToday}
                 />
               </View>
             ) : null}
@@ -163,54 +232,64 @@ class JournalQuestion extends Component {
               <View>
                 <CustomTextArea
                   title="What did I achieve today?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onAchieveToday(text)}
                   value={achieveToday}
+                  placeholder={achieveToday || dataById.achieveToday}
                 />
                 <CustomTextArea
                   title="What lessons did I learn?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onLearnToday(text)}
                   value={ilearnToday}
+                  placeholder={ilearnToday || dataById.ilearnToday}
                 />
                 <CustomTextArea
                   title="What am I thankful for right now?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onThankfulNow(text)}
                   value={thankfulNowToday}
+                  placeholder={thankfulNowToday || dataById.thankfulNowToday}
                 />
                 <CustomTextArea
                   title="How am I feeling right now?"
-                  // onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onFeelingRightNow(text)}
                   value={feelingRightNow}
+                  placeholder={feelingRightNow || dataById.feelingRightNow}
                 />
 
                 <CustomTextArea
                   title="What are 3 amazing things that happened today?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onAmazeHappen(text)}
                   value={amazeHappenToday}
+                  placeholder={amazeHappenToday || dataById.amazeHappenToday}
                 />
                 <CustomTextArea
                   title="How could I have made today better"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onBetterToday(text)}
                   value={betterToday}
+                  placeholder={betterToday || dataById.betterToday}
                 />
                 <CustomTextArea
                   title="Have you identified �triggers� to use today? Please explain. How did you manage? What coping skills you used?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onTriggerToday(text)}
                   value={triggerToday}
+                  placeholder={triggerToday || dataById.triggerToday}
                 />
                 <CustomTextArea
                   title=" Did you experience cravings? Physical? Psychological? Please describe."
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onCraving(text)}
                   value={cravingExperience}
+                  placeholder={cravingExperience || dataById.cravingExperience}
                 />
                 <CustomTextArea
                   title=" Did you take medication today? If not why?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onMedicationToday(text)}
                   value={medicationToday}
+                  placeholder={medicationToday || dataById.medicationToday}
                 />
                 <CustomTextArea
                   title="Anything you would like to add?"
-                  onChangeText={() => this.changeText()}
+                  onChangeText={text => this.onAnyComments(text)}
                   value={anyComments}
+                  placeholder={anyComments || dataById.anyComments}
                 />
               </View>
             ) : null}
@@ -220,7 +299,7 @@ class JournalQuestion extends Component {
               title="Save"
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.titleStyle}
-              onPress={() => alert('hello')}
+              onPress={() => this.submitJournalingData()}
             />
           </View>
         </ScrollView>
@@ -311,14 +390,12 @@ const styles = StyleSheet.create({
   },
 });
 
-// const mapStateToProps = ({user}) => {
-//   const {journaling} = user;
-//   return {data: journaling};
-// };
+const mapStateToProps = ({user}) => {
+  const {journaling, getJournalingRes} = user;
+  return {data: journaling, dataById: getJournalingRes};
+};
 
-// export default connect(
-//   mapStateToProps,
-//   {journalingSave},
-// )(JournalQuestion);
-
-export default JournalQuestion;
+export default connect(
+  mapStateToProps,
+  {journalingSave, getJournalingById},
+)(JournalQuestion);

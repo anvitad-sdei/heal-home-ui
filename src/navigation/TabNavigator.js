@@ -10,6 +10,7 @@ import {Avatar} from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation-stack';
 import Journaling from '../screens/journal/Journaling';
 import JournalQuestion from '../screens/journal/JournalQuestion';
+import DrinkingLogs from '../screens/drinkingLogs/DrinkingLogs';
 
 const TabBarComponent = props => {
   return <BottomTabBar {...props} />;
@@ -18,6 +19,7 @@ const TabBarComponent = props => {
 const RootStackHome = createStackNavigator(
   {
     Home: Home,
+    DrinkingLogs: DrinkingLogs,
     Journaling: Journaling,
     JournalQuestion: JournalQuestion,
   },
@@ -69,7 +71,7 @@ const TabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({focused}) => {
           let url = focused
-            ? require('../assets/assessment.png')
+            ? require('../assets/assessment-focused.png')
             : require('../assets/assessment.png');
           return (
             <Avatar

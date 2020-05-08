@@ -1,7 +1,8 @@
 import constants from '../constants';
 const iState = {
   journaling: {},
-  //saveJournalingRes: {},
+  saveJournalingRes: {},
+  getJournalingRes: {},
 };
 const user = (state = iState, action) => {
   switch (action.type) {
@@ -10,11 +11,16 @@ const user = (state = iState, action) => {
         ...state,
         journaling: action.payload,
       };
-    // case constants.SAVE_JOURNALING_SUCCESS:
-    //   return {
-    //     ...state,
-    //     saveJournalingRes: action.payload,
-    //   };
+    case constants.SAVE_JOURNALING_SUCCESS:
+      return {
+        ...state,
+        saveJournalingRes: action.payload,
+      };
+    case constants.GET_JOURNALING_ID_SUCCESS:
+      return {
+        ...state,
+        getJournalingRes: action.payload,
+      };
     default:
       return state;
   }
