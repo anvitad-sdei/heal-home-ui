@@ -23,7 +23,7 @@ const CustomModal = props => {
         <View style={styles.modalView}>
           <View style={{width: '100%'}}>{content}</View>
 
-          {/* <View style={styles.calendarView}>
+          <View style={styles.calendarView}>
             <TouchableOpacity onPress={handler}>
               <View
                 style={{
@@ -43,7 +43,7 @@ const CustomModal = props => {
                 <Text style={styles.calendarButtonText}>SET</Text>
               </View>
             </TouchableOpacity>
-          </View> */}
+          </View>
         </View>
       </Modal>
     </View>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    height: '40%',
+    height: '50%', //modal height
     marginTop: normalize(150),
   },
   // openButton: {
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '80%',
-    marginTop: normalize(10),
+    // marginTop: normalize(10),
   },
   calendarButton: {
     // width: '45%',
@@ -115,7 +115,8 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: normalize(10),
+    marginTop: normalize(30),
+    //  marginBottom: normalize(20),
     borderRadius: normalize(100),
   },
   calendarButtonText: {color: colors.WHITE, fontFamily: 'Poppins-Regular'},

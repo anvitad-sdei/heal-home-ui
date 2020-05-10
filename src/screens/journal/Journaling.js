@@ -59,6 +59,7 @@ class Journaling extends Component {
                         onPress={() =>
                           this.props.navigation.navigate('JournalQuestion', {
                             id: item.id,
+                            week: defaultWeek,
                           })
                         }
                       />

@@ -77,7 +77,7 @@ export default class Home extends React.Component {
           display="default"
           //onChange={this.dateHandler}
         />
-        <View style={styles.calendarView}>
+        {/* <View style={styles.calendarView}>
           <TouchableOpacity onPress={() => this.modalHandler()}>
             <View
               style={{...styles.calendarButton, backgroundColor: '#95B4FD'}}>
@@ -91,7 +91,7 @@ export default class Home extends React.Component {
               <Text style={styles.calendarButtonText}>SET</Text>
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </>
     );
 

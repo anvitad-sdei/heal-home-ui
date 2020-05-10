@@ -20,6 +20,7 @@ class JournalQuestion extends Component {
     const {navigation} = this.props;
     this.state = {
       id: navigation.getParam('id'),
+      week: navigation.getParam('week'),
       active: 1,
       gratefulToday: '',
       makeTodayGreat: '',
@@ -40,7 +41,6 @@ class JournalQuestion extends Component {
   componentDidMount() {
     const {navigation} = this.props;
     if (navigation.state.params.id) {
-      console.log('id==========', navigation.state.params.id);
       const id = navigation.state.params.id;
       this.props.getJournalingById(id);
     }
@@ -138,11 +138,7 @@ class JournalQuestion extends Component {
       anyComments,
     } = this.state;
     const {dataById} = this.props;
-    console.log(dataById);
-    /**      {"accomplishToday": null, "achieveToday": null, "amazeHappenToday": null, "anyComments": null, "betterToday": null,
-     * "cravingExperience": null, "day_no": 2, "feelingRightNow": null, "gratefulToday": null, "id": 1807, "ilearnToday": null,
-     *  "loggedDate": "2020-03-14 15:22:03", "makeTodayGreat": null, "medicationToday": null, "thankfulNowToday": null, "triggerToday": null, "week_no": 1}
-     */
+
     return (
       <MasterLayout
         leftIcon={require('../../assets/backArrow.png')}
@@ -150,7 +146,7 @@ class JournalQuestion extends Component {
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.navigate('Journaling')}
         rightIconPress={() => alert('right')}>
-        <CustomTabBar />
+        <CustomTabBar defaultWeek={this.state.week} />
 
         <ScrollView contentContainerStyle={{paddingBottom: normalize(440)}}>
           <View style={styles.questionView}>
