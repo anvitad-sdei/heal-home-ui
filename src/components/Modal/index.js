@@ -23,7 +23,7 @@ const CustomModal = props => {
         <View style={styles.modalView}>
           <View style={{width: '100%'}}>{content}</View>
 
-          <View style={styles.calendarView}>
+          {/* <View style={styles.calendarView}>
             <TouchableOpacity onPress={handler}>
               <View
                 style={{
@@ -43,7 +43,7 @@ const CustomModal = props => {
                 <Text style={styles.calendarButtonText}>SET</Text>
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </Modal>
     </View>
