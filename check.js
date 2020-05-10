@@ -18,15 +18,9 @@ let x = {
     {id: 1819, day: 14, week: 2, loggedDate: '2020-03-26 15:22:03'},
   ],
 };
-let p = Object.values(x).map(item => {
-  return item
-    .filter(data => {
-      return data.week === 2;
-    })
-    .map(item => {
-      console.log('yooo=>', item);
-      return item;
-    });
+const defaultWeek = 1;
+let p = Object.values(x).filter((item, i) => {
+  /// console.log(item);
+  return i === defaultWeek - 1;
 });
-//console.log(Object.keys(x));
-console.log(p);
+console.log(p[0]);

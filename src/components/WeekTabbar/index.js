@@ -4,19 +4,11 @@ import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 export default class CustomTabBar extends Component {
   render() {
+    const {handler, defaultWeek} = this.props;
     return (
       <View style={styles.weekView}>
-        <Text style={styles.textStyle} onPress={() => alert('week1')}>
-          Week 1
-        </Text>
-        <Text style={styles.textStyle} onPress={() => alert('week2')}>
-          Week 2
-        </Text>
-        <Text style={styles.textStyle} onPress={() => alert('week3')}>
-          Week 3
-        </Text>
-        <Text style={styles.textStyle} onPress={() => alert('week4')}>
-          Week 4
+        <Text style={styles.textStyle} onPress={handler}>
+          {`Week ${defaultWeek || 1}`}
         </Text>
       </View>
     );
