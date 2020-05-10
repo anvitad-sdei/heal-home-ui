@@ -9,20 +9,17 @@ export default class CustomTabBar extends Component {
     const {handler, defaultWeek} = this.props;
     return (
       <View style={styles.weekView}>
-        <View style={styles.innerView}>
-          <Text style={styles.textStyle} onPress={handler}>
-            {`Week ${defaultWeek || 1}`}
-          </Text>
-
-          <TouchableOpacity onPress={handler}>
-            <View style={styles.imageView}>
-              <Image
-                source={require('../../assets/calendar.png')}
-                style={{maxWidth: 20, height: '100%'}}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={handler}>
+          <View style={styles.imageView}>
+            <Image
+              source={require('../../assets/calendar.png')}
+              style={{maxWidth: 20, height: '100%'}}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text style={styles.textStyle} onPress={handler}>
+          {`Week ${defaultWeek || 1}`}
+        </Text>
       </View>
     );
   }
@@ -40,8 +37,8 @@ const styles = StyleSheet.create({
     //left: normalize(12),
     alignSelf: 'center',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    paddingRight: normalize(20),
+    justifyContent: 'center',
+    //paddingRight: normalize(20),
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -62,5 +59,6 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: normalize(14),
     color: colors.GRAY_EIGHT,
+    marginLeft: normalize(5),
   },
 });
