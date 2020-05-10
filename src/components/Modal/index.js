@@ -1,18 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Alert,
   Modal,
   StyleSheet,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 const CustomModal = props => {
   const {handler, visible, content} = props;
-  // const [modalVisible, setModalVisible] = useState(false);
-  // const {date} = props;
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -25,18 +23,27 @@ const CustomModal = props => {
         <View style={styles.modalView}>
           <View style={{width: '100%'}}>{content}</View>
 
-          {/* <View style={styles.buttonView}>
-            <TouchableHighlight
-              style={{...styles.openButton, backgroundColor: '#2196F3'}}
-              onPress={handler}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={{...styles.openButton, backgroundColor: '#2196F3'}}
-              onPress={handler}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </TouchableHighlight>
-          </View> */}
+          <View style={styles.calendarView}>
+            <TouchableOpacity onPress={handler}>
+              <View
+                style={{
+                  ...styles.calendarButton,
+                  backgroundColor: '#95B4FD',
+                }}>
+                <Text style={styles.calendarButtonText}>CANCEL</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={handler}>
+              <View
+                style={{
+                  ...styles.calendarButton,
+                  backgroundColor: '#6E78F7',
+                }}>
+                <Text style={styles.calendarButtonText}>SET</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
     </View>
@@ -55,7 +62,7 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
+    //  padding: 35,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
@@ -66,8 +73,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    height: '50%',
-    marginTop: normalize(180),
+    height: '40%',
+    marginTop: normalize(150),
   },
   // openButton: {
   //   backgroundColor: '#F194FF',
@@ -95,6 +102,23 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     color: colors.BLUE,
   },
+  calendarView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginTop: normalize(10),
+  },
+  calendarButton: {
+    // width: '45%',
+    width: normalize(100),
+    height: normalize(35),
+    // borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: normalize(10),
+    borderRadius: normalize(100),
+  },
+  calendarButtonText: {color: colors.WHITE, fontFamily: 'Poppins-Regular'},
 });
 
 export default CustomModal;
