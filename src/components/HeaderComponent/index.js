@@ -3,10 +3,7 @@ import {View, Text, SafeAreaView, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+
 const HeaderComponent = props => {
   const {
     leftIcon,
@@ -15,9 +12,10 @@ const HeaderComponent = props => {
     leftIconPress,
     rightIconPress,
     leftStyle,
+    headerStyle,
   } = props;
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, ...headerStyle}}>
       <View style={styles.leftComponent}>
         <TouchableOpacity onPress={leftIconPress}>
           <Image source={leftIcon} style={styles.leftIconStyle} />

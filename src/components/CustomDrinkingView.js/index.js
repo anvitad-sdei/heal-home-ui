@@ -6,8 +6,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import colors from '../../constants/colors';
-import RoundedButton from '../../components/Buttons/RoundedButton';
-const CustomView = () => {
+import RoundedButton from '../Buttons/RoundedButton';
+const CustomDrinkingView = () => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.textView}>
@@ -29,7 +29,7 @@ const CustomView = () => {
   );
 };
 
-export default CustomView;
+export default CustomDrinkingView;
 
 const styles = StyleSheet.create({
   wrapper: {

@@ -7,7 +7,7 @@ import {
 } from 'react-native-responsive-screen';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
-import CustomView from '../../components/CustomView.js';
+import CustomDrinkingView from '../../components/CustomDrinkingView.js';
 import CustomTabBar from '../../components/WeekTabbar';
 import {ScrollView} from 'react-native-gesture-handler';
 class DrinkingLogs extends Component {
@@ -22,7 +22,7 @@ class DrinkingLogs extends Component {
         <CustomTabBar />
         <ScrollView>
           <View style={styles.drinkViewBox}>
-            <CustomView />
+            <CustomDrinkingView />
           </View>
         </ScrollView>
       </MasterLayout>

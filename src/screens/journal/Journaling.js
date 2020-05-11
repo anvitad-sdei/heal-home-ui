@@ -120,8 +120,6 @@ const styles = StyleSheet.create({
     color: colors.DARK_TEXT_BLUE,
   },
   pickerContainer: {
-    // width: '100%',
-    //height: normalize(20),
     justifyContent: 'center',
     paddingTop: normalize(20),
     marginBottom: normalize(20),

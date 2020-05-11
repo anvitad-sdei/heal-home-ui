@@ -17,6 +17,7 @@ class MasterLayout extends Component {
       rightIconPress,
       centerTitle,
       masterStyle,
+      headerStyle,
     } = this.props;
     return (
       <SafeAreaView style={{...styles.container, ...masterStyle}}>
@@ -30,6 +31,7 @@ class MasterLayout extends Component {
                 rightIcon={rightIcon || null}
                 leftIconPress={leftIconPress}
                 rightIconPress={rightIconPress}
+                headerStyle={headerStyle}
               />
             </View>
           ) : null}

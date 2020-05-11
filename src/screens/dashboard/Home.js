@@ -8,7 +8,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import GradientButton from '../../components/Buttons/GradientButton';
-
 import CustomModal from '../../components/Modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
@@ -69,8 +68,6 @@ export default class Home extends React.Component {
     const dateContent = (
       <View
         style={{
-          // borderWidth: 1,
-          // borderColor: 'red',
           paddingBottom: normalize(10),
         }}>
         <DateTimePicker
@@ -124,6 +121,7 @@ export default class Home extends React.Component {
             imageView={{width: normalize(24), height: normalize(27)}}
             titleStyle={{color: colors.DARK_TEXT_BLUE}}
             iconColor={colors.BLACK}
+            onPress={() => this.props.navigation.navigate('Sessions')}
           />
 
           <View style={styles.upcomingSessionView}>
@@ -155,10 +153,8 @@ export default class Home extends React.Component {
 const styles = StyleSheet.create({
   calendarView: {flexDirection: 'row', justifyContent: 'space-around'},
   calendarButton: {
-    // width: '45%',
     width: normalize(100),
     height: normalize(35),
-    // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: normalize(10),
