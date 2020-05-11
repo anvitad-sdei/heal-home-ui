@@ -74,16 +74,19 @@ class Journaling extends Component {
             visible={modal}
             handler={() => this.modalHandler()}
             content={
-              <View>
-                <CustomPicker
-                  height={normalize(120)}
-                  itemStyle={styles.pickerItem}
-                  containerStyle={styles.pickerContainer}
-                  handler={this.weekHandler}
-                  selectedValue={defaultWeek}
-                  data={Object.keys(data).length ? Object.keys(data) : []}
-                />
-              </View>
+              <>
+                <View>
+                  <Text style={styles.textWeek}>Pick the Week</Text>
+                  <CustomPicker
+                    height={normalize(120)}
+                    itemStyle={styles.pickerItem}
+                    containerStyle={styles.pickerContainer}
+                    handler={this.weekHandler}
+                    selectedValue={defaultWeek}
+                    data={Object.keys(data).length ? Object.keys(data) : []}
+                  />
+                </View>
+              </>
             }
           />
         ) : null}
@@ -108,18 +111,26 @@ const styles = StyleSheet.create({
   weekView: {
     marginTop: normalize(40),
   },
-  pickerContainer: {
-    width: '100%',
-    height: normalize(20),
+  textWeek: {
+    textAlign: 'center',
     justifyContent: 'center',
-    marginTop: normalize(20),
+    marginBottom: normalize(30),
+    fontSize: normalize(24),
+    fontFamily: 'Poppins-Regular',
+    color: colors.DARK_TEXT_BLUE,
+  },
+  pickerContainer: {
+    // width: '100%',
+    //height: normalize(20),
+    justifyContent: 'center',
+    paddingTop: normalize(20),
     marginBottom: normalize(20),
   },
   pickerItem: {
-    // fontSize: normalize(20),
-    // fontFamily: 'FuturaPT-Heavy',
-    // color: colors.black,
-    height: normalize(120),
-    marginTop: normalize(-40),
+    fontSize: normalize(15),
+    fontFamily: 'Poppins-Regular',
+    color: colors.DARK_TEXT_BLUE,
+    height: normalize(200),
+    marginTop: normalize(-60),
   },
 });

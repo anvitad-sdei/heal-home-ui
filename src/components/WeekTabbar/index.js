@@ -55,10 +55,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: normalize(150),
   },
-  imageView: {width: 20, height: 20},
+  imageView: {width: normalize(20), height: normalize(20)},
   textStyle: {
     fontSize: normalize(14),
-    color: colors.GRAY_EIGHT,
+    color: colors.BLUE,
     marginLeft: normalize(5),
   },
 });

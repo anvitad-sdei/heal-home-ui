@@ -67,7 +67,12 @@ export default class Home extends React.Component {
         })
       : null;
     const dateContent = (
-      <>
+      <View
+        style={{
+          // borderWidth: 1,
+          // borderColor: 'red',
+          paddingBottom: normalize(10),
+        }}>
         <DateTimePicker
           testID="dateTimePicker"
           timeZoneOffsetInMinutes={0}
@@ -77,22 +82,7 @@ export default class Home extends React.Component {
           display="default"
           //onChange={this.dateHandler}
         />
-        {/* <View style={styles.calendarView}>
-          <TouchableOpacity onPress={() => this.modalHandler()}>
-            <View
-              style={{...styles.calendarButton, backgroundColor: '#95B4FD'}}>
-              <Text style={styles.calendarButtonText}>CANCEL</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => this.modalHandler()}>
-            <View
-              style={{...styles.calendarButton, backgroundColor: '#6E78F7'}}>
-              <Text style={styles.calendarButtonText}>SET</Text>
-            </View>
-          </TouchableOpacity>
-        </View> */}
-      </>
+      </View>
     );
 
     return (

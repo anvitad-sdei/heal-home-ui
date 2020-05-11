@@ -21,7 +21,13 @@ const CustomModal = props => {
           Alert.alert('Modal has been closed.');
         }}>
         <View style={styles.modalView}>
-          <View style={{width: '100%'}}>{content}</View>
+          <View
+            style={{
+              width: '90%',
+              paddingHorizontal: normalize(5),
+            }}>
+            {content}
+          </View>
 
           <View style={styles.calendarView}>
             <TouchableOpacity onPress={handler}>
@@ -55,11 +61,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
-    backgroundColor: 'red',
-    flexDirection: 'column',
+    //backgroundColor: 'red',
+    // flexDirection: 'column',
+    //  borderWidth: 1,
   },
   modalView: {
-    margin: 20,
+    marginHorizontal: normalize(20),
     backgroundColor: 'white',
     borderRadius: 20,
     //  padding: 35,
@@ -75,6 +82,8 @@ const styles = StyleSheet.create({
     elevation: 5,
     height: '50%', //modal height
     marginTop: normalize(150),
+    // borderWidth: 1,
+    // borderColor: 'red',
   },
   // openButton: {
   //   backgroundColor: '#F194FF',
@@ -106,7 +115,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '80%',
+    // paddingBottom: normalize(20),
     // marginTop: normalize(10),
+    // borderWidth: 1,
+    // borderColor: 'blue',
   },
   calendarButton: {
     // width: '45%',
@@ -115,7 +127,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: normalize(30),
+    // marginTop: normalize(30),
     //  marginBottom: normalize(20),
     borderRadius: normalize(100),
   },
