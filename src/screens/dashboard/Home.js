@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text, Image} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
@@ -8,11 +8,12 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import GradientButton from '../../components/Buttons/GradientButton';
-import {Avatar} from 'react-native-elements';
 import CustomModal from '../../components/Modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
+import ViewPager from '@react-native-community/viewpager';
 import moment from 'moment';
+import CardView from '../../components/ViewPager/CardView';
 export default class Home extends React.Component {
   constructor() {
     super();
@@ -22,6 +23,7 @@ export default class Home extends React.Component {
       date: '',
     };
   }
+
   modalHandler = () => {
     this.setState({modal: !this.state.modal});
   };
@@ -31,9 +33,43 @@ export default class Home extends React.Component {
   };
   render() {
     const {modal, defaultDate} = this.state;
-
+    const cardViewData = [
+      {
+        id: 1,
+        name: 'Rejina Freak',
+        degree: 'MBBS,DOMS,MS',
+        specilization: 'Therapists',
+        experience: '27 years of experience',
+        timing: '9:00AM-8:00PM',
+      },
+      {
+        id: 2,
+        name: 'Sejal Freak',
+        degree: 'MBBS',
+        specilization: 'Therapists',
+        experience: '25 years of experience',
+        timing: '8:00AM-8:00PM',
+      },
+    ];
+    const viewPagerData = cardViewData.length
+      ? cardViewData.map((item, i) => {
+          return (
+            <CardView
+              name={item.name}
+              degree={item.degree}
+              specilization={item.specilization}
+              experience={item.experience}
+              timing={item.timing}
+              source={require('../../assets/goal.png')}
+            />
+          );
+        })
+      : null;
     const dateContent = (
-      <>
+      <View
+        style={{
+          paddingBottom: normalize(10),
+        }}>
         <DateTimePicker
           testID="dateTimePicker"
           timeZoneOffsetInMinutes={0}
@@ -43,22 +79,7 @@ export default class Home extends React.Component {
           display="default"
           //onChange={this.dateHandler}
         />
-        <View style={styles.calendarView}>
-          <TouchableOpacity onPress={() => this.modalHandler()}>
-            <View
-              style={{...styles.calendarButton, backgroundColor: '#95B4FD'}}>
-              <Text style={styles.calendarButtonText}>CANCEL</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => this.modalHandler()}>
-            <View
-              style={{...styles.calendarButton, backgroundColor: '#6E78F7'}}>
-              <Text style={styles.calendarButtonText}>SET</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </>
+      </View>
     );
 
     return (
@@ -100,47 +121,20 @@ export default class Home extends React.Component {
             imageView={{width: normalize(24), height: normalize(27)}}
             titleStyle={{color: colors.DARK_TEXT_BLUE}}
             iconColor={colors.BLACK}
+            onPress={() => this.props.navigation.navigate('Sessions')}
           />
 
           <View style={styles.upcomingSessionView}>
             <Text style={styles.sessionTitle}>Upcoming Sessions</Text>
-            <View style={styles.sliderView}>
-              <View style={styles.sessionView}>
-                <View style={styles.userImageView}>
-                  <Avatar
-                    size="large"
-                    source={require('../../assets/goal.png')}
-                  />
-                </View>
-                <View style={{padding: normalize(10)}}>
-                  <Text style={styles.userName}>Rejina Freak</Text>
-                  <View style={styles.introView}>
-                    <Text style={styles.textColor}>MBBS,DOMS,MS</Text>
-                    <Text style={styles.textColor}>Therapists</Text>
-                    <Text style={styles.textColor}>26 years of experience</Text>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.socialView}>
-                <View style={styles.leftView}>
-                  <Text style={styles.timing}>9:30AM - 8:00PM</Text>
-                </View>
-                <View style={styles.rightView}>
-                  <TouchableOpacity onPress={() => alert('message')}>
-                    <Image
-                      source={require('../../assets/message3x.png')}
-                      style={styles.socialImage}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => alert('video')}>
-                    <Image
-                      source={require('../../assets/video3x.png')}
-                      style={styles.socialImageVideo}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
+            <ViewPager
+              initialPage={0}
+              pageMargin={10}
+              style={{
+                height: normalize(169),
+              }}
+              showPageIndicator={true}>
+              {viewPagerData}
+            </ViewPager>
           </View>
 
           {modal ? (
@@ -157,20 +151,10 @@ export default class Home extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  topView: {
-    height: normalize(60),
-    //  borderWidth: 1,
-    backgroundColor: colors.BLUE,
-    borderBottomLeftRadius: normalize(20),
-    borderBottomRightRadius: normalize(20),
-    marginBottom: 10,
-  },
   calendarView: {flexDirection: 'row', justifyContent: 'space-around'},
   calendarButton: {
-    // width: '45%',
     width: normalize(100),
     height: normalize(35),
-    // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: normalize(10),
@@ -193,7 +177,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     color: colors.BLUE,
   },
-  userImageView: {alignSelf: 'center', paddingHorizontal: wp(3)},
+
   sessionTitle: {
     fontSize: normalize(19),
     fontFamily: 'Poppins-Medium',
@@ -206,58 +190,5 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: hp(1),
-  },
-  sliderView: {
-    borderRadius: normalize(5),
-    backgroundColor: colors.WHITE,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
-  },
-  socialView: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  sessionView: {flexDirection: 'row'},
-  userName: {
-    fontSize: normalize(14),
-    fontFamily: 'Poppins-Medium',
-    color: colors.GRAY_FIVE,
-  },
-  leftView: {
-    alignSelf: 'center',
-  },
-  timing: {
-    fontSize: normalize(10),
-    color: colors.GREEN,
-    fontFamily: 'Poppins-Regular',
-  },
-  rightView: {
-    flexDirection: 'row',
-    paddingBottom: normalize(10),
-  },
-  socialImage: {width: normalize(36), height: normalize(36)},
-  socialImageVideo: {
-    width: normalize(36),
-    height: normalize(36),
-    marginLeft: normalize(10),
-  },
-  introView: {
-    borderWidth: 1,
-    width: normalize(155),
-    borderRadius: normalize(4),
-    paddingVertical: normalize(3),
-    paddingHorizontal: normalize(8),
-    borderColor: colors.GRAY_LIGHT,
-  },
-  textColor: {
-    color: colors.GRAY_PLACE,
-    fontSize: normalize(10),
-    fontFamily: 'Poppins-Regular',
   },
 });

@@ -11,7 +11,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import Journaling from '../screens/journal/Journaling';
 import JournalQuestion from '../screens/journal/JournalQuestion';
 import DrinkingLogs from '../screens/drinkingLogs/DrinkingLogs';
-
+import Sessions from '../screens/sessions/Sessions';
 const TabBarComponent = props => {
   return <BottomTabBar {...props} />;
 };
@@ -22,6 +22,7 @@ const RootStackHome = createStackNavigator(
     DrinkingLogs: DrinkingLogs,
     Journaling: Journaling,
     JournalQuestion: JournalQuestion,
+    Sessions: Sessions,
   },
   {
     initialRouteName: 'Home',

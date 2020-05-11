@@ -821,7 +821,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = co.healathome;
+				PRODUCT_BUNDLE_IDENTIFIER = co.heatathhome;
 				PRODUCT_NAME = HealHome;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -844,7 +844,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = co.healathome;
+				PRODUCT_BUNDLE_IDENTIFIER = co.heatathhome;
 				PRODUCT_NAME = HealHome;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
