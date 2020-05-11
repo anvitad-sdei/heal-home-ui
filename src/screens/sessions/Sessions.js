@@ -22,6 +22,61 @@ class Sessions extends Component {
   }
   render() {
     const {active} = this.state;
+    const requestedSessionData = [
+      {
+        id: 1,
+        session: 'Session 1',
+        sessionOn: '04/23/2020,12:49-01:49',
+        status: 'PENDING',
+        modifiedBy: 'Alcohol Management',
+        lastModified: '04/22/2020, 12:49 PM',
+      },
+      {
+        id: 2,
+        session: 'Session 2',
+        sessionOn: '04/24/2020,01:49-02:49',
+        status: 'PENDING',
+        modifiedBy: 'Alcohol Management',
+        lastModified: '04/23/2020, 12:49 PM',
+      },
+    ];
+
+    const requestedSessionJSX = requestedSessionData.length
+      ? requestedSessionData.map((item, i) => {
+          console.log(item);
+          return (
+            <View style={styles.sessionViewWrapper}>
+              <View style={styles.requestedSessionView}>
+                <View>
+                  <Text style={styles.sessionHeading}>{item.session}</Text>
+                  <Text style={{...styles.dateStyle, color: colors.BLUE}}>
+                    {item.sessionOn}
+                  </Text>
+                </View>
+                <View style={styles.editImageView}>
+                  <Image
+                    source={require('../../assets/edit.png')}
+                    style={{width: '100%', height: '100%'}}
+                  />
+                </View>
+              </View>
+
+              <Text style={{...styles.dateStyle, color: colors.ORANGE_FOUR}}>
+                {item.status}
+              </Text>
+              <Text style={{fontSize: normalize(12)}}>
+                <Text style={{color: colors.BLUE}}>Modified by :</Text>{' '}
+                {item.modifiedBy}
+              </Text>
+              <Text style={{fontSize: normalize(12)}}>
+                <Text style={{color: colors.BLUE}}>Last Modified :</Text>{' '}
+                {item.lastModified}
+              </Text>
+            </View>
+          );
+        })
+      : null;
+
     return (
       <MasterLayout
         leftIcon={require('../../assets/backArrow.png')}
@@ -30,71 +85,74 @@ class Sessions extends Component {
         leftIconPress={() => this.props.navigation.navigate('Home')}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
-        <ScrollView contentContainerStyle={{paddingBottom: hp(200)}}>
-          <ViewWithCircle source={require('../../assets/communication.png')}>
-            <View style={styles.topButtonView}>
-              {active === 1 ? (
-                <>
-                  <TouchableOpacity onPress={() => this.setState({active: 1})}>
-                    <View
+        <ViewWithCircle source={require('../../assets/communication.png')}>
+          <View style={styles.topButtonView}>
+            {active === 1 ? (
+              <>
+                <TouchableOpacity onPress={() => this.setState({active: 1})}>
+                  <View
+                    style={{
+                      ...styles.newSession,
+                      backgroundColor: active === 1 ? colors.BLUE : null,
+                    }}>
+                    <Text
                       style={{
-                        ...styles.newSession,
-                        backgroundColor: active === 1 ? colors.BLUE : null,
+                        ...styles.textStyle,
+                        color: active === 1 ? colors.WHITE : colors.BLUE,
                       }}>
-                      <Text
-                        style={{
-                          ...styles.textStyle,
-                          color: active === 1 ? colors.WHITE : colors.BLUE,
-                        }}>
-                        New Session
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.setState({active: 2})}>
-                    <View style={styles.requestedSession}>
-                      <Text
-                        style={{
-                          ...styles.textStyle,
-                          color: active === 1 ? colors.BLUE : colors.WHITE,
-                        }}>
-                        Requested Session
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </>
-              ) : null}
-              {active === 2 ? (
-                <>
-                  <TouchableOpacity onPress={() => this.setState({active: 1})}>
-                    <View style={styles.newSession}>
-                      <Text
-                        style={{
-                          ...styles.textStyle,
-                          color: active === 2 ? colors.BLUE : colors.WHITE,
-                        }}>
-                        New Session
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.setState({active: 2})}>
-                    <View
+                      New Session
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.setState({active: 2})}>
+                  <View style={styles.requestedSession}>
+                    <Text
                       style={{
-                        ...styles.requestedSession,
-                        backgroundColor: active === 2 ? colors.BLUE : null,
+                        ...styles.textStyle,
+                        color: active === 1 ? colors.BLUE : colors.WHITE,
                       }}>
-                      <Text
-                        style={{
-                          ...styles.textStyle,
-                          color: active === 2 ? colors.WHITE : BLUE,
-                        }}>
-                        Requested Session
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </>
-              ) : null}
-            </View>
-
+                      Requested Session
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </>
+            ) : null}
+            {active === 2 ? (
+              <>
+                <TouchableOpacity onPress={() => this.setState({active: 1})}>
+                  <View style={styles.newSession}>
+                    <Text
+                      style={{
+                        ...styles.textStyle,
+                        color: active === 2 ? colors.BLUE : colors.WHITE,
+                      }}>
+                      New Session
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.setState({active: 2})}>
+                  <View
+                    style={{
+                      ...styles.requestedSession,
+                      backgroundColor: active === 2 ? colors.BLUE : null,
+                    }}>
+                    <Text
+                      style={{
+                        ...styles.textStyle,
+                        color: active === 2 ? colors.WHITE : BLUE,
+                      }}>
+                      Requested Session
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </>
+            ) : null}
+          </View>
+          <ScrollView
+            contentContainerStyle={{
+              //  flex: 1,
+              paddingBottom: hp(100),
+            }}>
             {active === 1 ? (
               <>
                 <Text style={styles.subHeadingStyle}>Session Type</Text>
@@ -160,60 +218,9 @@ class Sessions extends Component {
               </>
             ) : null}
 
-            {active === 2 ? (
-              <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View>
-                    <Text
-                      style={{
-                        fontSize: normalize(19),
-                        fontFamily: 'Poppins-SemiBold',
-                      }}>
-                      Session 1
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: normalize(12),
-                        fontFamily: 'Poppins-Regular',
-                        color: colors.BLUE,
-                      }}>
-                      04/23/2020, 12:49 - 01:49
-                    </Text>
-                  </View>
-                  <View style={{width: normalize(20), height: normalize(20)}}>
-                    <Image
-                      source={require('../../assets/edit.png')}
-                      style={{width: '100%', height: '100%'}}
-                    />
-                  </View>
-                </View>
-
-                <Text
-                  style={{
-                    fontSize: normalize(12),
-                    fontFamily: 'Poppins-Regular',
-                    color: colors.ORANGE_FOUR,
-                  }}>
-                  PENDING
-                </Text>
-                <Text style={{fontSize: normalize(12)}}>
-                  <Text style={{color: colors.BLUE, fontSize: normalize(12)}}>
-                    Modified by :
-                  </Text>{' '}
-                  Alcohol Management
-                </Text>
-                <Text>
-                  <Text style={{color: colors.BLUE}}>Last Modified :</Text>{' '}
-                  04/22/2020, 12:49 PM
-                </Text>
-              </View>
-            ) : null}
-          </ViewWithCircle>
-        </ScrollView>
+            {active === 2 ? requestedSessionJSX : null}
+          </ScrollView>
+        </ViewWithCircle>
       </MasterLayout>
     );
   }
@@ -276,4 +283,23 @@ const styles = StyleSheet.create({
     fontSize: normalize(15),
     fontFamily: 'Poppins-Bold',
   },
+  sessionViewWrapper: {
+    marginTop: normalize(30),
+    borderBottomWidth: 1,
+    paddingBottom: normalize(20),
+    borderColor: colors.GRAY_LINE,
+  },
+  requestedSessionView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  sessionHeading: {
+    fontSize: normalize(19),
+    fontFamily: 'Poppins-SemiBold',
+  },
+  dateStyle: {
+    fontSize: normalize(12),
+    fontFamily: 'Poppins-Regular',
+  },
+  editImageView: {width: normalize(20), height: normalize(20)},
 });

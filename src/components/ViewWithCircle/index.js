@@ -3,6 +3,7 @@ import {Image, View, StyleSheet} from 'react-native';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 import {ScrollView} from 'react-native-gesture-handler';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const ViewWithCircle = props => {
   const {source} = props;
   return (
@@ -42,6 +43,8 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
     elevation: 3,
     paddingBottom: normalize(30),
+    //height: '100%',
+    //flex: 1,
   },
   circleViewImage: {
     width: normalize(80),
@@ -63,11 +66,14 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   childrenView: {
-    borderWidth: 1,
+    //borderWidth: 1,
+    // height: '100%',
+    flex: 1,
     marginTop: normalize(80),
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    // marginBottom: normalize(200),
+    paddingBottom: hp(400),
+    marginBottom: normalize(200),
   },
 });
