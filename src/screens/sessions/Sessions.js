@@ -33,7 +33,8 @@ class Sessions extends Component {
       startTime: '',
       endDate: '',
       endTime: '',
-      modal: false,
+      dateModal: false,
+      timeModal: false,
       defaultDate: Date.now(),
       notes: '',
       sessionType: '',
@@ -44,17 +45,23 @@ class Sessions extends Component {
   }
 
   editSession = id => {
-    console.log('editid==========requesjjsdfjkbsdg====', id);
     this.setState({active: 1});
     this.props.getRequestedSessionById(id);
   };
 
-  modalHandler = () => {
-    this.setState({modal: !this.state.modal});
+  dateModalHandler = () => {
+    this.setState({dateModal: !this.state.dateModal});
+  };
+  timeModalHandler = () => {
+    this.setState({timeModal: !this.state.timeModal});
   };
   dateHandler = (event, selectedDate) => {
-    console.log(selectedDate);
-    this.setState({date: selectedDate, modal: !this.state.modal});
+    console.log('selectedDate=========', selectedDate);
+    this.setState({
+      startDate: selectedDate,
+      modal: !this.state.modal,
+      defaultDate: selectedDate,
+    });
   };
 
   onSessionType = sessionType => {
@@ -73,7 +80,7 @@ class Sessions extends Component {
       sessionType: sessionType,
       notes: notes,
     };
-    console.log(data);
+    // console.log(data);
     this.props.requestSession(data);
   };
   render() {
@@ -84,13 +91,14 @@ class Sessions extends Component {
       endDate,
       endTime,
       defaultDate,
-      modal,
+      dateModal,
+      timeModal,
       sessionType,
       notes,
     } = this.state;
     const {mySession, getBySessionId} = this.props;
-    console.log('get by session id========', getBySessionId);
-    console.log(this.state.id, 'navigatoo================');
+    // console.log('get by session id========', getBySessionId);
+    console.log(this.state);
     const requestedSessionJSX = mySession.length
       ? mySession.map((item, i) => {
           return (
@@ -100,9 +108,13 @@ class Sessions extends Component {
                   <Text style={styles.sessionHeading}>
                     {'Session' + ' ' + item.id}
                   </Text>
-                  {/**   session numbering */}
+
                   <Text style={{...styles.dateStyle, color: colors.BLUE}}>
-                    {item.createdDate}
+                    {moment(item.createdDate).format('lll') +
+                      '-' +
+                      moment(item.createdDate)
+                        .add(1, 'hours')
+                        .format('LT')}
                   </Text>
                 </View>
                 <TouchableOpacity onPress={() => this.editSession(item.id)}>
@@ -114,17 +126,18 @@ class Sessions extends Component {
                   </View>
                 </TouchableOpacity>
               </View>
-
-              <Text style={{...styles.dateStyle, color: colors.ORANGE_FOUR}}>
-                {item.requestStatus}
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <View style={styles.orangeCircleView} />
+                <Text style={{...styles.dateStyle, color: colors.ORANGE_FOUR}}>
+                  {item.requestStatus}
+                </Text>
+              </View>
               <Text style={{fontSize: normalize(12)}}>
                 <Text style={{color: colors.BLUE}}>Modified by :</Text>{' '}
                 {item.lastModifiedBy}
               </Text>
               <Text style={{fontSize: normalize(12)}}>
                 <Text style={{color: colors.BLUE}}>Last Modified :</Text>{' '}
-                {/* {item.modifiedDate} */}
                 {moment(item.modifiedDate).format('lll')}
               </Text>
             </View>
@@ -142,6 +155,23 @@ class Sessions extends Component {
           timeZoneOffsetInMinutes={0}
           value={new Date(defaultDate)}
           mode={'date'}
+          is24Hour={true}
+          display="default"
+          onChange={this.dateHandler}
+        />
+      </View>
+    );
+
+    const timeContent = (
+      <View
+        style={{
+          paddingBottom: normalize(10),
+        }}>
+        <DateTimePicker
+          testID="dateTimePicker"
+          timeZoneOffsetInMinutes={0}
+          value={new Date(defaultDate)}
+          mode={'time'}
           is24Hour={true}
           display="default"
           //onChange={this.dateHandler}
@@ -234,17 +264,18 @@ class Sessions extends Component {
                 <Text style={styles.subHeadingStyle}>Start Date & Time</Text>
                 <View style={styles.dateTimeView}>
                   <InputField
-                    onPress={() => this.modalHandler()}
-                    // onChangeText={this.onChangeEmail}
+                    onPress={() => this.dateModalHandler()}
+                    onChangeText={this.dateHandler}
                     source={require('../../assets/calendar.png')}
                     containerStyle={styles.containerStyle}
                     inputContainerStyle={styles.inputContainerStyle}
                     inputStyle={styles.inputStyle}
                     containerInputStyle={{borderBottomColor: colors.BLUE}}
-                    value={startDate || getBySessionId.startDate}
+                    value={defaultDate}
                   />
                   <InputField
                     // onChangeText={this.onChangeEmail}
+                    onPress={() => this.timeModalHandler()}
                     source={require('../../assets/time.png')}
                     containerStyle={styles.containerStyle}
                     inputContainerStyle={styles.inputContainerStyle}
@@ -327,11 +358,19 @@ class Sessions extends Component {
               {active === 2 ? requestedSessionJSX : null}
             </View>
 
-            {modal ? (
+            {dateModal ? (
               <CustomModal
-                visible={modal}
-                handler={() => this.modalHandler()}
+                visible={dateModal}
+                handler={() => this.dateModalHandler()}
                 content={dateContent}
+              />
+            ) : null}
+
+            {timeModal ? (
+              <CustomModal
+                visible={timeModal}
+                handler={() => this.timeModalHandler()}
+                content={timeContent}
               />
             ) : null}
           </ScrollView>
@@ -387,6 +426,14 @@ const styles = StyleSheet.create({
     color: colors.GRAY_FIVE,
     paddingLeft: normalize(8),
     paddingBottom: normalize(5),
+  },
+  orangeCircleView: {
+    height: normalize(9),
+    width: normalize(9),
+    borderRadius: normalize(5),
+    backgroundColor: colors.ORANGE_FOUR,
+    alignSelf: 'center',
+    marginRight: normalize(5),
   },
   buttonView: {
     width: normalize(250),
