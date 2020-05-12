@@ -7,21 +7,45 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import LinearGradient from 'react-native-linear-gradient';
 import ViewWithCircle from '../../components/ViewWithCircle';
 import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import {Input, Image} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
+import InputField from '../../components/Input';
+import CustomModal from '../../components/Modal';
+import DateTimePicker from '@react-native-community/datetimepicker';
 class Sessions extends Component {
   constructor(props) {
     super(props);
     this.state = {
       active: 1,
+      startDate: '',
+      startTime: '',
+      endDate: '',
+      endTime: '',
+      modal: false,
+      defaultDate: Date.now(),
     };
   }
+
+  modalHandler = () => {
+    this.setState({modal: !this.state.modal});
+  };
+  dateHandler = (event, selectedDate) => {
+    console.log(selectedDate);
+    this.setState({date: selectedDate, modal: !this.state.modal});
+  };
   render() {
-    const {active} = this.state;
+    const {
+      active,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      defaultDate,
+      modal,
+    } = this.state;
     const requestedSessionData = [
       {
         id: 1,
@@ -43,14 +67,13 @@ class Sessions extends Component {
 
     const requestedSessionJSX = requestedSessionData.length
       ? requestedSessionData.map((item, i) => {
-          console.log(item);
           return (
             <View style={styles.sessionViewWrapper}>
               <View style={styles.requestedSessionView}>
                 <View>
                   <Text style={styles.sessionHeading}>{item.session}</Text>
                   <Text style={{...styles.dateStyle, color: colors.BLUE}}>
-                    {item.sessionOn}
+                    04/23/2020, 12:49 - 01:49
                   </Text>
                 </View>
                 <View style={styles.editImageView}>
@@ -62,20 +85,37 @@ class Sessions extends Component {
               </View>
 
               <Text style={{...styles.dateStyle, color: colors.ORANGE_FOUR}}>
-                {item.status}
+                PENDING
               </Text>
               <Text style={{fontSize: normalize(12)}}>
-                <Text style={{color: colors.BLUE}}>Modified by :</Text>{' '}
-                {item.modifiedBy}
+                <Text style={{color: colors.BLUE}}>Modified by :</Text> Alcohol
+                Management
               </Text>
               <Text style={{fontSize: normalize(12)}}>
                 <Text style={{color: colors.BLUE}}>Last Modified :</Text>{' '}
-                {item.lastModified}
+                04/22/2020, 12:49 PM
               </Text>
             </View>
           );
         })
       : null;
+
+    const dateContent = (
+      <View
+        style={{
+          paddingBottom: normalize(10),
+        }}>
+        <DateTimePicker
+          testID="dateTimePicker"
+          timeZoneOffsetInMinutes={0}
+          value={new Date(defaultDate)}
+          mode={'date'}
+          is24Hour={true}
+          display="default"
+          //onChange={this.dateHandler}
+        />
+      </View>
+    );
 
     return (
       <MasterLayout
@@ -85,7 +125,8 @@ class Sessions extends Component {
         leftIconPress={() => this.props.navigation.navigate('Home')}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
-        <ViewWithCircle source={require('../../assets/communication.png')}>
+        <ViewWithCircle source={require('../../assets/communication.png')} />
+        <View style={styles.shadowView}>
           <View style={styles.topButtonView}>
             {active === 1 ? (
               <>
@@ -148,63 +189,85 @@ class Sessions extends Component {
               </>
             ) : null}
           </View>
-          <ScrollView
-            contentContainerStyle={{
-              //  flex: 1,
-              paddingBottom: hp(100),
-            }}>
+          <ScrollView contentContainerStyle={styles.scrollView}>
             {active === 1 ? (
-              <>
+              <View
+                style={{
+                  width: '90%',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  paddingTop: normalize(10),
+                  // borderWidth: 1,
+                }}>
+                <Text style={styles.subHeadingStyle}>Start Date & Time</Text>
+                <View style={styles.dateTimeView}>
+                  <InputField
+                    onPress={() => this.modalHandler()}
+                    // onChangeText={this.onChangeEmail}
+                    source={require('../../assets/calendar.png')}
+                    containerStyle={styles.containerStyle}
+                    inputContainerStyle={styles.inputContainerStyle}
+                    inputStyle={styles.inputStyle}
+                    containerInputStyle={{borderBottomColor: colors.BLUE}}
+                    value={startDate}
+                  />
+                  <InputField
+                    // onChangeText={this.onChangeEmail}
+                    source={require('../../assets/time.png')}
+                    containerStyle={styles.containerStyle}
+                    inputContainerStyle={styles.inputContainerStyle}
+                    inputStyle={styles.inputStyle}
+                    containerInputStyle={{borderBottomColor: colors.BLUE}}
+                    value={startTime}
+                  />
+                </View>
+                <Text style={styles.subHeadingStyle}>End Date & Time</Text>
+                <View style={styles.dateTimeView}>
+                  <InputField
+                    // onChangeText={this.onChangeEmail}
+                    source={require('../../assets/calendar.png')}
+                    containerStyle={styles.containerStyle}
+                    inputContainerStyle={styles.inputContainerStyle}
+                    inputStyle={styles.inputStyle}
+                    containerInputStyle={{borderBottomColor: colors.BLUE}}
+                    value={endDate}
+                  />
+                  <InputField
+                    // onChangeText={this.onChangeEmail}
+                    source={require('../../assets/time.png')}
+                    containerStyle={styles.containerStyle}
+                    inputContainerStyle={styles.inputContainerStyle}
+                    inputStyle={styles.inputStyle}
+                    containerInputStyle={{borderBottomColor: colors.BLUE}}
+                    value={endTime}
+                  />
+                </View>
                 <Text style={styles.subHeadingStyle}>Session Type</Text>
-                <Input
-                  inputContainerStyle={{
-                    borderWidth: 1,
-                    borderRadius: normalize(5),
+                <View>
+                  <Input
+                    inputContainerStyle={styles.sessionInputStyle}
+                    placeholder={'Eg. Yoga Session'}
+                    placeholderTextColor={colors.GRAY_PLACE_COLOR}
+                    containerStyle={{
+                      /// borderWidth: 1,
+                      marginBottom: 0,
+                      paddingBottom: 0,
+                    }}
+                  />
+                </View>
+
+                <CustomTextArea
+                  title="Notes"
+                  titleStyle={{
+                    color: colors.GRAY_FIVE,
+                    fontSize: normalize(14),
+                    fontFamily: 'Poppins-SemiBold',
+                  }}
+                  placeholder=" "
+                  textInputClass={{
                     borderColor: colors.BLUE,
+                    paddingTop: 0,
                   }}
-                  placeholder={'Eg. Yoga Session'}
-                  placeholderTextColor={colors.GRAY_PLACE_COLOR}
-                />
-
-                <CustomTextArea
-                  title="Notes"
-                  titleStyle={{
-                    color: colors.GRAY_FIVE,
-                    fontSize: normalize(14),
-                    fontFamily: 'Poppins-SemiBold',
-                    marginTop: 0,
-                    padding: 0,
-                    // borderWidth: 1,
-                  }}
-                  placeholder=" "
-                  textInputClass={{borderColor: colors.BLUE}}
-                />
-
-                <CustomTextArea
-                  title="Notes"
-                  titleStyle={{
-                    color: colors.GRAY_FIVE,
-                    fontSize: normalize(14),
-                    fontFamily: 'Poppins-SemiBold',
-                    marginTop: 0,
-                    padding: 0,
-                    // borderWidth: 1,
-                  }}
-                  placeholder=" "
-                  textInputClass={{borderColor: colors.BLUE}}
-                />
-                <CustomTextArea
-                  title="Notes"
-                  titleStyle={{
-                    color: colors.GRAY_FIVE,
-                    fontSize: normalize(14),
-                    fontFamily: 'Poppins-SemiBold',
-                    marginTop: 0,
-                    padding: 0,
-                    // borderWidth: 1,
-                  }}
-                  placeholder=" "
-                  textInputClass={{borderColor: colors.BLUE}}
                 />
 
                 <View style={styles.buttonView}>
@@ -215,12 +278,22 @@ class Sessions extends Component {
                     onPress={() => alert('hello')}
                   />
                 </View>
-              </>
+              </View>
             ) : null}
 
-            {active === 2 ? requestedSessionJSX : null}
+            <View style={styles.allRequestedSessionView}>
+              {active === 2 ? requestedSessionJSX : null}
+            </View>
+
+            {modal ? (
+              <CustomModal
+                visible={modal}
+                handler={() => this.modalHandler()}
+                content={dateContent}
+              />
+            ) : null}
           </ScrollView>
-        </ViewWithCircle>
+        </View>
       </MasterLayout>
     );
   }
@@ -247,6 +320,8 @@ const styles = StyleSheet.create({
     borderColor: colors.BLUE,
     width: normalize(260),
     alignSelf: 'center',
+    marginTop: normalize(15),
+    marginBottom: normalize(30),
   },
   newSession: {
     height: normalize(35),
@@ -269,6 +344,8 @@ const styles = StyleSheet.create({
     fontSize: normalize(14),
     fontFamily: 'Poppins-SemiBold',
     color: colors.GRAY_FIVE,
+    paddingLeft: normalize(8),
+    paddingBottom: normalize(5),
   },
   buttonView: {
     width: normalize(250),
@@ -284,7 +361,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
   },
   sessionViewWrapper: {
-    marginTop: normalize(30),
+    //marginTop: normalize(25),
+    paddingTop: normalize(10),
     borderBottomWidth: 1,
     paddingBottom: normalize(20),
     borderColor: colors.GRAY_LINE,
@@ -302,4 +380,57 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
   editImageView: {width: normalize(20), height: normalize(20)},
+  shadowView: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    backgroundColor: colors.WHITE,
+    marginTop: normalize(10),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
+  scrollView: {
+    paddingBottom: hp(100),
+  },
+  allRequestedSessionView: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  containerStyle: {
+    width: normalize(100),
+    height: normalize(36),
+    borderBottomColor: colors.WHITE,
+    // borderWidth: 1,
+  },
+  inputContainerStyle: {
+    borderBottomColor: colors.WHITE,
+    // borderWidth: 1,
+  },
+  inputStyle: {
+    fontSize: normalize(14),
+    color: colors.BLACK_SECOND,
+    fontFamily: 'Poppins-Regular',
+    //borderWidth: 1,
+  },
+  sessionInputStyle: {
+    borderWidth: 1,
+    borderRadius: normalize(5),
+    borderColor: colors.BLUE,
+    paddingLeft: normalize(5),
+  },
+  dateTimeView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: normalize(10),
+  },
 });
