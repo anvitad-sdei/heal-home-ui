@@ -20,6 +20,7 @@ const InputField = props => {
     containerInputStyle,
     onPress,
   } = props;
+  console.log('time value=====', value);
   return (
     <View style={{...styles.container, ...containerInputStyle}}>
       <TouchableOpacity onPress={onPress}>

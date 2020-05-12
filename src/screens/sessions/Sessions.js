@@ -15,26 +15,73 @@ import {ScrollView} from 'react-native-gesture-handler';
 import InputField from '../../components/Input';
 import CustomModal from '../../components/Modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {
+  allRequestedSession,
+  requestSession,
+  getRequestedSessionById,
+} from '../../redux/actions';
+import moment from 'moment';
+import {connect} from 'react-redux';
 class Sessions extends Component {
   constructor(props) {
     super(props);
+    const {navigation} = this.props;
     this.state = {
+      id: navigation.getParam('id'),
       active: 1,
       startDate: '',
       startTime: '',
       endDate: '',
       endTime: '',
-      modal: false,
+      dateModal: false,
+      timeModal: false,
       defaultDate: Date.now(),
+      notes: '',
+      sessionType: '',
     };
   }
+  componentDidMount() {
+    this.props.allRequestedSession();
+  }
 
-  modalHandler = () => {
-    this.setState({modal: !this.state.modal});
+  editSession = id => {
+    this.setState({active: 1});
+    this.props.getRequestedSessionById(id);
+  };
+
+  dateModalHandler = () => {
+    this.setState({dateModal: !this.state.dateModal});
+  };
+  timeModalHandler = () => {
+    this.setState({timeModal: !this.state.timeModal});
   };
   dateHandler = (event, selectedDate) => {
-    console.log(selectedDate);
-    this.setState({date: selectedDate, modal: !this.state.modal});
+    console.log('selectedDate=========', selectedDate);
+    this.setState({
+      startDate: selectedDate,
+      modal: !this.state.modal,
+      defaultDate: selectedDate,
+    });
+  };
+
+  onSessionType = sessionType => {
+    this.setState({sessionType: sessionType});
+  };
+
+  onChangeNotes = notes => {
+    this.setState({notes: notes});
+  };
+  onRequestSession = () => {
+    const {id, startDate, endDate, notes, sessionType} = this.state;
+    const data = {
+      id: id,
+      startDate: startDate,
+      endDate: endDate,
+      sessionType: sessionType,
+      notes: notes,
+    };
+    // console.log(data);
+    this.props.requestSession(data);
   };
   render() {
     const {
@@ -44,56 +91,54 @@ class Sessions extends Component {
       endDate,
       endTime,
       defaultDate,
-      modal,
+      dateModal,
+      timeModal,
+      sessionType,
+      notes,
     } = this.state;
-    const requestedSessionData = [
-      {
-        id: 1,
-        session: 'Session 1',
-        sessionOn: '04/23/2020,12:49-01:49',
-        status: 'PENDING',
-        modifiedBy: 'Alcohol Management',
-        lastModified: '04/22/2020, 12:49 PM',
-      },
-      {
-        id: 2,
-        session: 'Session 2',
-        sessionOn: '04/24/2020,01:49-02:49',
-        status: 'PENDING',
-        modifiedBy: 'Alcohol Management',
-        lastModified: '04/23/2020, 12:49 PM',
-      },
-    ];
-
-    const requestedSessionJSX = requestedSessionData.length
-      ? requestedSessionData.map((item, i) => {
+    const {mySession, getBySessionId} = this.props;
+    // console.log('get by session id========', getBySessionId);
+    console.log(this.state);
+    const requestedSessionJSX = mySession.length
+      ? mySession.map((item, i) => {
           return (
-            <View style={styles.sessionViewWrapper}>
+            <View style={styles.sessionViewWrapper} key={i}>
               <View style={styles.requestedSessionView}>
                 <View>
-                  <Text style={styles.sessionHeading}>{item.session}</Text>
+                  <Text style={styles.sessionHeading}>
+                    {'Session' + ' ' + item.id}
+                  </Text>
+
                   <Text style={{...styles.dateStyle, color: colors.BLUE}}>
-                    04/23/2020, 12:49 - 01:49
+                    {moment(item.createdDate).format('lll') +
+                      '-' +
+                      moment(item.createdDate)
+                        .add(1, 'hours')
+                        .format('LT')}
                   </Text>
                 </View>
-                <View style={styles.editImageView}>
-                  <Image
-                    source={require('../../assets/edit.png')}
-                    style={{width: '100%', height: '100%'}}
-                  />
-                </View>
+                <TouchableOpacity onPress={() => this.editSession(item.id)}>
+                  <View style={styles.editImageView}>
+                    <Image
+                      source={require('../../assets/edit.png')}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  </View>
+                </TouchableOpacity>
               </View>
-
-              <Text style={{...styles.dateStyle, color: colors.ORANGE_FOUR}}>
-                PENDING
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <View style={styles.orangeCircleView} />
+                <Text style={{...styles.dateStyle, color: colors.ORANGE_FOUR}}>
+                  {item.requestStatus}
+                </Text>
+              </View>
               <Text style={{fontSize: normalize(12)}}>
-                <Text style={{color: colors.BLUE}}>Modified by :</Text> Alcohol
-                Management
+                <Text style={{color: colors.BLUE}}>Modified by :</Text>{' '}
+                {item.lastModifiedBy}
               </Text>
               <Text style={{fontSize: normalize(12)}}>
                 <Text style={{color: colors.BLUE}}>Last Modified :</Text>{' '}
-                04/22/2020, 12:49 PM
+                {moment(item.modifiedDate).format('lll')}
               </Text>
             </View>
           );
@@ -112,6 +157,23 @@ class Sessions extends Component {
           mode={'date'}
           is24Hour={true}
           display="default"
+          onChange={this.dateHandler}
+        />
+      </View>
+    );
+
+    const timeContent = (
+      <View
+        style={{
+          paddingBottom: normalize(10),
+        }}>
+        <DateTimePicker
+          testID="dateTimePicker"
+          timeZoneOffsetInMinutes={0}
+          value={new Date(defaultDate)}
+          mode={'time'}
+          is24Hour={true}
+          display="default"
           //onChange={this.dateHandler}
         />
       </View>
@@ -122,7 +184,7 @@ class Sessions extends Component {
         leftIcon={require('../../assets/backArrow.png')}
         centerTitle="Request Session"
         rightIcon={require('../../assets/bell.png')}
-        leftIconPress={() => this.props.navigation.navigate('Home')}
+        leftIconPress={() => this.props.navigation.navigate('TherapistsList')}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
         <ViewWithCircle source={require('../../assets/communication.png')} />
@@ -202,17 +264,18 @@ class Sessions extends Component {
                 <Text style={styles.subHeadingStyle}>Start Date & Time</Text>
                 <View style={styles.dateTimeView}>
                   <InputField
-                    onPress={() => this.modalHandler()}
-                    // onChangeText={this.onChangeEmail}
+                    onPress={() => this.dateModalHandler()}
+                    onChangeText={this.dateHandler}
                     source={require('../../assets/calendar.png')}
                     containerStyle={styles.containerStyle}
                     inputContainerStyle={styles.inputContainerStyle}
                     inputStyle={styles.inputStyle}
                     containerInputStyle={{borderBottomColor: colors.BLUE}}
-                    value={startDate}
+                    value={defaultDate}
                   />
                   <InputField
                     // onChangeText={this.onChangeEmail}
+                    onPress={() => this.timeModalHandler()}
                     source={require('../../assets/time.png')}
                     containerStyle={styles.containerStyle}
                     inputContainerStyle={styles.inputContainerStyle}
@@ -230,7 +293,7 @@ class Sessions extends Component {
                     inputContainerStyle={styles.inputContainerStyle}
                     inputStyle={styles.inputStyle}
                     containerInputStyle={{borderBottomColor: colors.BLUE}}
-                    value={endDate}
+                    value={endDate || getBySessionId.modifiedDate}
                   />
                   <InputField
                     // onChangeText={this.onChangeEmail}
@@ -246,6 +309,10 @@ class Sessions extends Component {
                 <View>
                   <Input
                     inputContainerStyle={styles.sessionInputStyle}
+                    inputStyle={{
+                      fontSize: normalize(14),
+                      fontFamily: 'Poppins-Regular',
+                    }}
                     placeholder={'Eg. Yoga Session'}
                     placeholderTextColor={colors.GRAY_PLACE_COLOR}
                     containerStyle={{
@@ -253,6 +320,8 @@ class Sessions extends Component {
                       marginBottom: 0,
                       paddingBottom: 0,
                     }}
+                    onChangeText={text => this.onSessionType(text)}
+                    value={sessionType || getBySessionId.sessionType}
                   />
                 </View>
 
@@ -267,7 +336,11 @@ class Sessions extends Component {
                   textInputClass={{
                     borderColor: colors.BLUE,
                     paddingTop: 0,
+                    fontSize: normalize(14),
+                    fontFamily: 'Poppins-Regular',
                   }}
+                  onChangeText={text => this.onChangeNotes(text)}
+                  value={notes || getBySessionId.notes}
                 />
 
                 <View style={styles.buttonView}>
@@ -275,7 +348,7 @@ class Sessions extends Component {
                     title="Save"
                     buttonStyle={styles.buttonStyle}
                     titleStyle={styles.titleStyle}
-                    onPress={() => alert('hello')}
+                    onPress={() => this.onRequestSession()}
                   />
                 </View>
               </View>
@@ -285,11 +358,19 @@ class Sessions extends Component {
               {active === 2 ? requestedSessionJSX : null}
             </View>
 
-            {modal ? (
+            {dateModal ? (
               <CustomModal
-                visible={modal}
-                handler={() => this.modalHandler()}
+                visible={dateModal}
+                handler={() => this.dateModalHandler()}
                 content={dateContent}
+              />
+            ) : null}
+
+            {timeModal ? (
+              <CustomModal
+                visible={timeModal}
+                handler={() => this.timeModalHandler()}
+                content={timeContent}
               />
             ) : null}
           </ScrollView>
@@ -298,7 +379,6 @@ class Sessions extends Component {
     );
   }
 }
-export default Sessions;
 
 const styles = StyleSheet.create({
   headerStyle: {
@@ -346,6 +426,14 @@ const styles = StyleSheet.create({
     color: colors.GRAY_FIVE,
     paddingLeft: normalize(8),
     paddingBottom: normalize(5),
+  },
+  orangeCircleView: {
+    height: normalize(9),
+    width: normalize(9),
+    borderRadius: normalize(5),
+    backgroundColor: colors.ORANGE_FOUR,
+    alignSelf: 'center',
+    marginRight: normalize(5),
   },
   buttonView: {
     width: normalize(250),
@@ -434,3 +522,16 @@ const styles = StyleSheet.create({
     marginBottom: normalize(10),
   },
 });
+const mapStateToProps = ({sessions}) => {
+  const {sessionsData, requestSession, sessionById} = sessions;
+  return {
+    mySession: sessionsData,
+    data: requestSession,
+    getBySessionId: sessionById,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {allRequestedSession, requestSession, getRequestedSessionById},
+)(Sessions);

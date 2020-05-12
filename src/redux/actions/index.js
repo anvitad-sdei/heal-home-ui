@@ -54,7 +54,7 @@ export const journaling = () => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios(`${apiUrls.BASE_URL}/journaling`);
     if (res) {
-      console.log(res);
+      // console.log(res);
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(
@@ -64,7 +64,7 @@ export const journaling = () => async dispatch => {
       );
     }
   } catch (err) {
-    console.log(JSON.stringify(err.response));
+    //console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
     errorResHandler(err);
   }
@@ -76,7 +76,7 @@ export const getJournalingById = id => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios(`${apiUrls.BASE_URL}/journaling/${id}`);
     if (res) {
-      console.log(res);
+      //console.log(res);
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(
@@ -86,7 +86,7 @@ export const getJournalingById = id => async dispatch => {
       );
     }
   } catch (err) {
-    console.log(JSON.stringify(err.response));
+    //console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
     errorResHandler(err);
   }
@@ -98,7 +98,7 @@ export const journalingSave = data => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios.post(`${apiUrls.BASE_URL}/journaling`, {...data});
     if (res) {
-      console.log(res);
+      // console.log(res);
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(constants.SAVE_JOURNALING_SUCCESS, res.data),
@@ -106,7 +106,7 @@ export const journalingSave = data => async dispatch => {
       successResHandler('Data save successfully', 'Journaling'); //check path name
     }
   } catch (err) {
-    console.log(JSON.stringify(err.response));
+    // console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
     // dispatch(errorHandler(err));
     // alert('Something went wrong');
@@ -114,22 +114,110 @@ export const journalingSave = data => async dispatch => {
   }
 };
 
-/*********************************************************************** */
-
-export const getUserData = () => async dispatch => {
+/**********************************POST REQUEST SESSION API ***********************/
+export const requestSession = data => async dispatch => {
   try {
     dispatch(loadingHandler(true));
-    let res = await axios('https://jsonplaceholder.typicode.com/todos');
+    let res = await axios.post(`${apiUrls.BASE_URL}/requestsession`, {...data});
     if (res) {
-      dispatch(successResponseHandler(constants.GET_SUCCESS, res.data)); //type check kr lena
+      // console.log(res);
       dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(constants.REQUEST_SESSION_SUCCESS, res.data),
+      );
+      successResHandler('Data save successfully', 'TherapistsList'); //check path name
     }
   } catch (err) {
+    // console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
-    errorResHandler(err);
     // dispatch(errorHandler(err));
+    // alert('Something went wrong');
+    errorResHandler(err);
   }
 };
+
+/*************************GET ALL MY REQUESTED SESSION********************** */
+export const allRequestedSession = () => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios(`${apiUrls.BASE_URL}/requestsession`);
+    if (res) {
+      //console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.GET_ALL_REQUESTED_SESSION_SUCCESS,
+          res.data.response,
+        ),
+      );
+    }
+  } catch (err) {
+    // console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
+
+/*************************GET REQUESTED SESSION BY ID API********************** */
+export const getRequestedSessionById = id => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios(`${apiUrls.BASE_URL}/requestsession/${id}`);
+    if (res) {
+      console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.GET_REQUESTED_SESSION_BY_ID_SUCCESS,
+          res.data.response,
+        ),
+      );
+    }
+  } catch (err) {
+    console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
+
+/*************************GET ALL THERAPISTS SUCCESS ********************** */
+export const getAllTherapists = () => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios(`${apiUrls.BASE_URL}/question/mytherapists`);
+    if (res) {
+      //console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.GET_ALL_THERAPISTS_SUCCESS,
+          res.data.response,
+        ),
+      );
+    }
+  } catch (err) {
+    // console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
+
+// /*********************************************************************** */
+
+// export const getUserData = () => async dispatch => {
+//   try {
+//     dispatch(loadingHandler(true));
+//     let res = await axios('https://jsonplaceholder.typicode.com/todos');
+//     if (res) {
+//       dispatch(successResponseHandler(constants.GET_SUCCESS, res.data)); //type check kr lena
+//       dispatch(loadingHandler(false));
+//     }
+//   } catch (err) {
+//     dispatch(loadingHandler(false));
+//     errorResHandler(err);
+//     // dispatch(errorHandler(err));
+//   }
+// };
 
 /********************************************************* */
 const navigateToRoute = (routeName, params) => {
