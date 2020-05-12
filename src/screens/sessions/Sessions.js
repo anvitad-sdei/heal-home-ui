@@ -15,7 +15,11 @@ import {ScrollView} from 'react-native-gesture-handler';
 import InputField from '../../components/Input';
 import CustomModal from '../../components/Modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {allRequestedSession} from '../../redux/actions';
+import {
+  allRequestedSession,
+  requestSession,
+  getRequestedSessionById,
+} from '../../redux/actions';
 import {connect} from 'react-redux';
 class Sessions extends Component {
   constructor(props) {
@@ -30,17 +34,46 @@ class Sessions extends Component {
       endTime: '',
       modal: false,
       defaultDate: Date.now(),
+      notes: '',
+      sessionType: '',
     };
   }
   componentDidMount() {
     this.props.allRequestedSession();
   }
+
+  editSession = id => {
+    console.log('id==========requesjjsdfjkbsdg====', id);
+    this.setState({active: 1});
+    this.props.getRequestedSessionById(id);
+  };
+
   modalHandler = () => {
     this.setState({modal: !this.state.modal});
   };
   dateHandler = (event, selectedDate) => {
     console.log(selectedDate);
     this.setState({date: selectedDate, modal: !this.state.modal});
+  };
+
+  onSessionType = sessionType => {
+    this.setState({sessionType: sessionType});
+  };
+
+  onChangeNotes = notes => {
+    this.setState({notes: notes});
+  };
+  onRequestSession = () => {
+    const {id, startDate, endDate, notes, sessionType} = this.state;
+    const data = {
+      id: id,
+      startDate: startDate,
+      endDate: endDate,
+      sessionType: sessionType,
+      notes: notes,
+    };
+    console.log(data);
+    this.props.requestSession(data);
   };
   render() {
     const {
@@ -51,13 +84,13 @@ class Sessions extends Component {
       endTime,
       defaultDate,
       modal,
+      sessionType,
+      notes,
     } = this.state;
-    const {data} = this.props;
-    console.log(this.state.id, 'if===========');
-    console.log(data, '=======================');
-
-    const requestedSessionJSX = data.length
-      ? data.map((item, i) => {
+    const {mySession, getBySessionId} = this.props;
+    console.log('get by session id========', getBySessionId);
+    const requestedSessionJSX = mySession.length
+      ? mySession.map((item, i) => {
           return (
             <View style={styles.sessionViewWrapper} key={i}>
               <View style={styles.requestedSessionView}>
@@ -70,12 +103,14 @@ class Sessions extends Component {
                     {item.createdDate}
                   </Text>
                 </View>
-                <View style={styles.editImageView}>
-                  <Image
-                    source={require('../../assets/edit.png')}
-                    style={{width: '100%', height: '100%'}}
-                  />
-                </View>
+                <TouchableOpacity onPress={() => this.editSession(item.id)}>
+                  <View style={styles.editImageView}>
+                    <Image
+                      source={require('../../assets/edit.png')}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  </View>
+                </TouchableOpacity>
               </View>
 
               <Text style={{...styles.dateStyle, color: colors.ORANGE_FOUR}}>
@@ -203,7 +238,7 @@ class Sessions extends Component {
                     inputContainerStyle={styles.inputContainerStyle}
                     inputStyle={styles.inputStyle}
                     containerInputStyle={{borderBottomColor: colors.BLUE}}
-                    value={startDate}
+                    value={startDate || getBySessionId.startDate}
                   />
                   <InputField
                     // onChangeText={this.onChangeEmail}
@@ -224,7 +259,7 @@ class Sessions extends Component {
                     inputContainerStyle={styles.inputContainerStyle}
                     inputStyle={styles.inputStyle}
                     containerInputStyle={{borderBottomColor: colors.BLUE}}
-                    value={endDate}
+                    value={endDate || getBySessionId.modifiedDate}
                   />
                   <InputField
                     // onChangeText={this.onChangeEmail}
@@ -240,6 +275,10 @@ class Sessions extends Component {
                 <View>
                   <Input
                     inputContainerStyle={styles.sessionInputStyle}
+                    inputStyle={{
+                      fontSize: normalize(14),
+                      fontFamily: 'Poppins-Regular',
+                    }}
                     placeholder={'Eg. Yoga Session'}
                     placeholderTextColor={colors.GRAY_PLACE_COLOR}
                     containerStyle={{
@@ -247,6 +286,8 @@ class Sessions extends Component {
                       marginBottom: 0,
                       paddingBottom: 0,
                     }}
+                    onChangeText={text => this.onSessionType(text)}
+                    value={sessionType || getBySessionId.sessionType}
                   />
                 </View>
 
@@ -261,7 +302,11 @@ class Sessions extends Component {
                   textInputClass={{
                     borderColor: colors.BLUE,
                     paddingTop: 0,
+                    fontSize: normalize(14),
+                    fontFamily: 'Poppins-Regular',
                   }}
+                  onChangeText={text => this.onChangeNotes(text)}
+                  value={notes || getBySessionId.notes}
                 />
 
                 <View style={styles.buttonView}>
@@ -269,7 +314,7 @@ class Sessions extends Component {
                     title="Save"
                     buttonStyle={styles.buttonStyle}
                     titleStyle={styles.titleStyle}
-                    onPress={() => alert('hello')}
+                    onPress={() => this.onRequestSession()}
                   />
                 </View>
               </View>
@@ -428,11 +473,15 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = ({sessions}) => {
-  const {sessionsData} = sessions;
-  return {data: sessionsData};
+  const {sessionsData, requestSession, sessionById} = sessions;
+  return {
+    mySession: sessionsData,
+    data: requestSession,
+    getBySessionId: sessionById,
+  };
 };
 
 export default connect(
   mapStateToProps,
-  {allRequestedSession},
+  {allRequestedSession, requestSession, getRequestedSessionById},
 )(Sessions);

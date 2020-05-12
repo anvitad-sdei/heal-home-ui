@@ -15,7 +15,7 @@ class TherapistsList extends Component {
         leftIcon={require('../../assets/backArrow.png')}
         centerTitle="Request Session"
         rightIcon={require('../../assets/bell.png')}
-        leftIconPress={() => this.props.navigation.navigate('TherapistsList')}
+        leftIconPress={() => this.props.navigation.navigate('Home')}
         rightIconPress={() => alert('right')}>
         <View
           style={{

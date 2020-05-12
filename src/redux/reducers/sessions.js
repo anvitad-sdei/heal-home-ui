@@ -1,6 +1,8 @@
 import constants from '../constants';
 const iState = {
   sessionsData: [],
+  requestSession: {},
+  sessionById: {},
 };
 const user = (state = iState, action) => {
   switch (action.type) {
@@ -10,6 +12,16 @@ const user = (state = iState, action) => {
         sessionsData: action.payload,
       };
 
+    case constants.REQUEST_SESSION_SUCCESS:
+      return {
+        ...state,
+        requestSession: action.payload,
+      };
+    case constants.GET_REQUESTED_SESSION_BY_ID_SUCCESS:
+      return {
+        ...state,
+        sessionById: action.payload,
+      };
     default:
       return state;
   }
