@@ -121,7 +121,7 @@ export default class Home extends React.Component {
             imageView={{width: normalize(24), height: normalize(27)}}
             titleStyle={{color: colors.DARK_TEXT_BLUE}}
             iconColor={colors.BLACK}
-            onPress={() => this.props.navigation.navigate('Sessions')}
+            onPress={() => this.props.navigation.navigate('TherapistsList')}
           />
 
           <View style={styles.upcomingSessionView}>

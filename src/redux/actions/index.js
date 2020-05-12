@@ -114,6 +114,28 @@ export const journalingSave = data => async dispatch => {
   }
 };
 
+/*************************GET ALL MY REQUESTED SESSION********************** */
+export const allRequestedSession = () => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios(`${apiUrls.BASE_URL}/requestsession`);
+    if (res) {
+      console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.GET_ALL_REQUESTED_SESSION_SUCCESS,
+          res.data.response,
+        ),
+      );
+    }
+  } catch (err) {
+    console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
+
 /*********************************************************************** */
 
 export const getUserData = () => async dispatch => {

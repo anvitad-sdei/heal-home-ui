@@ -15,10 +15,14 @@ import {ScrollView} from 'react-native-gesture-handler';
 import InputField from '../../components/Input';
 import CustomModal from '../../components/Modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {allRequestedSession} from '../../redux/actions';
+import {connect} from 'react-redux';
 class Sessions extends Component {
   constructor(props) {
     super(props);
+    const {navigation} = this.props;
     this.state = {
+      id: navigation.getParam('id'),
       active: 1,
       startDate: '',
       startTime: '',
@@ -28,7 +32,9 @@ class Sessions extends Component {
       defaultDate: Date.now(),
     };
   }
-
+  componentDidMount() {
+    this.props.allRequestedSession();
+  }
   modalHandler = () => {
     this.setState({modal: !this.state.modal});
   };
@@ -46,34 +52,22 @@ class Sessions extends Component {
       defaultDate,
       modal,
     } = this.state;
-    const requestedSessionData = [
-      {
-        id: 1,
-        session: 'Session 1',
-        sessionOn: '04/23/2020,12:49-01:49',
-        status: 'PENDING',
-        modifiedBy: 'Alcohol Management',
-        lastModified: '04/22/2020, 12:49 PM',
-      },
-      {
-        id: 2,
-        session: 'Session 2',
-        sessionOn: '04/24/2020,01:49-02:49',
-        status: 'PENDING',
-        modifiedBy: 'Alcohol Management',
-        lastModified: '04/23/2020, 12:49 PM',
-      },
-    ];
+    const {data} = this.props;
+    console.log(this.state.id, 'if===========');
+    console.log(data, '=======================');
 
-    const requestedSessionJSX = requestedSessionData.length
-      ? requestedSessionData.map((item, i) => {
+    const requestedSessionJSX = data.length
+      ? data.map((item, i) => {
           return (
-            <View style={styles.sessionViewWrapper}>
+            <View style={styles.sessionViewWrapper} key={i}>
               <View style={styles.requestedSessionView}>
                 <View>
-                  <Text style={styles.sessionHeading}>{item.session}</Text>
+                  <Text style={styles.sessionHeading}>
+                    {'Session' + ' ' + item.id}
+                  </Text>
+                  {/**   session numbering */}
                   <Text style={{...styles.dateStyle, color: colors.BLUE}}>
-                    04/23/2020, 12:49 - 01:49
+                    {item.createdDate}
                   </Text>
                 </View>
                 <View style={styles.editImageView}>
@@ -85,15 +79,15 @@ class Sessions extends Component {
               </View>
 
               <Text style={{...styles.dateStyle, color: colors.ORANGE_FOUR}}>
-                PENDING
+                {item.requestStatus}
               </Text>
               <Text style={{fontSize: normalize(12)}}>
-                <Text style={{color: colors.BLUE}}>Modified by :</Text> Alcohol
-                Management
+                <Text style={{color: colors.BLUE}}>Modified by :</Text>{' '}
+                {item.lastModifiedBy}
               </Text>
               <Text style={{fontSize: normalize(12)}}>
                 <Text style={{color: colors.BLUE}}>Last Modified :</Text>{' '}
-                04/22/2020, 12:49 PM
+                {item.modifiedDate}
               </Text>
             </View>
           );
@@ -122,7 +116,7 @@ class Sessions extends Component {
         leftIcon={require('../../assets/backArrow.png')}
         centerTitle="Request Session"
         rightIcon={require('../../assets/bell.png')}
-        leftIconPress={() => this.props.navigation.navigate('Home')}
+        leftIconPress={() => this.props.navigation.navigate('TherapistsList')}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
         <ViewWithCircle source={require('../../assets/communication.png')} />
@@ -298,7 +292,6 @@ class Sessions extends Component {
     );
   }
 }
-export default Sessions;
 
 const styles = StyleSheet.create({
   headerStyle: {
@@ -434,3 +427,12 @@ const styles = StyleSheet.create({
     marginBottom: normalize(10),
   },
 });
+const mapStateToProps = ({sessions}) => {
+  const {sessionsData} = sessions;
+  return {data: sessionsData};
+};
+
+export default connect(
+  mapStateToProps,
+  {allRequestedSession},
+)(Sessions);
