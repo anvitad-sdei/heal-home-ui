@@ -4,7 +4,7 @@ const iState = {
   requestSession: {},
   sessionById: {},
 };
-const user = (state = iState, action) => {
+const sessions = (state = iState, action) => {
   switch (action.type) {
     case constants.GET_ALL_REQUESTED_SESSION_SUCCESS:
       return {
@@ -27,4 +27,4 @@ const user = (state = iState, action) => {
   }
 };
 
-export default user;
+export default sessions;

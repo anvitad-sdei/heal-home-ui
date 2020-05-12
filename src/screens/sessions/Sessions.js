@@ -20,6 +20,7 @@ import {
   requestSession,
   getRequestedSessionById,
 } from '../../redux/actions';
+import moment from 'moment';
 import {connect} from 'react-redux';
 class Sessions extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ class Sessions extends Component {
   }
 
   editSession = id => {
-    console.log('id==========requesjjsdfjkbsdg====', id);
+    console.log('editid==========requesjjsdfjkbsdg====', id);
     this.setState({active: 1});
     this.props.getRequestedSessionById(id);
   };
@@ -89,6 +90,7 @@ class Sessions extends Component {
     } = this.state;
     const {mySession, getBySessionId} = this.props;
     console.log('get by session id========', getBySessionId);
+    console.log(this.state.id, 'navigatoo================');
     const requestedSessionJSX = mySession.length
       ? mySession.map((item, i) => {
           return (
@@ -122,7 +124,8 @@ class Sessions extends Component {
               </Text>
               <Text style={{fontSize: normalize(12)}}>
                 <Text style={{color: colors.BLUE}}>Last Modified :</Text>{' '}
-                {item.modifiedDate}
+                {/* {item.modifiedDate} */}
+                {moment(item.modifiedDate).format('lll')}
               </Text>
             </View>
           );

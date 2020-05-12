@@ -180,22 +180,44 @@ export const getRequestedSessionById = id => async dispatch => {
   }
 };
 
-/*********************************************************************** */
-
-export const getUserData = () => async dispatch => {
+/*************************GET ALL THERAPISTS SUCCESS ********************** */
+export const getAllTherapists = () => async dispatch => {
   try {
     dispatch(loadingHandler(true));
-    let res = await axios('https://jsonplaceholder.typicode.com/todos');
+    let res = await axios(`${apiUrls.BASE_URL}/question/mytherapists`);
     if (res) {
-      dispatch(successResponseHandler(constants.GET_SUCCESS, res.data)); //type check kr lena
+      //console.log(res);
       dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.GET_ALL_THERAPISTS_SUCCESS,
+          res.data.response,
+        ),
+      );
     }
   } catch (err) {
+    // console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
     errorResHandler(err);
-    // dispatch(errorHandler(err));
   }
 };
+
+// /*********************************************************************** */
+
+// export const getUserData = () => async dispatch => {
+//   try {
+//     dispatch(loadingHandler(true));
+//     let res = await axios('https://jsonplaceholder.typicode.com/todos');
+//     if (res) {
+//       dispatch(successResponseHandler(constants.GET_SUCCESS, res.data)); //type check kr lena
+//       dispatch(loadingHandler(false));
+//     }
+//   } catch (err) {
+//     dispatch(loadingHandler(false));
+//     errorResHandler(err);
+//     // dispatch(errorHandler(err));
+//   }
+// };
 
 /********************************************************* */
 const navigateToRoute = (routeName, params) => {
