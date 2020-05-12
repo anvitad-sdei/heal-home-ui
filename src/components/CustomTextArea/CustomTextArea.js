@@ -11,9 +11,10 @@ const CustomTextArea = props => {
     placeholder,
     titleStyle,
     textInputClass,
+    textAreaView,
   } = props;
   return (
-    <View style={styles.textAreaView}>
+    <View style={{...styles.textAreaView, ...textAreaView}}>
       <View style={styles.mainContainer}>
         <Text style={{...styles.question, ...titleStyle}}>{title}</Text>
         <TextInput

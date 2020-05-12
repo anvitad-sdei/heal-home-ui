@@ -255,7 +255,7 @@ class Sessions extends Component {
             {active === 1 ? (
               <View
                 style={{
-                  width: '90%',
+                  width: '95%',
                   marginLeft: 'auto',
                   marginRight: 'auto',
                   paddingTop: normalize(10),
@@ -312,14 +312,10 @@ class Sessions extends Component {
                     inputStyle={{
                       fontSize: normalize(14),
                       fontFamily: 'Poppins-Regular',
+                      //paddingTop: normalize(20),
                     }}
                     placeholder={'Eg. Yoga Session'}
                     placeholderTextColor={colors.GRAY_PLACE_COLOR}
-                    containerStyle={{
-                      /// borderWidth: 1,
-                      marginBottom: 0,
-                      paddingBottom: 0,
-                    }}
                     onChangeText={text => this.onSessionType(text)}
                     value={sessionType || getBySessionId.sessionType}
                   />
@@ -335,12 +331,15 @@ class Sessions extends Component {
                   placeholder=" "
                   textInputClass={{
                     borderColor: colors.BLUE,
-                    paddingTop: 0,
                     fontSize: normalize(14),
                     fontFamily: 'Poppins-Regular',
                   }}
                   onChangeText={text => this.onChangeNotes(text)}
                   value={notes || getBySessionId.notes}
+                  textAreaView={{
+                    width: '100%',
+                    marginTop: -17,
+                  }}
                 />
 
                 <View style={styles.buttonView}>
