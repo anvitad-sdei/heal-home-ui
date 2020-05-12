@@ -4,6 +4,7 @@ import {Input, Avatar} from 'react-native-elements';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const InputField = props => {
   const {
@@ -16,14 +17,18 @@ const InputField = props => {
     inputStyle,
     value,
     autoCapitalize,
+    containerInputStyle,
+    onPress,
   } = props;
   return (
-    <View style={styles.container}>
-      <Avatar
-        source={source}
-        containerStyle={styles.containerStyle}
-        overlayContainerStyle={styles.overlayContainerStyle}
-      />
+    <View style={{...styles.container, ...containerInputStyle}}>
+      <TouchableOpacity onPress={onPress}>
+        <Avatar
+          source={source}
+          containerStyle={styles.containerStyle}
+          overlayContainerStyle={styles.overlayContainerStyle}
+        />
+      </TouchableOpacity>
 
       <Input
         placeholder={placeholder}

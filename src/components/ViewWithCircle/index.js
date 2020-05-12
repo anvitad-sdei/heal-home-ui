@@ -2,8 +2,6 @@ import React from 'react';
 import {Image, View, StyleSheet} from 'react-native';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
-import {ScrollView} from 'react-native-gesture-handler';
-import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const ViewWithCircle = props => {
   const {source} = props;
   return (
@@ -17,7 +15,6 @@ const ViewWithCircle = props => {
           <Image source={source} style={styles.imageStyle} />
         </View>
       </View>
-      <View style={styles.childrenView}>{props.children}</View>
     </View>
   );
 };
@@ -26,25 +23,23 @@ export default ViewWithCircle;
 
 const styles = StyleSheet.create({
   sessionView: {
-    // zIndex: 999999,
     width: '90%',
     backgroundColor: colors.WHITE,
     position: 'absolute',
     alignSelf: 'center',
     top: normalize(-50),
-    // height: hp(50),
-    borderRadius: normalize(20),
+    borderTopRightRadius: normalize(20),
+    borderTopLeftRadius: normalize(20),
+    height: normalize(100),
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 3,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
-    paddingBottom: normalize(30),
-    //height: '100%',
-    //flex: 1,
+    shadowOpacity: 0.1,
+    shadowRadius: 4.65,
+    elevation: 6,
+    // borderWidth: 1,
   },
   circleViewImage: {
     width: normalize(80),
@@ -52,6 +47,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     top: -30,
+    //  borderWidth: 1,
   },
   innerViewImage: {
     alignItems: 'center',
@@ -64,16 +60,5 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: '100%',
     height: '100%',
-  },
-  childrenView: {
-    //borderWidth: 1,
-    // height: '100%',
-    flex: 1,
-    marginTop: normalize(80),
-    width: '90%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    paddingBottom: hp(400),
-    marginBottom: normalize(200),
   },
 });
