@@ -29,10 +29,10 @@ class Sessions extends Component {
     this.state = {
       id: navigation.getParam('id'),
       active: 1,
-      startDate: '',
-      startTime: '',
-      endDate: '',
-      endTime: '',
+      startDate: Date.now(),
+      startTime: Date.now(),
+      endDate: Date.now(),
+      endTime: Date.now(),
       dateModal: false,
       timeModal: false,
       defaultDate: Date.now(),
@@ -61,6 +61,14 @@ class Sessions extends Component {
       startDate: selectedDate,
       modal: !this.state.modal,
       defaultDate: selectedDate,
+    });
+  };
+
+  timeHandler = (event, selectedTime) => {
+    console.log('time handler-====>', moment(selectedTime).format('LT'));
+
+    this.setState({
+      startTime: selectedTime,
     });
   };
 
@@ -99,6 +107,7 @@ class Sessions extends Component {
     const {mySession, getBySessionId} = this.props;
     // console.log('get by session id========', getBySessionId);
     console.log(this.state);
+    console.log('start time and adtae===>', startDate);
     const requestedSessionJSX = mySession.length
       ? mySession.map((item, i) => {
           return (
@@ -170,11 +179,11 @@ class Sessions extends Component {
         <DateTimePicker
           testID="dateTimePicker"
           timeZoneOffsetInMinutes={0}
-          value={new Date(defaultDate)}
-          mode={'time'}
+          value={new Date(startTime)}
+          mode="time"
           is24Hour={true}
           display="default"
-          //onChange={this.dateHandler}
+          onChange={this.timeHandler}
         />
       </View>
     );
@@ -271,7 +280,7 @@ class Sessions extends Component {
                     inputContainerStyle={styles.inputContainerStyle}
                     inputStyle={styles.inputStyle}
                     containerInputStyle={{borderBottomColor: colors.BLUE}}
-                    value={defaultDate}
+                    value={moment(startDate).format('llll')}
                   />
                   <InputField
                     // onChangeText={this.onChangeEmail}
@@ -281,7 +290,7 @@ class Sessions extends Component {
                     inputContainerStyle={styles.inputContainerStyle}
                     inputStyle={styles.inputStyle}
                     containerInputStyle={{borderBottomColor: colors.BLUE}}
-                    value={startTime}
+                    value={moment(startTime).format('LT')}
                   />
                 </View>
                 <Text style={styles.subHeadingStyle}>End Date & Time</Text>
