@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   subHeading: {color: colors.WHITE},
   headingStyle: {fontFamily: 'Poppins-Bold', fontSize: normalize(24)},
   subHeadingStyle: {fontSize: normalize(12), fontFamily: 'Poppins-Light'},
-  buttonView: {alignSelf: 'center', marginTop: hp(4)},
+  buttonView: {alignSelf: 'center', marginTop: hp(8)},
   buttonStyle: {
     width: normalize(276),
     borderRadius: 30,
@@ -221,14 +221,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexDirection: 'row',
   },
-  textStyle: {
-    fontSize: normalize(15),
-  },
-  textFontFamily: {
-    fontFamily: 'Poppins-Regular',
-  },
-  boldFamily: {
-    fontFamily: 'Poppins-Bold',
-    color: colors.BLUE,
-  },
+  // textStyle: {
+  //   fontSize: normalize(15),
+  // },
+  // textFontFamily: {
+  //   fontFamily: 'Poppins-Regular',
+  // },
+  // boldFamily: {
+  //   fontFamily: 'Poppins-Bold',
+  //   color: colors.BLUE,
+  // },
 });
