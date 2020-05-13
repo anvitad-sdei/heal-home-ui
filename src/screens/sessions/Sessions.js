@@ -16,6 +16,7 @@ import {
   allRequestedSession,
   requestSession,
   getRequestedSessionById,
+  clearSessionById,
 } from '../../redux/actions';
 import moment from 'moment';
 import {connect} from 'react-redux';
@@ -152,8 +153,8 @@ class Sessions extends Component {
     } = this.state;
     const {mySession, getBySessionId} = this.props;
     // console.log('get by session id========', getBySessionId);
-    console.log(this.state);
-    console.log('start time and adtae===>', startDate);
+    console.log('state====>', this.state);
+
     const requestedSessionJSX = mySession.length
       ? mySession.map((item, i) => {
           return (
@@ -238,7 +239,10 @@ class Sessions extends Component {
         leftIcon={require('../../assets/backArrow.png')}
         centerTitle="Request Session"
         rightIcon={require('../../assets/bell.png')}
-        leftIconPress={() => this.props.navigation.navigate('TherapistsList')}
+        leftIconPress={() => {
+          this.props.navigation.navigate('TherapistsList');
+          this.props.clearSessionById();
+        }}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
         <ViewWithCircle source={require('../../assets/communication.png')} />
@@ -599,5 +603,10 @@ const mapStateToProps = ({sessions}) => {
 
 export default connect(
   mapStateToProps,
-  {allRequestedSession, requestSession, getRequestedSessionById},
+  {
+    allRequestedSession,
+    requestSession,
+    getRequestedSessionById,
+    clearSessionById,
+  },
 )(Sessions);

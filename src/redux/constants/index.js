@@ -13,6 +13,7 @@ const constants = {
   ERROR: 'ERROR',
   IS_LOADING: 'IS_LOADING',
   CLEAR: 'CLEAR',
+  CLEAR_SESSION_BY_ID: 'CLEAR_SESSION_BY_ID',
 };
 
 export default constants;

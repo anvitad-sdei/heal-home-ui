@@ -28,6 +28,9 @@ const sessions = (state = iState, action) => {
         ...state,
         upcomingSession: action.payload,
       };
+
+    case constants.CLEAR_SESSION_BY_ID:
+      return {...state, sessionById: {}};
     default:
       return state;
   }

@@ -224,6 +224,9 @@ export const getAllTherapists = () => async dispatch => {
   }
 };
 
+export const clearSessionById = () => dispatch => {
+  dispatch({type: constants.CLEAR_SESSION_BY_ID});
+};
 // /*********************************************************************** */
 
 // export const getUserData = () => async dispatch => {
