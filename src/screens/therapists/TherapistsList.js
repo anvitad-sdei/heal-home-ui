@@ -33,7 +33,9 @@ class TherapistsList extends Component {
                 })
               }>
               <View>
-                <Text>{item.firstName + ' ' + item.lastName}</Text>
+                <Text style={styles.nameStyle}>
+                  {item.firstName + ' ' + item.lastName}
+                </Text>
                 <Text>{item.role}</Text>
               </View>
               <View style={{paddingTop: normalize(3)}}>
@@ -104,11 +106,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: normalize(15),
     borderBottomWidth: 1,
+    borderBottomColor: '#00000029',
   },
   activeStatusView: {
     width: normalize(10),
     height: normalize(10),
     borderRadius: normalize(10),
     backgroundColor: colors.GREEN,
+  },
+  nameStyle: {
+    fontSize: normalize(14),
+    fontFamily: 'Poppins-Medium',
+    color: colors.GRAY_FIVE,
+  },
+  roleStyle: {
+    fontSize: normalize(10),
+    color: colors.GRAY_PLACE_COLOR,
+    fontFamily: 'Poppins-Regular',
   },
 });
