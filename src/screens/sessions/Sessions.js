@@ -307,14 +307,6 @@ class Sessions extends Component {
                 </TouchableOpacity>
               </>
             ) : null}
-            {update ? (
-              <Text
-                onPress={() => {
-                  this.backHandler();
-                }}>
-                Back
-              </Text>
-            ) : null}
           </View>
           <ScrollView contentContainerStyle={styles.scrollView}>
             {active === 1 ? (
