@@ -68,7 +68,7 @@ class Home extends React.Component {
                 'Session start' +
                 ' ' +
                 moment(item.start)
-                  .endOf(item.end)
+                  .endOf(item.start)
                   .fromNow()
               }
               // time={moment(currentDate).format('l')}

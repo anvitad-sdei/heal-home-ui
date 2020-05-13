@@ -42,7 +42,6 @@ class Sessions extends Component {
       notes: '',
       sessionType: '',
       start: true,
-      update: false,
     };
   }
 
@@ -50,8 +49,8 @@ class Sessions extends Component {
     this.props.allRequestedSession();
   }
 
-  editSession = (id, update) => {
-    this.setState({active: 1, update: update});
+  editSession = id => {
+    this.setState({active: 1});
     this.props.getRequestedSessionById(id);
   };
 
@@ -119,22 +118,6 @@ class Sessions extends Component {
     // console.log(data);
     this.props.requestSession(data);
   };
-  backHandler = () => {
-    this.setState({
-      active: 1,
-      startDate: Date.now(),
-      startTime: Date.now(),
-      endDate: Date.now(),
-      endTime: Date.now(),
-      dateModal: false,
-      timeModal: false,
-      defaultDate: Date.now(),
-      notes: '',
-      sessionType: '',
-      start: true,
-      update: false,
-    });
-  };
   render() {
     const {
       active,
@@ -148,7 +131,6 @@ class Sessions extends Component {
       sessionType,
       notes,
       start,
-      update,
     } = this.state;
     const {mySession, getBySessionId} = this.props;
     // console.log('get by session id========', getBySessionId);
@@ -158,7 +140,7 @@ class Sessions extends Component {
       ? mySession.map((item, i) => {
           return (
             <View style={styles.sessionViewWrapper} key={i}>
-              <TouchableOpacity onPress={() => this.editSession(item.id, true)}>
+              <TouchableOpacity onPress={() => this.editSession(item.id)}>
                 <View style={styles.requestedSessionView}>
                   <View>
                     <Text style={styles.sessionHeading}>
@@ -246,10 +228,7 @@ class Sessions extends Component {
           <View style={styles.topButtonView}>
             {active === 1 ? (
               <>
-                <TouchableOpacity
-                  onPress={() => {
-                    update ? this.backHandler() : this.setState({active: 1});
-                  }}>
+                <TouchableOpacity onPress={() => this.setState({active: 1})}>
                   <View
                     style={{
                       ...styles.newSession,
@@ -260,7 +239,7 @@ class Sessions extends Component {
                         ...styles.textStyle,
                         color: active === 1 ? colors.WHITE : colors.BLUE,
                       }}>
-                      {update ? 'Back' : 'New Session'}
+                      New Session
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -306,14 +285,6 @@ class Sessions extends Component {
                   </View>
                 </TouchableOpacity>
               </>
-            ) : null}
-            {update ? (
-              <Text
-                onPress={() => {
-                  this.backHandler();
-                }}>
-                Back
-              </Text>
             ) : null}
           </View>
           <ScrollView contentContainerStyle={styles.scrollView}>
