@@ -108,16 +108,37 @@ class Sessions extends Component {
   onChangeNotes = notes => {
     this.setState({notes: notes});
   };
+  dateFormatter = date => {
+    //console.log('date====>', date);
+    return `${moment(date).get('year')}-${moment(date).get('months') +
+      1}-${moment(date).get('days')}`;
+  };
+
+  timeFormatter = () => {};
   onRequestSession = () => {
-    const {id, startDate, endDate, notes, sessionType} = this.state;
+    const {
+      id,
+      startDate,
+      endDate,
+      startTime,
+      endTime,
+      notes,
+      sessionType,
+    } = this.state;
     const data = {
       id: id,
-      startDate: startDate,
-      endDate: endDate,
+      startDate:
+        moment(startDate).format('YYYY-MM-DD') +
+        ' ' +
+        moment(startTime).format('HH:mm:ss'),
+      endDate:
+        moment(endDate).format('YYYY-MM-DD') +
+        ' ' +
+        moment(endTime).format('HH:mm:ss'),
       sessionType: sessionType,
       notes: notes,
     };
-    // console.log(data);
+    console.log(data);
     this.props.requestSession(data);
   };
   backHandler = () => {

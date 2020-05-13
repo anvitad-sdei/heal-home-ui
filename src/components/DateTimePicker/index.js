@@ -11,7 +11,7 @@ export const CustomDatePicker = ({date, handler}) => {
       }}>
       <DateTimePicker
         testID="dateTimePicker"
-        timeZoneOffsetInMinutes={0}
+        //  timeZoneOffsetInMinutes={0}
         value={new Date(date)}
         mode={'date'}
         is24Hour={true}
