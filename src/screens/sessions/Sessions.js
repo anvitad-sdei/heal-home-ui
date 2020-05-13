@@ -156,6 +156,7 @@ class Sessions extends Component {
       start: true,
       update: false,
     });
+    this.props.clearSessionById();
   };
   render() {
     const {
@@ -420,7 +421,7 @@ class Sessions extends Component {
 
                 <View style={styles.buttonView}>
                   <RoundedButton
-                    title="Save"
+                    title={update ? 'UPDATE' : 'SAVE'}
                     buttonStyle={styles.buttonStyle}
                     titleStyle={styles.titleStyle}
                     onPress={() => this.onRequestSession()}
