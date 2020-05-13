@@ -14,9 +14,11 @@ import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
 import ViewPager from '@react-native-community/viewpager';
 import moment from 'moment';
 import CardView from '../../components/ViewPager/CardView';
-export default class Home extends React.Component {
-  constructor() {
-    super();
+import {getUpcomingSession} from '../../redux/actions';
+import {connect} from 'react-redux';
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       modal: false,
       defaultDate: Date.now(),
@@ -24,6 +26,9 @@ export default class Home extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.getUpcomingSession();
+  }
   modalHandler = () => {
     this.setState({modal: !this.state.modal});
   };
@@ -33,6 +38,8 @@ export default class Home extends React.Component {
   };
   render() {
     const {modal, defaultDate} = this.state;
+    const {upcomingSessionData} = this.props;
+    console.log('upcoming session -------------------', upcomingSessionData);
     const cardViewData = [
       {
         id: 1,
@@ -51,16 +58,18 @@ export default class Home extends React.Component {
         timing: '8:00AM-8:00PM',
       },
     ];
-    const viewPagerData = cardViewData.length
-      ? cardViewData.map((item, i) => {
+    const viewPagerData = upcomingSessionData.length
+      ? upcomingSessionData.map((item, i) => {
           return (
             <CardView
-              name={item.name}
-              degree={item.degree}
-              specilization={item.specilization}
-              experience={item.experience}
-              timing={item.timing}
-              source={require('../../assets/goal.png')}
+              title={item.title}
+              time={item.localDateTime.year}
+              // name={item.name}
+              // degree={item.degree}
+              // specilization={item.specilization}
+              // experience={item.experience}
+              // timing={item.timing}
+              // source={require('../../assets/goal.png')}
             />
           );
         })
@@ -192,3 +201,12 @@ const styles = StyleSheet.create({
     marginTop: hp(1),
   },
 });
+const mapStateToProps = ({sessions}) => {
+  const {upcomingSession} = sessions;
+  return {upcomingSessionData: upcomingSession};
+};
+
+export default connect(
+  mapStateToProps,
+  {getUpcomingSession},
+)(Home);
