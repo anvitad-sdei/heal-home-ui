@@ -20,6 +20,10 @@ import {
 import moment from 'moment';
 import {connect} from 'react-redux';
 import InputFieldDateTime from '../../components/DateTimeField';
+import {
+  CustomTimePicker,
+  CustomDatePicker,
+} from '../../components/DateTimePicker';
 
 class Sessions extends Component {
   constructor(props) {
@@ -37,6 +41,7 @@ class Sessions extends Component {
       defaultDate: Date.now(),
       notes: '',
       sessionType: '',
+      start: true,
     };
   }
 
@@ -49,12 +54,20 @@ class Sessions extends Component {
     this.props.getRequestedSessionById(id);
   };
 
-  dateModalHandler = () => {
-    this.setState({dateModal: !this.state.dateModal});
+  dateModalHandler = start => {
+    if (start) {
+      this.setState({dateModal: !this.state.dateModal, start: start});
+    } else {
+      this.setState({dateModal: !this.state.dateModal, start: start});
+    }
   };
 
-  timeModalHandler = () => {
-    this.setState({timeModal: !this.state.timeModal});
+  timeModalHandler = start => {
+    if (start) {
+      this.setState({timeModal: !this.state.timeModal, start: start});
+    } else {
+      this.setState({timeModal: !this.state.timeModal, start: start});
+    }
   };
 
   dateHandler = (event, selectedDate) => {
@@ -73,6 +86,19 @@ class Sessions extends Component {
     });
   };
 
+  endTimeHandler = (event, time) => {
+    this.setState({endTime: time});
+  };
+  startTimeHandler = (event, time) => {
+    this.setState({startTime: time});
+  };
+
+  startDateHandler = (event, date) => {
+    this.setState({startDate: date});
+  };
+  endDateHandler = (event, date) => {
+    this.setState({endDate: date});
+  };
   onSessionType = sessionType => {
     this.setState({sessionType: sessionType});
   };
@@ -104,6 +130,7 @@ class Sessions extends Component {
       timeModal,
       sessionType,
       notes,
+      start,
     } = this.state;
     const {mySession, getBySessionId} = this.props;
     // console.log('get by session id========', getBySessionId);
@@ -178,7 +205,7 @@ class Sessions extends Component {
         }}>
         <DateTimePicker
           testID="dateTimePicker"
-          timeZoneOffsetInMinutes={0}
+          // timeZoneOffsetInMinutes={0}
           value={new Date(startTime)}
           mode="time"
           is24Hour={true}
@@ -276,7 +303,7 @@ class Sessions extends Component {
                 <View style={styles.dateTimeView}>
                   <InputFieldDateTime
                     source={require('../../assets/calendar.png')}
-                    onPress={() => this.dateModalHandler()}
+                    onPress={() => this.dateModalHandler(true)}
                     dateTimeValue={
                       moment(startDate).format('L') ||
                       getBySessionId.moment(startDate).format('L')
@@ -284,7 +311,7 @@ class Sessions extends Component {
                   />
                   <InputFieldDateTime
                     source={require('../../assets/time.png')}
-                    onPress={() => this.timeModalHandler()}
+                    onPress={() => this.timeModalHandler(true)}
                     dateTimeValue={moment(startTime).format('LT')}
                   />
                 </View>
@@ -295,7 +322,7 @@ class Sessions extends Component {
                 <View style={styles.dateTimeView}>
                   <InputFieldDateTime
                     source={require('../../assets/calendar.png')}
-                    onPress={() => this.dateModalHandler()}
+                    onPress={() => this.dateModalHandler(false)}
                     dateTimeValue={
                       moment(endDate).format('L') ||
                       getBySessionId.moment(endDate).format('L')
@@ -303,7 +330,7 @@ class Sessions extends Component {
                   />
                   <InputFieldDateTime
                     source={require('../../assets/time.png')}
-                    onPress={() => this.timeModalHandler()}
+                    onPress={() => this.timeModalHandler(false)}
                     dateTimeValue={moment(endTime).format('LT')}
                   />
                 </View>
@@ -362,7 +389,19 @@ class Sessions extends Component {
               <CustomModal
                 visible={dateModal}
                 handler={() => this.dateModalHandler()}
-                content={dateContent}
+                content={
+                  start ? (
+                    <CustomDatePicker
+                      date={startDate}
+                      handler={this.startDateHandler}
+                    />
+                  ) : (
+                    <CustomDatePicker
+                      date={endDate}
+                      handler={this.endDateHandler}
+                    />
+                  )
+                }
               />
             ) : null}
 
@@ -370,7 +409,19 @@ class Sessions extends Component {
               <CustomModal
                 visible={timeModal}
                 handler={() => this.timeModalHandler()}
-                content={timeContent}
+                content={
+                  start ? (
+                    <CustomTimePicker
+                      time={startTime}
+                      handler={this.startTimeHandler}
+                    />
+                  ) : (
+                    <CustomTimePicker
+                      time={endTime}
+                      handler={this.endTimeHandler}
+                    />
+                  )
+                }
               />
             ) : null}
           </ScrollView>
