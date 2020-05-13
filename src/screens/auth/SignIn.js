@@ -126,7 +126,7 @@ class SignIn extends React.Component {
               onPress={() => this.loginHandler()}
             />
           </View>
-          <View style={styles.bottomTextView}>
+          {/* <View style={styles.bottomTextView}>
             <Text style={[styles.textStyle, styles.textFontFamily]}>
               Do you have an account?
             </Text>
@@ -137,7 +137,7 @@ class SignIn extends React.Component {
               {' '}
               Sign Up
             </Text>
-          </View>
+          </View> */}
         </ScrollView>
       </MasterLayout>
     );
