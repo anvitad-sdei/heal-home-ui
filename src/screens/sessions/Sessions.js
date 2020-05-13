@@ -181,39 +181,39 @@ class Sessions extends Component {
         })
       : null;
 
-    const dateContent = (
-      <View
-        style={{
-          paddingBottom: normalize(10),
-        }}>
-        <DateTimePicker
-          testID="dateTimePicker"
-          timeZoneOffsetInMinutes={0}
-          value={new Date(defaultDate)}
-          mode={'date'}
-          is24Hour={true}
-          display="default"
-          onChange={this.dateHandler}
-        />
-      </View>
-    );
+    // const dateContent = (
+    //   <View
+    //     style={{
+    //       paddingBottom: normalize(10),
+    //     }}>
+    //     <DateTimePicker
+    //       testID="dateTimePicker"
+    //       timeZoneOffsetInMinutes={0}
+    //       value={new Date(defaultDate)}
+    //       mode={'date'}
+    //       is24Hour={true}
+    //       display="default"
+    //       onChange={this.dateHandler}
+    //     />
+    //   </View>
+    // );
 
-    const timeContent = (
-      <View
-        style={{
-          paddingBottom: normalize(10),
-        }}>
-        <DateTimePicker
-          testID="dateTimePicker"
-          // timeZoneOffsetInMinutes={0}
-          value={new Date(startTime)}
-          mode="time"
-          is24Hour={true}
-          display="default"
-          onChange={this.timeHandler}
-        />
-      </View>
-    );
+    // const timeContent = (
+    //   <View
+    //     style={{
+    //       paddingBottom: normalize(10),
+    //     }}>
+    //     <DateTimePicker
+    //       testID="dateTimePicker"
+    //       // timeZoneOffsetInMinutes={0}
+    //       value={new Date(startTime)}
+    //       mode="time"
+    //       is24Hour={true}
+    //       display="default"
+    //       onChange={this.timeHandler}
+    //     />
+    //   </View>
+    // );
 
     return (
       <MasterLayout
@@ -331,7 +331,9 @@ class Sessions extends Component {
                   <InputFieldDateTime
                     source={require('../../assets/time.png')}
                     onPress={() => this.timeModalHandler(false)}
-                    dateTimeValue={moment(endTime).format('LT')}
+                    dateTimeValue={moment(endTime)
+                      .add(1, 'hours')
+                      .format('LT')}
                   />
                 </View>
 
@@ -477,6 +479,7 @@ const styles = StyleSheet.create({
     color: colors.GRAY_FIVE,
     paddingLeft: normalize(8),
     paddingBottom: normalize(5),
+    paddingTop: normalize(12),
   },
   orangeCircleView: {
     height: normalize(9),

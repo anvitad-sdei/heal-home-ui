@@ -16,6 +16,7 @@ import moment from 'moment';
 import CardView from '../../components/ViewPager/CardView';
 import {getUpcomingSession} from '../../redux/actions';
 import {connect} from 'react-redux';
+const currentDate = Date.now();
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -63,7 +64,15 @@ class Home extends React.Component {
           return (
             <CardView
               title={item.title}
-              time={item.localDateTime.year}
+              time={
+                'Session start' +
+                ' ' +
+                moment(item.start)
+                  .endOf(item.end)
+                  .fromNow()
+              }
+              // time={moment(currentDate).format('l')}
+
               // name={item.name}
               // degree={item.degree}
               // specilization={item.specilization}

@@ -30,7 +30,7 @@ const CardView = props => {
               marginTop: normalize(20),
               justifyContent: 'space-between',
             }}>
-            <Text>{time}</Text>
+            <Text style={{fontSize: normalize(12)}}>{time}</Text>
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity onPress={() => alert('message')}>
                 <Image
