@@ -3,6 +3,7 @@ const iState = {
   sessionsData: [],
   requestSession: {},
   sessionById: {},
+  upcomingSession: [],
 };
 const sessions = (state = iState, action) => {
   switch (action.type) {
@@ -21,6 +22,11 @@ const sessions = (state = iState, action) => {
       return {
         ...state,
         sessionById: action.payload,
+      };
+    case constants.UPCOMING_SESSION_SUCCESS:
+      return {
+        ...state,
+        upcomingSession: action.payload,
       };
     default:
       return state;

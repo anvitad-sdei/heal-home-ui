@@ -164,7 +164,7 @@ export const getRequestedSessionById = id => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios(`${apiUrls.BASE_URL}/requestsession/${id}`);
     if (res) {
-      console.log(res);
+      // console.log(res);
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(
@@ -174,7 +174,29 @@ export const getRequestedSessionById = id => async dispatch => {
       );
     }
   } catch (err) {
-    console.log(JSON.stringify(err.response));
+    //console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
+
+/*************************GET UPCOMING SESSION  API********************** */
+export const getUpcomingSession = () => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios(`${apiUrls.BASE_URL}/question/upcomingsessions`);
+    if (res) {
+      //console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.UPCOMING_SESSION_SUCCESS,
+          res.data.response,
+        ),
+      );
+    }
+  } catch (err) {
+    // console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
     errorResHandler(err);
   }
