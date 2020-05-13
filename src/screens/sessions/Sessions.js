@@ -3,10 +3,7 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import ViewWithCircle from '../../components/ViewWithCircle';
 import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 import RoundedButton from '../../components/Buttons/RoundedButton';
@@ -22,6 +19,8 @@ import {
 } from '../../redux/actions';
 import moment from 'moment';
 import {connect} from 'react-redux';
+import InputFieldDateTime from '../../components/DateTimeField';
+
 class Sessions extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +39,7 @@ class Sessions extends Component {
       sessionType: '',
     };
   }
+
   componentDidMount() {
     this.props.allRequestedSession();
   }
@@ -52,9 +52,11 @@ class Sessions extends Component {
   dateModalHandler = () => {
     this.setState({dateModal: !this.state.dateModal});
   };
+
   timeModalHandler = () => {
     this.setState({timeModal: !this.state.timeModal});
   };
+
   dateHandler = (event, selectedDate) => {
     console.log('selectedDate=========', selectedDate);
     this.setState({
@@ -66,7 +68,6 @@ class Sessions extends Component {
 
   timeHandler = (event, selectedTime) => {
     console.log('time handler-====>', moment(selectedTime).format('LT'));
-
     this.setState({
       startTime: selectedTime,
     });
@@ -112,29 +113,28 @@ class Sessions extends Component {
       ? mySession.map((item, i) => {
           return (
             <View style={styles.sessionViewWrapper} key={i}>
-              <View style={styles.requestedSessionView}>
-                <View>
-                  <Text style={styles.sessionHeading}>
-                    {'Session' + ' ' + item.id}
-                  </Text>
+              <TouchableOpacity onPress={() => this.editSession(item.id)}>
+                <View style={styles.requestedSessionView}>
+                  <View>
+                    <Text style={styles.sessionHeading}>
+                      {'Session' + ' ' + item.id}
+                    </Text>
 
-                  <Text style={{...styles.dateStyle, color: colors.BLUE}}>
-                    {moment(item.createdDate).format('lll') +
-                      '-' +
-                      moment(item.createdDate)
-                        .add(1, 'hours')
-                        .format('LT')}
-                  </Text>
-                </View>
-                <TouchableOpacity onPress={() => this.editSession(item.id)}>
+                    <Text style={{...styles.dateStyle, color: colors.BLUE}}>
+                      {moment(item.startDate).format('lll') +
+                        '-' +
+                        moment(item.endDate).format('LT')}
+                    </Text>
+                  </View>
+
                   <View style={styles.editImageView}>
                     <Image
                       source={require('../../assets/edit.png')}
                       style={{width: '100%', height: '100%'}}
                     />
                   </View>
-                </TouchableOpacity>
-              </View>
+                </View>
+              </TouchableOpacity>
               <View style={{flexDirection: 'row'}}>
                 <View style={styles.orangeCircleView} />
                 <Text style={{...styles.dateStyle, color: colors.ORANGE_FOUR}}>
@@ -270,59 +270,51 @@ class Sessions extends Component {
                   paddingTop: normalize(10),
                   // borderWidth: 1,
                 }}>
+                {/*****************Start Date Time Field********************* */}
+
                 <Text style={styles.subHeadingStyle}>Start Date & Time</Text>
                 <View style={styles.dateTimeView}>
-                  <InputField
-                    onPress={() => this.dateModalHandler()}
-                    onChangeText={this.dateHandler}
+                  <InputFieldDateTime
                     source={require('../../assets/calendar.png')}
-                    containerStyle={styles.containerStyle}
-                    inputContainerStyle={styles.inputContainerStyle}
-                    inputStyle={styles.inputStyle}
-                    containerInputStyle={{borderBottomColor: colors.BLUE}}
-                    value={moment(startDate).format('llll')}
+                    onPress={() => this.dateModalHandler()}
+                    dateTimeValue={
+                      moment(startDate).format('L') ||
+                      getBySessionId.moment(startDate).format('L')
+                    }
                   />
-                  <InputField
-                    // onChangeText={this.onChangeEmail}
-                    onPress={() => this.timeModalHandler()}
+                  <InputFieldDateTime
                     source={require('../../assets/time.png')}
-                    containerStyle={styles.containerStyle}
-                    inputContainerStyle={styles.inputContainerStyle}
-                    inputStyle={styles.inputStyle}
-                    containerInputStyle={{borderBottomColor: colors.BLUE}}
-                    value={moment(startTime).format('LT')}
+                    onPress={() => this.timeModalHandler()}
+                    dateTimeValue={moment(startTime).format('LT')}
                   />
                 </View>
+
+                {/*****************End Date Time Field********************* */}
+
                 <Text style={styles.subHeadingStyle}>End Date & Time</Text>
                 <View style={styles.dateTimeView}>
-                  <InputField
-                    // onChangeText={this.onChangeEmail}
+                  <InputFieldDateTime
                     source={require('../../assets/calendar.png')}
-                    containerStyle={styles.containerStyle}
-                    inputContainerStyle={styles.inputContainerStyle}
-                    inputStyle={styles.inputStyle}
-                    containerInputStyle={{borderBottomColor: colors.BLUE}}
-                    value={endDate || getBySessionId.modifiedDate}
+                    onPress={() => this.dateModalHandler()}
+                    dateTimeValue={
+                      moment(endDate).format('L') ||
+                      getBySessionId.moment(endDate).format('L')
+                    }
                   />
-                  <InputField
-                    // onChangeText={this.onChangeEmail}
+                  <InputFieldDateTime
                     source={require('../../assets/time.png')}
-                    containerStyle={styles.containerStyle}
-                    inputContainerStyle={styles.inputContainerStyle}
-                    inputStyle={styles.inputStyle}
-                    containerInputStyle={{borderBottomColor: colors.BLUE}}
-                    value={endTime}
+                    onPress={() => this.timeModalHandler()}
+                    dateTimeValue={moment(endTime).format('LT')}
                   />
                 </View>
+
+                {/*****************Session Field********************* */}
+
                 <Text style={styles.subHeadingStyle}>Session Type</Text>
                 <View>
                   <Input
-                    inputContainerStyle={styles.sessionInputStyle}
-                    inputStyle={{
-                      fontSize: normalize(14),
-                      fontFamily: 'Poppins-Regular',
-                      //paddingTop: normalize(20),
-                    }}
+                    inputContainerStyle={styles.inputContainerStyle}
+                    inputStyle={styles.inputStyle}
                     placeholder={'Eg. Yoga Session'}
                     placeholderTextColor={colors.GRAY_PLACE_COLOR}
                     onChangeText={text => this.onSessionType(text)}
@@ -485,11 +477,12 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 1,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 4.65,
-    elevation: 6,
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+
+    elevation: 1,
   },
   scrollView: {
     paddingBottom: hp(100),
@@ -499,28 +492,18 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
-  containerStyle: {
-    width: normalize(100),
-    height: normalize(36),
-    borderBottomColor: colors.WHITE,
-    // borderWidth: 1,
-  },
+
   inputContainerStyle: {
-    borderBottomColor: colors.WHITE,
-    // borderWidth: 1,
-  },
-  inputStyle: {
-    fontSize: normalize(14),
-    color: colors.BLACK_SECOND,
-    fontFamily: 'Poppins-Regular',
-    //borderWidth: 1,
-  },
-  sessionInputStyle: {
     borderWidth: 1,
     borderRadius: normalize(5),
     borderColor: colors.BLUE,
     paddingLeft: normalize(5),
   },
+  inputStyle: {
+    fontSize: normalize(14),
+    fontFamily: 'Poppins-Regular',
+  },
+
   dateTimeView: {
     flexDirection: 'row',
     justifyContent: 'space-between',

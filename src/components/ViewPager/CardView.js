@@ -8,11 +8,46 @@ import {
 } from 'react-native-responsive-screen';
 import {Avatar} from 'react-native-elements';
 const CardView = props => {
-  const {name, degree, experience, specilization, timing, source} = props;
+  const {
+    name,
+    degree,
+    experience,
+    specilization,
+    timing,
+    source,
+    title,
+    time,
+  } = props;
   return (
     <View>
       <View style={styles.sliderView}>
-        <View style={styles.sessionView}>
+        <View style={{padding: normalize(20)}}>
+          <Text>{title}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              // borderWidth: 1,
+              marginTop: normalize(20),
+              justifyContent: 'space-between',
+            }}>
+            <Text>{time}</Text>
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity onPress={() => alert('message')}>
+                <Image
+                  source={require('../../assets/message3x.png')}
+                  style={styles.socialImage}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => alert('video')}>
+                <Image
+                  source={require('../../assets/video3x.png')}
+                  style={styles.socialImageVideo}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+        {/* <View style={styles.sessionView}>
           <View style={styles.userImageView}>
             <Avatar size="large" source={source} />
           </View>
@@ -43,7 +78,7 @@ const CardView = props => {
               />
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
       </View>
     </View>
   );

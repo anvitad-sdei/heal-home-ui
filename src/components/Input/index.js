@@ -20,28 +20,27 @@ const InputField = props => {
     containerInputStyle,
     onPress,
   } = props;
-  console.log('time value=====', value);
+
   return (
-    <View style={{...styles.container, ...containerInputStyle}}>
-      <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
+      <View style={{...styles.container, ...containerInputStyle}}>
         <Avatar
           source={source}
           containerStyle={styles.containerStyle}
           overlayContainerStyle={styles.overlayContainerStyle}
         />
-      </TouchableOpacity>
-
-      <Input
-        placeholder={placeholder}
-        onChangeText={onChangeText}
-        secureTextEntry={secureTextEntry}
-        containerStyle={containerStyle}
-        inputContainerStyle={inputContainerStyle}
-        inputStyle={inputStyle}
-        value={value}
-        autoCapitalize={autoCapitalize || 'none'}
-      />
-    </View>
+        <Input
+          placeholder={placeholder}
+          onChangeText={onChangeText}
+          secureTextEntry={secureTextEntry}
+          containerStyle={containerStyle}
+          inputContainerStyle={inputContainerStyle}
+          inputStyle={inputStyle}
+          value={value}
+          autoCapitalize={autoCapitalize || 'none'}
+        />
+      </View>
+    </TouchableOpacity>
   );
 };
 
