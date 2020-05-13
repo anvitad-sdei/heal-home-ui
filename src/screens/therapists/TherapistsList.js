@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import {getAllTherapists} from '../../redux/actions';
 import {connect} from 'react-redux';
+import colors from '../../constants/colors';
+import normalize from '../../helpers/ResponsiveFont';
+import {ScrollView} from 'react-native-gesture-handler';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 class TherapistsList extends Component {
   constructor(props) {
@@ -21,13 +25,23 @@ class TherapistsList extends Component {
       ? therapistsList.map((item, i) => {
           return (
             <TouchableOpacity
+              style={styles.touchableView}
               key={i}
               onPress={() =>
                 this.props.navigation.navigate('Sessions', {
                   id: item.id,
                 })
               }>
-              <Text>{item.firstName}</Text>
+              <View>
+                <Text>{item.firstName + ' ' + item.lastName}</Text>
+                <Text>{item.role}</Text>
+              </View>
+              <View style={{paddingTop: normalize(3)}}>
+                {/* <Text>{item.activeStatus}</Text> */}
+                {item.activeStatus === 'ACTIVE' ? (
+                  <View style={styles.activeStatusView} />
+                ) : null}
+              </View>
             </TouchableOpacity>
           );
         })
@@ -35,17 +49,15 @@ class TherapistsList extends Component {
     return (
       <MasterLayout
         leftIcon={require('../../assets/backArrow.png')}
-        centerTitle="Therapists"
+        centerTitle="Therapist Listing"
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.navigate('Home')}
         rightIconPress={() => alert('right')}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          {therapistsData}
-        </View>
+        <ScrollView contentContainerStyle={{paddingBottom: hp(40)}}>
+          <View style={styles.outerShadowView}>
+            <View style={styles.innerListView}>{therapistsData}</View>
+          </View>
+        </ScrollView>
       </MasterLayout>
     );
   }
@@ -62,3 +74,41 @@ export default connect(
   mapStateToProps,
   {getAllTherapists},
 )(TherapistsList);
+
+const styles = StyleSheet.create({
+  outerShadowView: {
+    backgroundColor: colors.WHITE,
+    borderRadius: normalize(10),
+    marginTop: normalize(15),
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  innerListView: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: normalize(15),
+    marginBottom: normalize(25),
+  },
+  touchableView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: normalize(15),
+    borderBottomWidth: 1,
+  },
+  activeStatusView: {
+    width: normalize(10),
+    height: normalize(10),
+    borderRadius: normalize(10),
+    backgroundColor: colors.GREEN,
+  },
+});

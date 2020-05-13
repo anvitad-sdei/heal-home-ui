@@ -13,7 +13,7 @@ export default class CustomTabBar extends Component {
           <View style={styles.imageView}>
             <Image
               source={require('../../assets/calendar.png')}
-              style={{maxWidth: 20, height: '100%'}}
+              style={{width: '100%', height: '100%'}}
             />
           </View>
         </TouchableOpacity>
