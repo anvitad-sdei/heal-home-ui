@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Alert} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
@@ -14,6 +14,8 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {journalingSave, getJournalingById} from '../../redux/actions';
 import {connect} from 'react-redux';
+import Axios from 'axios';
+import {apiUrls} from '../../redux/api/constants';
 class JournalQuestion extends Component {
   constructor(props) {
     super(props);
@@ -35,6 +37,7 @@ class JournalQuestion extends Component {
       cravingExperience: '',
       medicationToday: '',
       anyComments: '',
+      isLoading: false,
     };
   }
 
@@ -45,6 +48,49 @@ class JournalQuestion extends Component {
       this.props.getJournalingById(id);
     }
   }
+
+  getJournalingById = async id => {
+    try {
+      this.setState({isLoading: true});
+      let res = await Axios(`${apiUrls.BASE_URL}/journaling/${id}`);
+      if (res) {
+        const {
+          gratefulToday,
+          makeTodayGreat,
+          accomplishToday,
+          achieveToday,
+          ilearnToday,
+          thankfulNowToday,
+          feelingRightNow,
+          amazeHappenToday,
+          betterToday,
+          triggerToday,
+          cravingExperience,
+          medicationToday,
+          anyComments,
+        } = res.data.response;
+        this.setState({
+          anyComments: anyComments,
+          accomplishToday: accomplishToday,
+          achieveToday: achieveToday,
+          amazeHappenToday: amazeHappenToday,
+          betterToday: betterToday,
+          cravingExperience: cravingExperience,
+          feelingRightNow: feelingRightNow,
+          gratefulToday: gratefulToday,
+          ilearnToday: ilearnToday,
+          makeTodayGreat: makeTodayGreat,
+          medicationToday: medicationToday,
+          thankfulNowToday: thankfulNowToday,
+          triggerToday: triggerToday,
+          isLoading: false,
+        });
+      }
+    } catch (err) {
+      this.setState({isLoading: false});
+      Alert.alert('Failed to fetch');
+    }
+  };
   onGratefulToday = gratefulToday => {
     this.setState({gratefulToday: gratefulToday});
   };
@@ -101,26 +147,28 @@ class JournalQuestion extends Component {
       thankfulNowToday,
       triggerToday,
     } = this.state;
+    const {dataById} = this.props;
 
     let data = {
-      accomplishToday: accomplishToday,
-      achieveToday: achieveToday,
-      amazeHappenToday: amazeHappenToday,
-      anyComments: anyComments,
-      betterToday: betterToday,
-      cravingExperience: cravingExperience,
-      feelingRightNow: feelingRightNow,
-      gratefulToday: gratefulToday,
-      id: this.state.id,
-      ilearnToday: ilearnToday,
-      makeTodayGreat: makeTodayGreat,
-      medicationToday: medicationToday,
-      thankfulNowToday: thankfulNowToday,
-      triggerToday: triggerToday,
+      accomplishToday: accomplishToday || dataById.accomplishToday,
+      achieveToday: achieveToday || dataById.achieveToday,
+      amazeHappenToday: amazeHappenToday || dataById.amazeHappenToday,
+      anyComments: anyComments || dataById.anyComments,
+      betterToday: betterToday || dataById.betterToday,
+      cravingExperience: cravingExperience || dataById.cravingExperience,
+      feelingRightNow: feelingRightNow || dataById.feelingRightNow,
+      gratefulToday: gratefulToday || dataById.gratefulToday,
+      id: this.state.id || dataById.id,
+      ilearnToday: ilearnToday || dataById.ilearnToday,
+      makeTodayGreat: makeTodayGreat || dataById.makeTodayGreat,
+      medicationToday: medicationToday || dataById.medicationToday,
+      thankfulNowToday: thankfulNowToday || dataById.thankfulNowToday,
+      triggerToday: triggerToday || dataById.triggerToday,
     };
     console.log('data============>', data);
     this.props.journalingSave(data);
   };
+
   render() {
     const {
       gratefulToday,
