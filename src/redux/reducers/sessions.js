@@ -4,6 +4,7 @@ const iState = {
   requestSession: {},
   sessionById: {},
   upcomingSession: [],
+  updateSessionRequest: {},
 };
 const sessions = (state = iState, action) => {
   switch (action.type) {
@@ -27,6 +28,11 @@ const sessions = (state = iState, action) => {
       return {
         ...state,
         upcomingSession: action.payload,
+      };
+    case constants.UPDATE_REQUEST_SESSION_SUCCESS:
+      return {
+        ...state,
+        updateSessionRequest: action.payload,
       };
 
     case constants.CLEAR_SESSION_BY_ID:

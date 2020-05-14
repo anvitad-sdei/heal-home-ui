@@ -101,22 +101,22 @@ class JournalQuestion extends Component {
       thankfulNowToday,
       triggerToday,
     } = this.state;
-
+    const {dataById} = this.props;
     let data = {
-      accomplishToday: accomplishToday,
-      achieveToday: achieveToday,
-      amazeHappenToday: amazeHappenToday,
-      anyComments: anyComments,
-      betterToday: betterToday,
-      cravingExperience: cravingExperience,
-      feelingRightNow: feelingRightNow,
-      gratefulToday: gratefulToday,
-      id: this.state.id,
-      ilearnToday: ilearnToday,
-      makeTodayGreat: makeTodayGreat,
-      medicationToday: medicationToday,
-      thankfulNowToday: thankfulNowToday,
-      triggerToday: triggerToday,
+      accomplishToday: accomplishToday || dataById.accomplishToday,
+      achieveToday: achieveToday || dataById.achieveToday,
+      amazeHappenToday: amazeHappenToday || dataById.amazeHappenToday,
+      anyComments: anyComments || dataById.anyComments,
+      betterToday: betterToday || dataById.betterToday,
+      cravingExperience: cravingExperience || dataById.cravingExperience,
+      feelingRightNow: feelingRightNow || dataById.feelingRightNow,
+      gratefulToday: gratefulToday || dataById.gratefulToday,
+      id: this.state.id || dataById.id,
+      ilearnToday: ilearnToday || dataById.ilearnToday,
+      makeTodayGreat: makeTodayGreat || dataById.makeTodayGreat,
+      medicationToday: medicationToday || dataById.medicationToday,
+      thankfulNowToday: thankfulNowToday || dataById.thankfulNowToday,
+      triggerToday: triggerToday || dataById.triggerToday,
     };
     console.log('data============>', data);
     this.props.journalingSave(data);
