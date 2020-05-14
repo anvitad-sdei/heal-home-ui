@@ -98,18 +98,14 @@ export const journalingSave = data => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios.post(`${apiUrls.BASE_URL}/journaling`, {...data});
     if (res) {
-      // console.log(res);
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(constants.SAVE_JOURNALING_SUCCESS, res.data),
       );
-      successResHandler('Data save successfully', 'Journaling'); //check path name
+      successResHandler('Data save successfully', 'Journaling');
     }
   } catch (err) {
-    // console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
-    // dispatch(errorHandler(err));
-    // alert('Something went wrong');
     errorResHandler(err);
   }
 };
@@ -120,22 +116,40 @@ export const requestSession = data => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios.post(`${apiUrls.BASE_URL}/requestsession`, {...data});
     if (res) {
-      // console.log(res);
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(constants.REQUEST_SESSION_SUCCESS, res.data),
       );
-      successResHandler('Data save successfully', 'TherapistsList'); //check path name
+      successResHandler('Data save successfully', 'TherapistsList');
     }
   } catch (err) {
-    // console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
-    // dispatch(errorHandler(err));
-    // alert('Something went wrong');
     errorResHandler(err);
   }
 };
 
+/**********************************UPDATE REQUEST SESSION API ***********************/
+export const updateRequestSession = updateData => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios.post(`${apiUrls.BASE_URL}/requestsession`, {
+      ...updateData,
+    });
+    if (res) {
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.UPDATE_REQUEST_SESSION_SUCCESS,
+          res.data,
+        ),
+      );
+      successResHandler('Data update successfully', 'TherapistsList');
+    }
+  } catch (err) {
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
 /*************************GET ALL MY REQUESTED SESSION********************** */
 export const allRequestedSession = () => async dispatch => {
   try {
@@ -223,26 +237,33 @@ export const getAllTherapists = () => async dispatch => {
     errorResHandler(err);
   }
 };
+/*************************GET ALL HANDOUTS SUCCESS ********************** */
+export const getAllHandouts = () => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios(`${apiUrls.BASE_URL}/question/handouts`);
+    if (res) {
+      //console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.GET_ALL_HANDOUTS_SUCCESS,
+          res.data.response,
+        ),
+      );
+    }
+  } catch (err) {
+    // console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
+
+/*************************CLEAR SESSION BY ID8*************************** */
 
 export const clearSessionById = () => dispatch => {
   dispatch({type: constants.CLEAR_SESSION_BY_ID});
 };
-// /*********************************************************************** */
-
-// export const getUserData = () => async dispatch => {
-//   try {
-//     dispatch(loadingHandler(true));
-//     let res = await axios('https://jsonplaceholder.typicode.com/todos');
-//     if (res) {
-//       dispatch(successResponseHandler(constants.GET_SUCCESS, res.data)); //type check kr lena
-//       dispatch(loadingHandler(false));
-//     }
-//   } catch (err) {
-//     dispatch(loadingHandler(false));
-//     errorResHandler(err);
-//     // dispatch(errorHandler(err));
-//   }
-// };
 
 /********************************************************* */
 const navigateToRoute = (routeName, params) => {

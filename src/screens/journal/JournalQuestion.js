@@ -16,6 +16,7 @@ import {journalingSave, getJournalingById} from '../../redux/actions';
 import {connect} from 'react-redux';
 import Axios from 'axios';
 import {apiUrls} from '../../redux/api/constants';
+import Loader from '../../components/Loader';
 class JournalQuestion extends Component {
   constructor(props) {
     super(props);
@@ -45,7 +46,7 @@ class JournalQuestion extends Component {
     const {navigation} = this.props;
     if (navigation.state.params.id) {
       const id = navigation.state.params.id;
-      this.props.getJournalingById(id);
+      this.getJournalingById(id);
     }
   }
 
@@ -148,22 +149,21 @@ class JournalQuestion extends Component {
       triggerToday,
     } = this.state;
     const {dataById} = this.props;
-
     let data = {
-      accomplishToday: accomplishToday || dataById.accomplishToday,
-      achieveToday: achieveToday || dataById.achieveToday,
-      amazeHappenToday: amazeHappenToday || dataById.amazeHappenToday,
-      anyComments: anyComments || dataById.anyComments,
-      betterToday: betterToday || dataById.betterToday,
-      cravingExperience: cravingExperience || dataById.cravingExperience,
-      feelingRightNow: feelingRightNow || dataById.feelingRightNow,
-      gratefulToday: gratefulToday || dataById.gratefulToday,
-      id: this.state.id || dataById.id,
-      ilearnToday: ilearnToday || dataById.ilearnToday,
-      makeTodayGreat: makeTodayGreat || dataById.makeTodayGreat,
-      medicationToday: medicationToday || dataById.medicationToday,
-      thankfulNowToday: thankfulNowToday || dataById.thankfulNowToday,
-      triggerToday: triggerToday || dataById.triggerToday,
+      accomplishToday: accomplishToday,
+      achieveToday: achieveToday,
+      amazeHappenToday: amazeHappenToday,
+      anyComments: anyComments,
+      betterToday: betterToday,
+      cravingExperience: cravingExperience,
+      feelingRightNow: feelingRightNow,
+      gratefulToday: gratefulToday,
+      id: this.state.id,
+      ilearnToday: ilearnToday,
+      makeTodayGreat: makeTodayGreat,
+      medicationToday: medicationToday,
+      thankfulNowToday: thankfulNowToday,
+      triggerToday: triggerToday,
     };
     console.log('data============>', data);
     this.props.journalingSave(data);
@@ -255,19 +255,19 @@ class JournalQuestion extends Component {
                   title="What am I grateful for today?"
                   onChangeText={text => this.onGratefulToday(text)}
                   value={gratefulToday}
-                  placeholder={gratefulToday || dataById.gratefulToday}
+                  placeholder={gratefulToday}
                 />
                 <CustomTextArea
                   title="What would make today great?"
                   onChangeText={text => this.onTodayGreat(text)}
                   value={makeTodayGreat}
-                  placeholder={makeTodayGreat || dataById.makeTodayGreat}
+                  placeholder={makeTodayGreat}
                 />
                 <CustomTextArea
                   title="What's ONE Thing I must accomplish today?"
                   onChangeText={text => this.onAccomplishToday(text)}
                   value={accomplishToday}
-                  placeholder={accomplishToday || dataById.accomplishToday}
+                  placeholder={accomplishToday}
                 />
               </View>
             ) : null}
@@ -278,62 +278,62 @@ class JournalQuestion extends Component {
                   title="What did I achieve today?"
                   onChangeText={text => this.onAchieveToday(text)}
                   value={achieveToday}
-                  placeholder={achieveToday || dataById.achieveToday}
+                  placeholder={achieveToday}
                 />
                 <CustomTextArea
                   title="What lessons did I learn?"
                   onChangeText={text => this.onLearnToday(text)}
                   value={ilearnToday}
-                  placeholder={ilearnToday || dataById.ilearnToday}
+                  placeholder={ilearnToday}
                 />
                 <CustomTextArea
                   title="What am I thankful for right now?"
                   onChangeText={text => this.onThankfulNow(text)}
                   value={thankfulNowToday}
-                  placeholder={thankfulNowToday || dataById.thankfulNowToday}
+                  placeholder={thankfulNowToday}
                 />
                 <CustomTextArea
                   title="How am I feeling right now?"
                   onChangeText={text => this.onFeelingRightNow(text)}
                   value={feelingRightNow}
-                  placeholder={feelingRightNow || dataById.feelingRightNow}
+                  placeholder={feelingRightNow}
                 />
 
                 <CustomTextArea
                   title="What are 3 amazing things that happened today?"
                   onChangeText={text => this.onAmazeHappen(text)}
                   value={amazeHappenToday}
-                  placeholder={amazeHappenToday || dataById.amazeHappenToday}
+                  placeholder={amazeHappenToday}
                 />
                 <CustomTextArea
                   title="How could I have made today better"
                   onChangeText={text => this.onBetterToday(text)}
                   value={betterToday}
-                  placeholder={betterToday || dataById.betterToday}
+                  placeholder={betterToday}
                 />
                 <CustomTextArea
                   title="Have you identified �triggers� to use today? Please explain. How did you manage? What coping skills you used?"
                   onChangeText={text => this.onTriggerToday(text)}
                   value={triggerToday}
-                  placeholder={triggerToday || dataById.triggerToday}
+                  placeholder={triggerToday}
                 />
                 <CustomTextArea
                   title=" Did you experience cravings? Physical? Psychological? Please describe."
                   onChangeText={text => this.onCraving(text)}
                   value={cravingExperience}
-                  placeholder={cravingExperience || dataById.cravingExperience}
+                  placeholder={cravingExperience}
                 />
                 <CustomTextArea
                   title=" Did you take medication today? If not why?"
                   onChangeText={text => this.onMedicationToday(text)}
                   value={medicationToday}
-                  placeholder={medicationToday || dataById.medicationToday}
+                  placeholder={medicationToday}
                 />
                 <CustomTextArea
                   title="Anything you would like to add?"
                   onChangeText={text => this.onAnyComments(text)}
                   value={anyComments}
-                  placeholder={anyComments || dataById.anyComments}
+                  placeholder={anyComments}
                 />
               </View>
             ) : null}
@@ -347,6 +347,7 @@ class JournalQuestion extends Component {
             />
           </View>
         </ScrollView>
+        <Loader isLoading={this.state.isLoading} />
       </MasterLayout>
     );
   }

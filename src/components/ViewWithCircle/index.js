@@ -3,14 +3,11 @@ import {Image, View, StyleSheet} from 'react-native';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 const ViewWithCircle = props => {
-  const {source} = props;
+  const {source, sourceCircle} = props;
   return (
     <View style={styles.sessionView}>
       <View style={styles.circleViewImage}>
-        <Image
-          source={require('../../assets/circle.png')}
-          style={styles.imageStyle}
-        />
+        <Image source={sourceCircle} style={styles.imageStyle} />
         <View style={styles.innerViewImage}>
           <Image source={source} style={styles.imageStyle} />
         </View>

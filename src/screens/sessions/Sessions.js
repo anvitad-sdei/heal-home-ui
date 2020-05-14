@@ -9,14 +9,13 @@ import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import {Input, Image} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
-import InputField from '../../components/Input';
 import CustomModal from '../../components/Modal';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import {
   allRequestedSession,
   requestSession,
   getRequestedSessionById,
   clearSessionById,
+  updateRequestSession,
 } from '../../redux/actions';
 import moment from 'moment';
 import {connect} from 'react-redux';
@@ -31,7 +30,8 @@ class Sessions extends Component {
     super(props);
     const {navigation} = this.props;
     this.state = {
-      id: navigation.getParam('id'),
+      // id: navigation.getParam('id'),
+      id: '',
       active: 1,
       startDate: Date.now(),
       startTime: Date.now(),
@@ -45,6 +45,7 @@ class Sessions extends Component {
       start: true,
       update: false,
     };
+    this.backHandler();
   }
 
   componentDidMount() {
@@ -52,7 +53,7 @@ class Sessions extends Component {
   }
 
   editSession = (id, update) => {
-    this.setState({active: 1, update: update});
+    this.setState({active: 1, update: update, id: id});
     this.props.getRequestedSessionById(id);
   };
 
@@ -73,7 +74,7 @@ class Sessions extends Component {
   };
 
   dateHandler = (event, selectedDate) => {
-    console.log('selectedDate=========', selectedDate);
+    // console.log('selectedDate=========', selectedDate);
     this.setState({
       startDate: selectedDate,
       modal: !this.state.modal,
@@ -82,7 +83,7 @@ class Sessions extends Component {
   };
 
   timeHandler = (event, selectedTime) => {
-    console.log('time handler-====>', moment(selectedTime).format('LT'));
+    //  console.log('time handler-====>', moment(selectedTime).format('LT'));
     this.setState({
       startTime: selectedTime,
     });
@@ -102,14 +103,15 @@ class Sessions extends Component {
     this.setState({endDate: date});
   };
   onSessionType = sessionType => {
-    this.setState({sessionType: sessionType});
+    this.setState({sessionType: sessionType}, () => {
+      this.props.clearSessionById();
+    });
   };
 
   onChangeNotes = notes => {
     this.setState({notes: notes});
   };
   dateFormatter = date => {
-    //console.log('date====>', date);
     return `${moment(date).get('year')}-${moment(date).get('months') +
       1}-${moment(date).get('days')}`;
   };
@@ -117,7 +119,6 @@ class Sessions extends Component {
   timeFormatter = () => {};
   onRequestSession = () => {
     const {
-      id,
       startDate,
       endDate,
       startTime,
@@ -126,7 +127,6 @@ class Sessions extends Component {
       sessionType,
     } = this.state;
     const data = {
-      id: id,
       startDate:
         moment(startDate).format('YYYY-MM-DD') +
         ' ' +
@@ -138,12 +138,38 @@ class Sessions extends Component {
       sessionType: sessionType,
       notes: notes,
     };
-    console.log(data);
     this.props.requestSession(data);
+  };
+
+  onUpdateRequestSession = () => {
+    const {
+      id,
+      startDate,
+      endDate,
+      startTime,
+      endTime,
+      notes,
+      sessionType,
+    } = this.state;
+    const {getBySessionId} = this.props;
+    const updateData = {
+      id: id,
+      startDate:
+        moment(startDate).format('YYYY-MM-DD') +
+        ' ' +
+        moment(startTime).format('HH:mm:ss'),
+      endDate:
+        moment(endDate).format('YYYY-MM-DD') +
+        ' ' +
+        moment(endTime).format('HH:mm:ss'),
+      sessionType: sessionType || getBySessionId.sessionType,
+      notes: notes || getBySessionId.notes,
+    };
+    this.props.updateRequestSession(updateData);
   };
   backHandler = () => {
     this.setState({
-      active: 1,
+      active: 2,
       startDate: Date.now(),
       startTime: Date.now(),
       endDate: Date.now(),
@@ -176,7 +202,22 @@ class Sessions extends Component {
     const {mySession, getBySessionId} = this.props;
     // console.log('get by session id========', getBySessionId);
     console.log('state====>', this.state);
-
+    const buttonView =
+      update === false ? (
+        <RoundedButton
+          title={'SAVE'}
+          buttonStyle={styles.buttonStyle}
+          titleStyle={styles.titleStyle}
+          onPress={() => this.onRequestSession()}
+        />
+      ) : (
+        <RoundedButton
+          title={'UPDATE'}
+          buttonStyle={styles.buttonStyle}
+          titleStyle={styles.titleStyle}
+          onPress={() => this.onUpdateRequestSession()}
+        />
+      );
     const requestedSessionJSX = mySession.length
       ? mySession.map((item, i) => {
           return (
@@ -222,40 +263,6 @@ class Sessions extends Component {
         })
       : null;
 
-    // const dateContent = (
-    //   <View
-    //     style={{
-    //       paddingBottom: normalize(10),
-    //     }}>
-    //     <DateTimePicker
-    //       testID="dateTimePicker"
-    //       timeZoneOffsetInMinutes={0}
-    //       value={new Date(defaultDate)}
-    //       mode={'date'}
-    //       is24Hour={true}
-    //       display="default"
-    //       onChange={this.dateHandler}
-    //     />
-    //   </View>
-    // );
-
-    // const timeContent = (
-    //   <View
-    //     style={{
-    //       paddingBottom: normalize(10),
-    //     }}>
-    //     <DateTimePicker
-    //       testID="dateTimePicker"
-    //       // timeZoneOffsetInMinutes={0}
-    //       value={new Date(startTime)}
-    //       mode="time"
-    //       is24Hour={true}
-    //       display="default"
-    //       onChange={this.timeHandler}
-    //     />
-    //   </View>
-    // );
-
     return (
       <MasterLayout
         leftIcon={require('../../assets/backArrow.png')}
@@ -267,7 +274,10 @@ class Sessions extends Component {
         }}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
-        <ViewWithCircle source={require('../../assets/communication.png')} />
+        <ViewWithCircle
+          sourceCircle={require('../../assets/circle.png')}
+          source={require('../../assets/communication.png')}
+        />
         <View style={styles.shadowView}>
           <View style={styles.topButtonView}>
             {active === 1 ? (
@@ -378,9 +388,7 @@ class Sessions extends Component {
                   <InputFieldDateTime
                     source={require('../../assets/time.png')}
                     onPress={() => this.timeModalHandler(false)}
-                    dateTimeValue={moment(endTime)
-                      .add(1, 'hours')
-                      .format('LT')}
+                    dateTimeValue={moment(endTime).format('LT')}
                   />
                 </View>
 
@@ -420,12 +428,13 @@ class Sessions extends Component {
                 />
 
                 <View style={styles.buttonView}>
-                  <RoundedButton
+                  {/* <RoundedButton
                     title={update ? 'UPDATE' : 'SAVE'}
                     buttonStyle={styles.buttonStyle}
                     titleStyle={styles.titleStyle}
                     onPress={() => this.onRequestSession()}
-                  />
+                  /> */}
+                  {buttonView}
                 </View>
               </View>
             ) : null}
@@ -489,8 +498,7 @@ const styles = StyleSheet.create({
     height: normalize(150),
     borderBottomLeftRadius: normalize(20),
     borderBottomRightRadius: normalize(20),
-    paddingBottom: normalize(100),
-    zIndex: -1,
+    paddingBottom: normalize(75),
   },
   topButtonView: {
     flexDirection: 'row',
@@ -615,11 +623,17 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = ({sessions}) => {
-  const {sessionsData, requestSession, sessionById} = sessions;
+  const {
+    sessionsData,
+    requestSession,
+    sessionById,
+    updateRequestSession,
+  } = sessions;
   return {
     mySession: sessionsData,
     data: requestSession,
     getBySessionId: sessionById,
+    updateData: updateRequestSession,
   };
 };
 
@@ -630,5 +644,6 @@ export default connect(
     requestSession,
     getRequestedSessionById,
     clearSessionById,
+    updateRequestSession,
   },
 )(Sessions);

@@ -3,6 +3,7 @@ import React from 'react';
 import {View} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import normalize from '../../helpers/ResponsiveFont';
+import colors from '../../constants/colors';
 export const CustomDatePicker = ({date, handler}) => {
   return (
     <View
@@ -17,6 +18,7 @@ export const CustomDatePicker = ({date, handler}) => {
         is24Hour={true}
         display="default"
         onChange={handler}
+        style={{backgroundColor: '#0000'}}
       />
     </View>
   );

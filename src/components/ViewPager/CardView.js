@@ -22,7 +22,7 @@ const CardView = props => {
     <View>
       <View style={styles.sliderView}>
         <View style={{padding: normalize(20)}}>
-          <Text>{title}</Text>
+          <Text style={{fontSize: normalize(14)}}>{title}</Text>
           <View
             style={{
               flexDirection: 'row',
