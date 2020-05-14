@@ -20,7 +20,6 @@ const CustomTextArea = props => {
         <TextInput
           style={{...styles.textInputStyleClass, ...textInputClass}}
           underlineColorAndroid="transparent"
-          // placeholder={'Type your answer here'}
           placeholder={placeholder || 'Type your answer here'}
           placeholderTextColor={colors.GRAY_PLACE}
           numberOfLines={10}
@@ -49,11 +48,11 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     paddingTop: Platform.OS === 'ios' ? 5 : 0,
-    // justifyContent: 'center',
   },
 
   textInputStyleClass: {
     borderWidth: 1,
+    fontSize: normalize(14),
     borderColor: colors.GRAY_LINE,
     borderRadius: normalize(5),
     height: normalize(69),
