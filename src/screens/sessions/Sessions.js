@@ -103,7 +103,9 @@ class Sessions extends Component {
     this.setState({endDate: date});
   };
   onSessionType = sessionType => {
-    this.setState({sessionType: sessionType});
+    this.setState({sessionType: sessionType}, () => {
+      this.props.clearSessionById();
+    });
   };
 
   onChangeNotes = notes => {
@@ -272,7 +274,10 @@ class Sessions extends Component {
         }}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
-        <ViewWithCircle source={require('../../assets/communication.png')} />
+        <ViewWithCircle
+          sourceCircle={require('../../assets/circle.png')}
+          source={require('../../assets/communication.png')}
+        />
         <View style={styles.shadowView}>
           <View style={styles.topButtonView}>
             {active === 1 ? (
@@ -493,8 +498,7 @@ const styles = StyleSheet.create({
     height: normalize(150),
     borderBottomLeftRadius: normalize(20),
     borderBottomRightRadius: normalize(20),
-    paddingBottom: normalize(100),
-    zIndex: -1,
+    paddingBottom: normalize(75),
   },
   topButtonView: {
     flexDirection: 'row',

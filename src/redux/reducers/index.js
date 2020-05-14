@@ -5,6 +5,7 @@ import sessions from './sessions';
 import {combineReducers} from 'redux';
 import auth from './auth';
 import therapist from './therapist';
+import handouts from './handouts';
 export default combineReducers({
   auth: auth,
   loading: loading,
@@ -12,4 +13,5 @@ export default combineReducers({
   user: user,
   sessions: sessions,
   therapist: therapist,
+  handouts: handouts,
 });

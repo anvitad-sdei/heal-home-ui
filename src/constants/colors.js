@@ -38,6 +38,7 @@ const colors = {
   SKY_LIGHT_BLUE: '#95B4FD',
   GRAY_PLACE_COLOR: '#898A8F',
   ORANGE_FOUR: '#F99C32',
+  COLOR_29: '#00000029',
 };
 
 export default colors;

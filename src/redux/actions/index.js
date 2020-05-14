@@ -237,26 +237,33 @@ export const getAllTherapists = () => async dispatch => {
     errorResHandler(err);
   }
 };
+/*************************GET ALL HANDOUTS SUCCESS ********************** */
+export const getAllHandouts = () => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios(`${apiUrls.BASE_URL}/question/handouts`);
+    if (res) {
+      //console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.GET_ALL_HANDOUTS_SUCCESS,
+          res.data.response,
+        ),
+      );
+    }
+  } catch (err) {
+    // console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
+
+/*************************CLEAR SESSION BY ID8*************************** */
 
 export const clearSessionById = () => dispatch => {
   dispatch({type: constants.CLEAR_SESSION_BY_ID});
 };
-// /*********************************************************************** */
-
-// export const getUserData = () => async dispatch => {
-//   try {
-//     dispatch(loadingHandler(true));
-//     let res = await axios('https://jsonplaceholder.typicode.com/todos');
-//     if (res) {
-//       dispatch(successResponseHandler(constants.GET_SUCCESS, res.data)); //type check kr lena
-//       dispatch(loadingHandler(false));
-//     }
-//   } catch (err) {
-//     dispatch(loadingHandler(false));
-//     errorResHandler(err);
-//     // dispatch(errorHandler(err));
-//   }
-// };
 
 /********************************************************* */
 const navigateToRoute = (routeName, params) => {

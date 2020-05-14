@@ -13,6 +13,7 @@ const HeaderComponent = props => {
     rightIconPress,
     leftStyle,
     headerStyle,
+    centerTitleStyle,
   } = props;
   return (
     <View style={{...styles.container, ...headerStyle}}>
@@ -50,11 +51,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.BLUE,
     height: normalize(80),
     alignItems: 'center',
-    borderBottomLeftRadius: normalize(35),
-    borderBottomRightRadius: normalize(35),
+    borderBottomLeftRadius: normalize(25),
+    borderBottomRightRadius: normalize(25),
   },
   leftComponent: {
     width: '13%',
+    // borderWidth: 1,
+    alignSelf: 'center',
   },
   leftIconStyle: {
     width: normalize(24), //38
@@ -67,17 +70,20 @@ const styles = StyleSheet.create({
   },
   centerComponent: {
     width: '60%',
-    // borderWidth: 1,
+    //borderWidth: 1,
+    alignSelf: 'center',
   },
   rightComponent: {
-    //borderWidth: 1,
+    // borderWidth: 1,
     width: '12%',
+    alignSelf: 'center',
   },
 
   centerText: {
     textAlign: 'center',
     fontSize: normalize(20),
     color: colors.WHITE,
+    fontFamily: 'Poppins-Bold',
   },
 });
 
