@@ -24,13 +24,14 @@ import {
   CustomTimePicker,
   CustomDatePicker,
 } from '../../components/DateTimePicker';
-
+import Axios from 'axios';
+import {apiUrls} from '../../redux/api/constants';
+import Loader from '../../components/Loader';
 class Sessions extends Component {
   constructor(props) {
     super(props);
-    const {navigation} = this.props;
+
     this.state = {
-      // id: navigation.getParam('id'),
       id: '',
       active: 1,
       startDate: Date.now(),
@@ -44,18 +45,46 @@ class Sessions extends Component {
       sessionType: '',
       start: true,
       update: false,
+      isLoading: false,
     };
     this.backHandler();
   }
+  editSession = (id, update) => {
+    this.setState({
+      active: 1,
+      update: update,
+      id: id,
+    });
+    this.getRequestedSessionById(id);
+  };
+
+  /************************get session by id*************************** */
+
+  getRequestedSessionById = async id => {
+    try {
+      this.setState({isLoading: true});
+      let res = await Axios(`${apiUrls.BASE_URL}/requestsession/${id}`);
+      if (res) {
+        const {startDate, endDate, sessionType, notes} = res.data.response;
+        this.setState({
+          isLoading: false,
+          startDate: Date.now(startDate),
+          startTime: Date.now(startDate),
+          endDate: Date.now(endDate),
+          endTime: Date.now(endDate),
+          sessionType: sessionType,
+          notes: notes,
+        });
+      }
+    } catch (err) {
+      this.setState({isLoading: false});
+      Alert.alert('Fetch Failed');
+    }
+  };
 
   componentDidMount() {
     this.props.allRequestedSession();
   }
-
-  editSession = (id, update) => {
-    this.setState({active: 1, update: update, id: id});
-    this.props.getRequestedSessionById(id);
-  };
 
   dateModalHandler = start => {
     if (start) {
@@ -177,6 +206,7 @@ class Sessions extends Component {
       dateModal: false,
       timeModal: false,
       defaultDate: Date.now(),
+      defaultDate: '',
       notes: '',
       sessionType: '',
       start: true,
@@ -222,7 +252,10 @@ class Sessions extends Component {
       ? mySession.map((item, i) => {
           return (
             <View style={styles.sessionViewWrapper} key={i}>
-              <TouchableOpacity onPress={() => this.editSession(item.id, true)}>
+              <TouchableOpacity
+                onPress={() =>
+                  this.editSession(item.id, true, item.startDate, item.endDate)
+                }>
                 <View style={styles.requestedSessionView}>
                   <View>
                     <Text style={styles.sessionHeading}>
@@ -344,6 +377,7 @@ class Sessions extends Component {
               </>
             ) : null}
           </View>
+
           <ScrollView contentContainerStyle={styles.scrollView}>
             {active === 1 ? (
               <View
@@ -369,7 +403,10 @@ class Sessions extends Component {
                   <InputFieldDateTime
                     source={require('../../assets/time.png')}
                     onPress={() => this.timeModalHandler(true)}
-                    dateTimeValue={moment(startTime).format('LT')}
+                    dateTimeValue={
+                      moment(startTime).format('LT') ||
+                      getBySessionId.moment(startTime).format('LT')
+                    }
                   />
                 </View>
 
@@ -388,7 +425,10 @@ class Sessions extends Component {
                   <InputFieldDateTime
                     source={require('../../assets/time.png')}
                     onPress={() => this.timeModalHandler(false)}
-                    dateTimeValue={moment(endTime).format('LT')}
+                    dateTimeValue={
+                      moment(endTime).format('LT') ||
+                      getBySessionId.moment(endTime).format('LT')
+                    }
                   />
                 </View>
 
@@ -484,6 +524,7 @@ class Sessions extends Component {
             ) : null}
           </ScrollView>
         </View>
+        <Loader isLoading={this.state.isLoading} />
       </MasterLayout>
     );
   }

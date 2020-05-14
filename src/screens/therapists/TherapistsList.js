@@ -11,9 +11,6 @@ import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 class TherapistsList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      id: '',
-    };
   }
   componentDidMount() {
     this.props.getAllTherapists();
@@ -27,11 +24,7 @@ class TherapistsList extends Component {
             <TouchableOpacity
               style={styles.touchableView}
               key={i}
-              onPress={() =>
-                this.props.navigation.navigate('Sessions', {
-                  id: item.id,
-                })
-              }>
+              onPress={() => this.props.navigation.navigate('Sessions')}>
               <View>
                 <Text style={styles.nameStyle}>
                   {item.firstName + ' ' + item.lastName}

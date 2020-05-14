@@ -148,7 +148,7 @@ class JournalQuestion extends Component {
       thankfulNowToday,
       triggerToday,
     } = this.state;
-    const {dataById} = this.props;
+
     let data = {
       accomplishToday: accomplishToday,
       achieveToday: achieveToday,
