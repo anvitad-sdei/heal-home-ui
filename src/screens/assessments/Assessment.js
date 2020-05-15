@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
   },
   listView: {
-    paddingBottom: normalize(20),
+    marginBottom: normalize(20),
     borderBottomWidth: 1,
     borderBottomColor: colors.COLOR_29,
   },
