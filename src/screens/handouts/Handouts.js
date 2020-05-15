@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, ScrollView, StyleSheet} from 'react-native';
+import {Text, View, ScrollView, StyleSheet, Linking} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
@@ -9,35 +9,19 @@ import RoundedButton from '../../components/Buttons/RoundedButton';
 import {getAllHandouts} from '../../redux/actions';
 import moment from 'moment';
 import {connect} from 'react-redux';
+
 class Handouts extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   componentDidMount() {
     this.props.getAllHandouts();
   }
 
-  onDownload = () => {
-    alert('hello');
-  };
-
   render() {
     const {data} = this.props;
-    console.log(data, '-----------------------');
-    const handoutsList = [
-      {
-        fileName: '10_19 - Heal at Home Social Posts.docx',
-        createdBy: 'Sophie Solmini',
-        createdDate: '2020-04-24 15:59:26',
-      },
-      {
-        fileName: '10_19 - Heal at Home Social Posts.docx',
-        createdBy: 'Deepan',
-        createdDate: '2020-04-24 15:59:26',
-      },
-    ];
+    // console.log(data, '-----------------------');
 
     const handoutDataJSX = data.length
       ? data.map((item, i) => {
@@ -57,7 +41,7 @@ class Handouts extends Component {
                 title="Download"
                 buttonStyle={styles.buttonStyle}
                 titleStyle={styles.titleStyle}
-                onPress={() => this.onDownload()}
+                onPress={() => Linking.openURL(item.serverPath)}
               />
             </View>
           );
