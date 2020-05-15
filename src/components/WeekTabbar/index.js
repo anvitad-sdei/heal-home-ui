@@ -18,7 +18,7 @@ export default class CustomTabBar extends Component {
           </View>
         </TouchableOpacity>
         <Text style={styles.textStyle} onPress={handler}>
-          {`Week ${defaultWeek || 1}`}
+          {` ${defaultWeek || 1}`}
         </Text>
       </View>
     );
