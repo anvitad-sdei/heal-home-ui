@@ -102,21 +102,21 @@ class Sessions extends Component {
     }
   };
 
-  dateHandler = (event, selectedDate) => {
-    // console.log('selectedDate=========', selectedDate);
-    this.setState({
-      startDate: selectedDate,
-      modal: !this.state.modal,
-      defaultDate: selectedDate,
-    });
-  };
+  // dateHandler = (event, selectedDate) => {
+  //   // console.log('selectedDate=========', selectedDate);
+  //   this.setState({
+  //     startDate: selectedDate,
+  //     modal: !this.state.modal,
+  //     defaultDate: selectedDate,
+  //   });
+  // };
 
-  timeHandler = (event, selectedTime) => {
-    //  console.log('time handler-====>', moment(selectedTime).format('LT'));
-    this.setState({
-      startTime: selectedTime,
-    });
-  };
+  // timeHandler = (event, selectedTime) => {
+  //   //  console.log('time handler-====>', moment(selectedTime).format('LT'));
+  //   this.setState({
+  //     startTime: selectedTime,
+  //   });
+  // };
 
   endTimeHandler = (event, time) => {
     this.setState({endTime: time});
@@ -140,12 +140,12 @@ class Sessions extends Component {
   onChangeNotes = notes => {
     this.setState({notes: notes});
   };
-  dateFormatter = date => {
-    return `${moment(date).get('year')}-${moment(date).get('months') +
-      1}-${moment(date).get('days')}`;
-  };
+  // dateFormatter = date => {
+  //   return `${moment(date).get('year')}-${moment(date).get('months') +
+  //     1}-${moment(date).get('days')}`;
+  // };
 
-  timeFormatter = () => {};
+  // timeFormatter = () => {};
   onRequestSession = () => {
     const {
       startDate,

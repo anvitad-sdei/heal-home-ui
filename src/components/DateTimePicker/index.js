@@ -5,6 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 export const CustomDatePicker = ({date, handler}) => {
+  console.log('dat=========', date);
   return (
     <View
       style={{

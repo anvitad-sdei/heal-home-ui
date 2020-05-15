@@ -8,7 +8,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import GradientButton from '../../components/Buttons/GradientButton';
-import CustomModal from '../../components/Modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
 import ViewPager from '@react-native-community/viewpager';
@@ -16,49 +15,44 @@ import moment from 'moment';
 import CardView from '../../components/ViewPager/CardView';
 import {getUpcomingSession} from '../../redux/actions';
 import {connect} from 'react-redux';
-const currentDate = Date.now();
+import CustomModal from '../../components/Modal';
+import {CustomDatePicker} from '../../components/DateTimePicker';
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false,
-      defaultDate: Date.now(),
-      date: '',
+      //   modal: false,
+      //  defaultDate: Date.now(),
+      date: Date.now(),
+      dateModal: false,
+      start: true,
     };
   }
 
   componentDidMount() {
     this.props.getUpcomingSession();
   }
-  modalHandler = () => {
-    this.setState({modal: !this.state.modal});
+  // modalHandler = () => {
+  //   this.setState({modal: !this.state.modal});
+  // };
+  // dateHandler = (event, selectedDate) => {
+  //   this.setState({date: selectedDate, modal: !this.state.modal});
+  // };
+  dateModalHandler = start => {
+    if (start) {
+      this.setState({dateModal: !this.state.dateModal, start: start});
+    } else {
+      this.setState({dateModal: !this.state.dateModal, start: start});
+    }
   };
-  dateHandler = (event, selectedDate) => {
-    // console.log(selectedDate);
-    this.setState({date: selectedDate, modal: !this.state.modal});
+  startDateHandler = (event, date) => {
+    this.setState({date: date});
   };
   render() {
-    const {modal, defaultDate} = this.state;
+    const {modal, defaultDate, dateModal, date} = this.state;
     const {upcomingSessionData} = this.props;
-    //console.log('upcoming session -------------------', upcomingSessionData);
-    const cardViewData = [
-      {
-        id: 1,
-        name: 'Rejina Freak',
-        degree: 'MBBS,DOMS,MS',
-        specilization: 'Therapists',
-        experience: '27 years of experience',
-        timing: '9:00AM-8:00PM',
-      },
-      {
-        id: 2,
-        name: 'Sejal Freak',
-        degree: 'MBBS',
-        specilization: 'Therapists',
-        experience: '25 years of experience',
-        timing: '8:00AM-8:00PM',
-      },
-    ];
+
     const viewPagerData = upcomingSessionData.length
       ? upcomingSessionData.map((item, i) => {
           return (
@@ -71,34 +65,26 @@ class Home extends React.Component {
                   .endOf(item.start)
                   .fromNow()
               }
-              // time={moment(currentDate).format('l')}
-
-              // name={item.name}
-              // degree={item.degree}
-              // specilization={item.specilization}
-              // experience={item.experience}
-              // timing={item.timing}
-              // source={require('../../assets/goal.png')}
             />
           );
         })
       : null;
-    const dateContent = (
-      <View
-        style={{
-          paddingBottom: normalize(10),
-        }}>
-        <DateTimePicker
-          testID="dateTimePicker"
-          timeZoneOffsetInMinutes={0}
-          value={new Date(defaultDate)}
-          mode={'date'}
-          is24Hour={true}
-          display="default"
-          //onChange={this.dateHandler}
-        />
-      </View>
-    );
+    // const dateContent = (
+    //   <View
+    //     style={{
+    //       paddingBottom: normalize(10),
+    //     }}>
+    //     <DateTimePicker
+    //       testID="dateTimePicker"
+    //       timeZoneOffsetInMinutes={0}
+    //       value={new Date(defaultDate)}
+    //       mode={'date'}
+    //       is24Hour={true}
+    //       display="default"
+    //       //onChange={this.dateHandler}
+    //     />
+    //   </View>
+    // );
 
     return (
       <MasterLayout
@@ -111,8 +97,10 @@ class Home extends React.Component {
           <View style={styles.dateView}>
             <Text style={styles.dateText}>Pick the Date</Text>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={styles.datePick} onPress={() => this.modalHandler()}>
-                05/05/2020
+              <Text
+                style={styles.datePick}
+                onPress={() => this.dateModalHandler(true)}>
+                {moment(date).format('L')}
               </Text>
             </View>
           </View>
@@ -155,11 +143,20 @@ class Home extends React.Component {
             </ViewPager>
           </View>
 
-          {modal ? (
+          {/* {modal ? (
             <CustomModal
               visible={modal}
               handler={() => this.modalHandler()}
               content={dateContent}
+            />
+          ) : null} */}
+          {dateModal ? (
+            <CustomModal
+              visible={dateModal}
+              handler={() => this.dateModalHandler()}
+              content={
+                <CustomDatePicker date={date} handler={this.startDateHandler} />
+              }
             />
           ) : null}
         </ScrollView>
