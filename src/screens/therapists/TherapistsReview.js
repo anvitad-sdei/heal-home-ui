@@ -6,6 +6,8 @@ import normalize from '../../helpers/ResponsiveFont';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
+import {getAllTherapistsReview} from '../../redux/actions';
+import {connect} from 'react-redux';
 class TherapistsReview extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +15,9 @@ class TherapistsReview extends Component {
       active: 1,
       reply: '',
     };
+  }
+  componentDidMount() {
+    this.props.getAllTherapistsReview();
   }
 
   onChangeReply = reply => {
@@ -24,6 +29,48 @@ class TherapistsReview extends Component {
 
   render() {
     const {active, reply} = this.state;
+    const {data} = this.props;
+    console.log('data===============review', data);
+    const reviewListData = data.length
+      ? data.map((item, i) => {
+          return (
+            <View style={styles.innerWrapperView}>
+              <Text style={styles.dateHeading}>{item.createdDate}</Text>
+              <Text style={styles.subTitle}>
+                Please fill this log regularly.
+              </Text>
+              <View style={styles.borderBottomStyle} />
+              <Text style={styles.heading}>Alcohol Management commented</Text>
+              <Text style={styles.replyText}>Lorem ipsum dolor sit amet</Text>
+              {active === 1 ? (
+                <RoundedButton
+                  title="Reply"
+                  buttonStyle={styles.buttonStyle}
+                  titleStyle={styles.titleStyle}
+                  value={reply}
+                  onChangeText={() => this.onChangeReply()}
+                  onPress={() => this.onReply()}
+                />
+              ) : null}
+
+              {active === 2 ? (
+                <View>
+                  <CustomTextArea
+                    placeholder=" "
+                    textAreaView={{padding: 0}}
+                    titleStyle={{marginTop: 0}}
+                  />
+                  <RoundedButton
+                    title="Submit"
+                    buttonStyle={styles.submitButtonStyle}
+                    titleStyle={styles.submitTitleStyle}
+                  />
+                </View>
+              ) : null}
+            </View>
+          );
+        })
+      : null;
     return (
       <MasterLayout
         leftIcon={require('../../assets/menu.png')}
@@ -34,6 +81,7 @@ class TherapistsReview extends Component {
         headerStyle={styles.headerStyle}>
         <View style={styles.shadowView}>
           <ScrollView contentContainerStyle={styles.scrollView}>
+            {/* {reviewListData} */}
             <View style={styles.innerWrapperView}>
               <Text style={styles.dateHeading}>Tuesday, May 12th 2020</Text>
               <Text style={styles.subTitle}>
@@ -74,7 +122,21 @@ class TherapistsReview extends Component {
     );
   }
 }
-export default TherapistsReview;
+
+const mapStateToProps = ({therapist}) => {
+  const {therapistsReview} = therapist;
+  return {
+    data: therapistsReview,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    getAllTherapistsReview,
+  },
+)(TherapistsReview);
+//export default TherapistsReview;
 const styles = StyleSheet.create({
   headerStyle: {
     flexDirection: 'row',

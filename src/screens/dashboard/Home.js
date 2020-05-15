@@ -34,13 +34,13 @@ class Home extends React.Component {
     this.setState({modal: !this.state.modal});
   };
   dateHandler = (event, selectedDate) => {
-    console.log(selectedDate);
+    // console.log(selectedDate);
     this.setState({date: selectedDate, modal: !this.state.modal});
   };
   render() {
     const {modal, defaultDate} = this.state;
     const {upcomingSessionData} = this.props;
-    console.log('upcoming session -------------------', upcomingSessionData);
+    //console.log('upcoming session -------------------', upcomingSessionData);
     const cardViewData = [
       {
         id: 1,

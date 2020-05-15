@@ -237,6 +237,28 @@ export const getAllTherapists = () => async dispatch => {
     errorResHandler(err);
   }
 };
+
+/*************************GET ALL THERAPISTS REVIEW SUCCESS ********************** */
+export const getAllTherapistsReview = () => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios(`${apiUrls.BASE_URL}/review`);
+    if (res) {
+      console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.GET_ALL_THERAPISTS_REVIEW_SUCCESS,
+          res.data.response,
+        ),
+      );
+    }
+  } catch (err) {
+    console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
 /*************************GET ALL HANDOUTS SUCCESS ********************** */
 export const getAllHandouts = () => async dispatch => {
   try {
