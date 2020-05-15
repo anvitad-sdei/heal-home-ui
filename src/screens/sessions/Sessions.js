@@ -631,8 +631,10 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.18,
     shadowRadius: 1.0,
-
     elevation: 1,
+    // marginBottom: normalize(390),
+    // borderBottomLeftRadius: normalize(20),
+    // borderBottomRightRadius: normalize(20),
   },
   scrollView: {
     paddingBottom: hp(100),

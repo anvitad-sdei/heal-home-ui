@@ -48,11 +48,19 @@ class TherapistsList extends Component {
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.navigate('Home')}
         rightIconPress={() => alert('right')}>
-        <ScrollView contentContainerStyle={{paddingBottom: hp(40)}}>
-          <View style={styles.outerShadowView}>
-            <View style={styles.innerListView}>{therapistsData}</View>
-          </View>
-        </ScrollView>
+        <View style={styles.outerShadowView}>
+          <ScrollView contentContainerStyle={{paddingBottom: hp(80)}}>
+            <View
+              style={{
+                width: '90%',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                paddingTop: normalize(10),
+              }}>
+              {therapistsData}
+            </View>
+          </ScrollView>
+        </View>
       </MasterLayout>
     );
   }
@@ -86,6 +94,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
+    marginBottom: normalize(170),
   },
   innerListView: {
     width: '90%',
