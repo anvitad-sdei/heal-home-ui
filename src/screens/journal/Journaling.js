@@ -45,7 +45,7 @@ class Journaling extends Component {
         rightIconPress={() => alert('right')}>
         <CustomTabBar
           handler={() => this.modalHandler()}
-          defaultWeek={defaultWeek}
+          defaultWeek={'Week' + ' ' + defaultWeek}
         />
         <ScrollView contentContainerStyle={{paddingBottom: hp(40)}}>
           <View style={styles.weekView}>
@@ -60,6 +60,7 @@ class Journaling extends Component {
                           this.props.navigation.navigate('JournalQuestion', {
                             id: item.id,
                             week: defaultWeek,
+                            date: item.loggedDate,
                           })
                         }
                       />

@@ -17,6 +17,7 @@ import {connect} from 'react-redux';
 import Axios from 'axios';
 import {apiUrls} from '../../redux/api/constants';
 import Loader from '../../components/Loader';
+import moment from 'moment';
 class JournalQuestion extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +25,7 @@ class JournalQuestion extends Component {
     this.state = {
       id: navigation.getParam('id'),
       week: navigation.getParam('week'),
+      date: navigation.getParam('date'),
       active: 1,
       gratefulToday: '',
       makeTodayGreat: '',
@@ -184,6 +186,7 @@ class JournalQuestion extends Component {
       cravingExperience,
       medicationToday,
       anyComments,
+      date,
     } = this.state;
     const {dataById} = this.props;
 
@@ -194,7 +197,7 @@ class JournalQuestion extends Component {
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.navigate('Journaling')}
         rightIconPress={() => alert('right')}>
-        <CustomTabBar defaultWeek={this.state.week} />
+        <CustomTabBar defaultWeek={moment(date).format('l')} />
 
         <ScrollView contentContainerStyle={{paddingBottom: normalize(440)}}>
           <View style={styles.questionView}>
