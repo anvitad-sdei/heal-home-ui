@@ -19,7 +19,7 @@ class DrinkingLogs extends Component {
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.navigate('Home')}
         rightIconPress={() => alert('right')}>
-        <CustomTabBar />
+        <CustomTabBar defaultWeek={'Week 1'} />
         <ScrollView>
           <View style={styles.drinkViewBox}>
             <CustomDrinkingView />
