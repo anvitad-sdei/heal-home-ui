@@ -385,7 +385,7 @@ class Sessions extends Component {
                   width: '95%',
                   marginLeft: 'auto',
                   marginRight: 'auto',
-                  paddingTop: normalize(10),
+                  // paddingTop: normalize(10),
                   // borderWidth: 1,
                 }}>
                 {/*****************Start Date Time Field********************* */}
@@ -536,10 +536,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     backgroundColor: colors.BLUE,
-    height: normalize(150),
+    height: normalize(200),
     borderBottomLeftRadius: normalize(20),
     borderBottomRightRadius: normalize(20),
-    paddingBottom: normalize(75),
+    paddingBottom: normalize(125),
   },
   topButtonView: {
     flexDirection: 'row',
@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
     borderColor: colors.BLUE,
     width: normalize(260),
     alignSelf: 'center',
-    marginTop: normalize(15),
+    //  marginTop: normalize(15),
     marginBottom: normalize(30),
   },
   newSession: {
@@ -599,11 +599,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
   },
   sessionViewWrapper: {
+    // borderWidth: 1,
     //marginTop: normalize(25),
     paddingTop: normalize(10),
     borderBottomWidth: 1,
     paddingBottom: normalize(20),
-    borderColor: colors.GRAY_LINE,
+    borderColor: colors.COLOR_29,
   },
   requestedSessionView: {
     flexDirection: 'row',
@@ -617,13 +618,17 @@ const styles = StyleSheet.create({
     fontSize: normalize(12),
     fontFamily: 'Poppins-Regular',
   },
-  editImageView: {width: normalize(20), height: normalize(20)},
+  editImageView: {
+    width: normalize(20),
+    height: normalize(20),
+    //paddingTop: normalize(5),
+  },
   shadowView: {
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
     backgroundColor: colors.WHITE,
-    marginTop: normalize(10),
+    // marginTop: normalize(10),
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -643,6 +648,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
+    // borderWidth: 1,
   },
 
   inputContainerStyle: {

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE,
     position: 'absolute',
     alignSelf: 'center',
-    top: normalize(-50),
+    top: normalize(-100), //-50
     borderTopRightRadius: normalize(20),
     borderTopLeftRadius: normalize(20),
     height: normalize(100),

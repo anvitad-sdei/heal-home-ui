@@ -13,6 +13,7 @@ import JournalQuestion from '../screens/journal/JournalQuestion';
 import DrinkingLogs from '../screens/drinkingLogs/DrinkingLogs';
 import Sessions from '../screens/sessions/Sessions';
 import TherapistsList from '../screens/therapists/TherapistsList';
+import TherapistsReview from '../screens/therapists/TherapistsReview';
 const TabBarComponent = props => {
   return <BottomTabBar {...props} />;
 };
@@ -86,7 +87,7 @@ const TabNavigator = createBottomTabNavigator(
       },
     },
     Profile: {
-      screen: Profile,
+      screen: TherapistsReview,
       navigationOptions: {
         tabBarIcon: ({focused}) => {
           let url = focused
