@@ -110,6 +110,11 @@ const styles = StyleSheet.create({
     paddingBottom: normalize(20),
     borderBottomWidth: 1,
     borderBottomColor: colors.COLOR_29,
+    // borderWidth: 1,
+    // width: '100%',
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   scrollView: {
     paddingBottom: hp(100),
@@ -117,9 +122,9 @@ const styles = StyleSheet.create({
   },
   innerWrapperView: {
     marginTop: normalize(10),
-    width: '90%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    // width: '90%',
+    // marginLeft: 'auto',
+    // marginRight: 'auto',
   },
   buttonStyle: {
     marginTop: normalize(20),

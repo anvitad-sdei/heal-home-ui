@@ -27,14 +27,28 @@ export default class Assessment extends Component {
           return (
             <View style={styles.listView}>
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={{...styles.headingStyle, color: colors.GRAY_FIVE}}>
-                  {item.name}
-                </Text>
-                <Text style={{...styles.headingStyle, color: colors.BLUE}}>
-                  {item.view}
-                </Text>
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <View style={{width: '70%'}}>
+                  <Text
+                    style={{...styles.headingStyle, color: colors.GRAY_FIVE}}>
+                    {item.name}
+                  </Text>
+                </View>
+                <View style={{width: '30%'}}>
+                  <Text
+                    style={{
+                      ...styles.headingStyle,
+                      color: colors.BLUE,
+                      textAlign: 'right',
+                    }}>
+                    {item.view}
+                  </Text>
+                </View>
               </View>
+
               <Text
                 style={{
                   ...styles.statusStyle,

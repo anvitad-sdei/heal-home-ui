@@ -8,8 +8,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import GradientButton from '../../components/Buttons/GradientButton';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import {TouchableOpacity, ScrollView} from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import ViewPager from '@react-native-community/viewpager';
 import moment from 'moment';
 import CardView from '../../components/ViewPager/CardView';
@@ -22,8 +21,6 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //   modal: false,
-      //  defaultDate: Date.now(),
       date: Date.now(),
       dateModal: false,
       start: true,
@@ -33,12 +30,7 @@ class Home extends React.Component {
   componentDidMount() {
     this.props.getUpcomingSession();
   }
-  // modalHandler = () => {
-  //   this.setState({modal: !this.state.modal});
-  // };
-  // dateHandler = (event, selectedDate) => {
-  //   this.setState({date: selectedDate, modal: !this.state.modal});
-  // };
+
   dateModalHandler = start => {
     if (start) {
       this.setState({dateModal: !this.state.dateModal, start: start});
@@ -50,7 +42,7 @@ class Home extends React.Component {
     this.setState({date: date});
   };
   render() {
-    const {modal, defaultDate, dateModal, date} = this.state;
+    const {dateModal, date} = this.state;
     const {upcomingSessionData} = this.props;
 
     const viewPagerData = upcomingSessionData.length
@@ -69,22 +61,6 @@ class Home extends React.Component {
           );
         })
       : null;
-    // const dateContent = (
-    //   <View
-    //     style={{
-    //       paddingBottom: normalize(10),
-    //     }}>
-    //     <DateTimePicker
-    //       testID="dateTimePicker"
-    //       timeZoneOffsetInMinutes={0}
-    //       value={new Date(defaultDate)}
-    //       mode={'date'}
-    //       is24Hour={true}
-    //       display="default"
-    //       //onChange={this.dateHandler}
-    //     />
-    //   </View>
-    // );
 
     return (
       <MasterLayout
@@ -136,20 +112,13 @@ class Home extends React.Component {
               initialPage={0}
               pageMargin={10}
               style={{
-                height: normalize(169),
+                height: normalize(100),
               }}
               showPageIndicator={true}>
               {viewPagerData}
             </ViewPager>
           </View>
 
-          {/* {modal ? (
-            <CustomModal
-              visible={modal}
-              handler={() => this.modalHandler()}
-              content={dateContent}
-            />
-          ) : null} */}
           {dateModal ? (
             <CustomModal
               visible={dateModal}

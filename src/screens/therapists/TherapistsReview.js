@@ -105,7 +105,7 @@ class TherapistsReview extends Component {
                 <View>
                   <CustomTextArea
                     placeholder=" "
-                    textAreaView={{padding: 0}}
+                    // textAreaView={{padding: 0}}
                     titleStyle={{marginTop: 0}}
                   />
                   <RoundedButton
