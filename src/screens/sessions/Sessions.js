@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  Platform,
 } from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
@@ -34,6 +35,8 @@ import {
 import Axios from 'axios';
 import {apiUrls} from '../../redux/api/constants';
 import Loader from '../../components/Loader';
+
+let isIOS = Platform.OS === 'ios' ? true : false;
 class Sessions extends Component {
   constructor(props) {
     super(props);
@@ -53,6 +56,8 @@ class Sessions extends Component {
       start: true,
       update: false,
       isLoading: false,
+      show: false,
+      timeShow: false,
     };
     this.backHandler();
   }
@@ -96,32 +101,68 @@ class Sessions extends Component {
 
   dateModalHandler = start => {
     if (start) {
-      this.setState({dateModal: !this.state.dateModal, start: start});
+      this.setState({
+        dateModal: !this.state.dateModal,
+        start: start,
+        show: isIOS ? false : true,
+      });
     } else {
-      this.setState({dateModal: !this.state.dateModal, start: start});
+      this.setState({
+        dateModal: !this.state.dateModal,
+        start: start,
+        show: isIOS ? false : true,
+      });
     }
   };
 
   timeModalHandler = start => {
     if (start) {
-      this.setState({timeModal: !this.state.timeModal, start: start});
+      this.setState({
+        timeModal: !this.state.timeModal,
+        start: start,
+        timeShow: isIOS ? false : true,
+      });
     } else {
-      this.setState({timeModal: !this.state.timeModal, start: start});
+      this.setState({
+        timeModal: !this.state.timeModal,
+        start: start,
+        timeShow: isIOS ? false : true,
+      });
     }
   };
 
   endTimeHandler = (event, time) => {
-    this.setState({endTime: time});
+    const {type} = event;
+    if (type === 'dismissed') {
+      return;
+    } else {
+      this.setState({endTime: time, timeShow: false});
+    }
   };
   startTimeHandler = (event, time) => {
-    this.setState({startTime: time});
+    const {type} = event;
+    if (type === 'dismissed') {
+      return;
+    } else {
+      this.setState({startTime: time, timeShow: false});
+    }
   };
 
   startDateHandler = (event, date) => {
-    this.setState({startDate: date});
+    const {type} = event;
+    if (type === 'dismissed') {
+      return;
+    } else {
+      this.setState({startDate: date, show: false});
+    }
   };
   endDateHandler = (event, date) => {
-    this.setState({endDate: date});
+    const {type} = event;
+    if (type === 'dismissed') {
+      return;
+    } else {
+      this.setState({endDate: date, show: false});
+    }
   };
   onSessionType = sessionType => {
     this.setState({sessionType: sessionType}, () => {
@@ -214,6 +255,8 @@ class Sessions extends Component {
       notes,
       start,
       update,
+      show,
+      timeShow,
     } = this.state;
     const {mySession, getBySessionId} = this.props;
 
@@ -476,43 +519,83 @@ class Sessions extends Component {
             </View>
 
             {dateModal ? (
-              <CustomModal
-                visible={dateModal}
-                handler={() => this.dateModalHandler()}
-                content={
-                  start ? (
-                    <CustomDatePicker
-                      date={startDate}
-                      handler={this.startDateHandler}
-                    />
-                  ) : (
-                    <CustomDatePicker
-                      date={endDate}
-                      handler={this.endDateHandler}
-                    />
-                  )
-                }
-              />
+              <>
+                {isIOS ? (
+                  <CustomModal
+                    visible={dateModal}
+                    handler={() => this.dateModalHandler()}
+                    content={
+                      start ? (
+                        <CustomDatePicker
+                          date={startDate}
+                          handler={this.startDateHandler}
+                        />
+                      ) : (
+                        <CustomDatePicker
+                          date={endDate}
+                          handler={this.endDateHandler}
+                        />
+                      )
+                    }
+                  />
+                ) : (
+                  <View>
+                    {show ? (
+                      start ? (
+                        <CustomDatePicker
+                          date={startDate}
+                          handler={this.startDateHandler}
+                        />
+                      ) : (
+                        <CustomDatePicker
+                          date={endDate}
+                          handler={this.endDateHandler}
+                        />
+                      )
+                    ) : null}
+                  </View>
+                )}
+              </>
             ) : null}
 
             {timeModal ? (
-              <CustomModal
-                visible={timeModal}
-                handler={() => this.timeModalHandler()}
-                content={
-                  start ? (
-                    <CustomTimePicker
-                      time={startTime}
-                      handler={this.startTimeHandler}
-                    />
-                  ) : (
-                    <CustomTimePicker
-                      time={endTime}
-                      handler={this.endTimeHandler}
-                    />
-                  )
-                }
-              />
+              <>
+                {isIOS ? (
+                  <CustomModal
+                    visible={timeModal}
+                    handler={() => this.timeModalHandler()}
+                    content={
+                      start ? (
+                        <CustomTimePicker
+                          time={startTime}
+                          handler={this.startTimeHandler}
+                        />
+                      ) : (
+                        <CustomTimePicker
+                          time={endTime}
+                          handler={this.endTimeHandler}
+                        />
+                      )
+                    }
+                  />
+                ) : (
+                  <View>
+                    {timeShow ? (
+                      start ? (
+                        <CustomTimePicker
+                          time={startTime}
+                          handler={this.startTimeHandler}
+                        />
+                      ) : (
+                        <CustomTimePicker
+                          time={endTime}
+                          handler={this.endTimeHandler}
+                        />
+                      )
+                    ) : null}
+                  </View>
+                )}
+              </>
             ) : null}
           </ScrollView>
         </View>
