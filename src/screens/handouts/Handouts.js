@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, ScrollView, StyleSheet, Linking} from 'react-native';
+import {Text, View, ScrollView, StyleSheet, Linking, Image} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
@@ -56,11 +56,19 @@ class Handouts extends Component {
         leftIconPress={() => this.props.navigation.openDrawer()}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
-        <ViewWithCircle sourceCircle={require('../../assets/handouts.png')} />
+        {/* <ViewWithCircle sourceCircle={require('../../assets/handouts.png')} /> */}
         <View style={styles.shadowView}>
-          <ScrollView contentContainerStyle={styles.scrollView}>
-            <View style={styles.innerWrapperView}>{handoutDataJSX}</View>
-          </ScrollView>
+          <View style={styles.circleViewImage}>
+            <Image
+              source={require('../../assets/handouts.png')}
+              style={styles.imageStyle}
+            />
+          </View>
+          <View style={{marginTop: normalize(90)}}>
+            <ScrollView contentContainerStyle={styles.scrollView}>
+              <View style={styles.innerWrapperView}>{handoutDataJSX}</View>
+            </ScrollView>
+          </View>
         </View>
       </MasterLayout>
     );
@@ -78,6 +86,8 @@ const styles = StyleSheet.create({
     paddingBottom: normalize(120),
   },
   shadowView: {
+    // position: 'absolute',
+    top: normalize(-100),
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -91,9 +101,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 1.0,
     elevation: 1,
-    marginBottom: normalize(410),
-    borderBottomLeftRadius: normalize(20),
-    borderBottomRightRadius: normalize(20),
+    marginBottom: normalize(310),
+    borderRadius: normalize(20),
+    // borderBottomLeftRadius: normalize(20),
+    // borderBottomRightRadius: normalize(20),
   },
   listView: {
     paddingBottom: normalize(20),
@@ -102,6 +113,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     paddingBottom: hp(100),
+    // marginTop: normalize(80),
   },
   innerWrapperView: {
     marginTop: normalize(10),
@@ -128,6 +140,19 @@ const styles = StyleSheet.create({
     fontSize: normalize(12),
     color: colors.BLUE,
     fontFamily: 'Poppins-Regular',
+  },
+  circleViewImage: {
+    width: normalize(80),
+    height: normalize(80),
+    position: 'absolute',
+    alignSelf: 'center',
+    top: -30,
+    //  borderWidth: 1,
+  },
+
+  imageStyle: {
+    width: '100%',
+    height: '100%',
   },
 });
 

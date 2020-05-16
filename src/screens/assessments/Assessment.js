@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, Image} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
@@ -57,14 +57,28 @@ export default class Assessment extends Component {
         leftIconPress={() => this.props.navigation.openDrawer()}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
-        <ViewWithCircle
+        {/* <ViewWithCircle
           sourceCircle={require('../../assets/circle.png')}
           source={require('../../assets/myAssessment.png')}
-        />
+        /> */}
         <View style={styles.shadowView}>
-          <ScrollView contentContainerStyle={styles.scrollView}>
-            <View style={styles.innerWrapperView}>{assessmentDataJSX}</View>
-          </ScrollView>
+          <View style={styles.circleViewImage}>
+            <Image
+              source={require('../../assets/circle.png')}
+              style={styles.imageStyle}
+            />
+            <View style={styles.innerViewImage}>
+              <Image
+                source={require('../../assets/myAssessment.png')}
+                style={styles.imageStyle}
+              />
+            </View>
+          </View>
+          <View style={{marginTop: normalize(90)}}>
+            <ScrollView contentContainerStyle={styles.scrollView}>
+              <View style={styles.innerWrapperView}>{assessmentDataJSX}</View>
+            </ScrollView>
+          </View>
         </View>
       </MasterLayout>
     );
@@ -96,12 +110,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 1.0,
     elevation: 1,
-    marginBottom: normalize(410), //310
-    borderBottomLeftRadius: normalize(20),
-    borderBottomRightRadius: normalize(20),
+    marginBottom: normalize(310), //310
+    // borderBottomLeftRadius: normalize(20),
+    // borderBottomRightRadius: normalize(20),
+    borderRadius: normalize(20),
+    top: normalize(-100),
   },
   scrollView: {
     paddingBottom: hp(100),
+    // marginTop: normalize(80),
   },
 
   innerWrapperView: {
@@ -124,5 +141,25 @@ const styles = StyleSheet.create({
     fontSize: normalize(12),
     fontFamily: 'Poppins-Regular',
     paddingVertical: normalize(10),
+  },
+  circleViewImage: {
+    width: normalize(80),
+    height: normalize(80),
+    position: 'absolute',
+    alignSelf: 'center',
+    top: -30,
+    //  borderWidth: 1,
+  },
+  innerViewImage: {
+    alignItems: 'center',
+    width: normalize(50),
+    height: normalize(50),
+    position: 'absolute',
+    alignSelf: 'center',
+    marginTop: normalize(15),
+  },
+  imageStyle: {
+    width: '100%',
+    height: '100%',
   },
 });

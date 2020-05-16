@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
@@ -7,7 +7,7 @@ import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import ViewWithCircle from '../../components/ViewWithCircle';
 import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 import RoundedButton from '../../components/Buttons/RoundedButton';
-import {Input, Image} from 'react-native-elements';
+import {Input} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
 import CustomModal from '../../components/Modal';
 import {
@@ -49,11 +49,12 @@ class Sessions extends Component {
     };
     this.backHandler();
   }
-  editSession = (id, update) => {
+  editSession = (id, update, startDate) => {
     this.setState({
       active: 1,
       update: update,
       id: id,
+      startDate: startDate,
     });
     this.getRequestedSessionById(id);
   };
@@ -102,22 +103,6 @@ class Sessions extends Component {
     }
   };
 
-  // dateHandler = (event, selectedDate) => {
-  //   // console.log('selectedDate=========', selectedDate);
-  //   this.setState({
-  //     startDate: selectedDate,
-  //     modal: !this.state.modal,
-  //     defaultDate: selectedDate,
-  //   });
-  // };
-
-  // timeHandler = (event, selectedTime) => {
-  //   //  console.log('time handler-====>', moment(selectedTime).format('LT'));
-  //   this.setState({
-  //     startTime: selectedTime,
-  //   });
-  // };
-
   endTimeHandler = (event, time) => {
     this.setState({endTime: time});
   };
@@ -140,12 +125,7 @@ class Sessions extends Component {
   onChangeNotes = notes => {
     this.setState({notes: notes});
   };
-  // dateFormatter = date => {
-  //   return `${moment(date).get('year')}-${moment(date).get('months') +
-  //     1}-${moment(date).get('days')}`;
-  // };
 
-  // timeFormatter = () => {};
   onRequestSession = () => {
     const {
       startDate,
@@ -230,8 +210,7 @@ class Sessions extends Component {
       update,
     } = this.state;
     const {mySession, getBySessionId} = this.props;
-    // console.log('get by session id========', getBySessionId);
-    console.log('state====>', this.state);
+
     const buttonView =
       update === false ? (
         <RoundedButton
@@ -257,9 +236,9 @@ class Sessions extends Component {
                   this.editSession(item.id, true, item.startDate, item.endDate)
                 }>
                 <View style={styles.requestedSessionView}>
-                  <View>
+                  <View style={{width: '90%'}}>
                     <Text style={styles.sessionHeading}>
-                      {'Session' + ' ' + item.id}
+                      {item.sessionType}
                     </Text>
 
                     <Text style={{...styles.dateStyle, color: colors.BLUE}}>
@@ -307,11 +286,23 @@ class Sessions extends Component {
         }}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
-        <ViewWithCircle
+        {/* <ViewWithCircle
           sourceCircle={require('../../assets/circle.png')}
           source={require('../../assets/communication.png')}
-        />
+        /> */}
         <View style={styles.shadowView}>
+          <View style={styles.circleViewImage}>
+            <Image
+              source={require('../../assets/circle.png')}
+              style={styles.imageStyle}
+            />
+            <View style={styles.innerViewImage}>
+              <Image
+                source={require('../../assets/communication.png')}
+                style={styles.imageStyle}
+              />
+            </View>
+          </View>
           <View style={styles.topButtonView}>
             {active === 1 ? (
               <>
@@ -385,8 +376,6 @@ class Sessions extends Component {
                   width: '95%',
                   marginLeft: 'auto',
                   marginRight: 'auto',
-                  // paddingTop: normalize(10),
-                  // borderWidth: 1,
                 }}>
                 {/*****************Start Date Time Field********************* */}
 
@@ -403,10 +392,7 @@ class Sessions extends Component {
                   <InputFieldDateTime
                     source={require('../../assets/time.png')}
                     onPress={() => this.timeModalHandler(true)}
-                    dateTimeValue={
-                      moment(startTime).format('LT') ||
-                      getBySessionId.moment(startTime).format('LT')
-                    }
+                    dateTimeValue={moment(startTime).format('LT')}
                   />
                 </View>
 
@@ -549,7 +535,7 @@ const styles = StyleSheet.create({
     borderColor: colors.BLUE,
     width: normalize(260),
     alignSelf: 'center',
-    //  marginTop: normalize(15),
+    marginTop: normalize(90),
     marginBottom: normalize(30),
   },
   newSession: {
@@ -609,6 +595,8 @@ const styles = StyleSheet.create({
   requestedSessionView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    // borderWidth: 1,
+    // width:"100%"
   },
   sessionHeading: {
     fontSize: normalize(19),
@@ -637,6 +625,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 1.0,
     elevation: 1,
+    top: normalize(-100),
+    borderRadius: normalize(20),
     // marginBottom: normalize(390),
     // borderBottomLeftRadius: normalize(20),
     // borderBottomRightRadius: normalize(20),
@@ -669,6 +659,26 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: normalize(10),
+  },
+  circleViewImage: {
+    width: normalize(80),
+    height: normalize(80),
+    position: 'absolute',
+    alignSelf: 'center',
+    top: -30,
+    //  borderWidth: 1,
+  },
+  innerViewImage: {
+    alignItems: 'center',
+    width: normalize(50),
+    height: normalize(50),
+    position: 'absolute',
+    alignSelf: 'center',
+    marginTop: normalize(15),
+  },
+  imageStyle: {
+    width: '100%',
+    height: '100%',
   },
 });
 const mapStateToProps = ({sessions}) => {
