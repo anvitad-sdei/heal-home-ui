@@ -186,7 +186,6 @@ class Sessions extends Component {
       dateModal: false,
       timeModal: false,
       defaultDate: Date.now(),
-      defaultDate: '',
       notes: '',
       sessionType: '',
       start: true,
