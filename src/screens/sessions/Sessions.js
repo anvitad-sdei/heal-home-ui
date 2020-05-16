@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
@@ -34,7 +41,7 @@ class Sessions extends Component {
     this.state = {
       id: '',
       active: 1,
-      startDate: Date.now(),
+      startDate: new Date(),
       startTime: Date.now(),
       endDate: Date.now(),
       endTime: Date.now(),
@@ -69,10 +76,10 @@ class Sessions extends Component {
         const {startDate, endDate, sessionType, notes} = res.data.response;
         this.setState({
           isLoading: false,
-          startDate: Date.now(startDate),
-          startTime: Date.now(startDate),
-          endDate: Date.now(endDate),
-          endTime: Date.now(endDate),
+          startDate: moment(startDate).format(),
+          startTime: moment(startDate).format(),
+          endDate: moment(endDate).format(),
+          endTime: moment(endDate).format(),
           sessionType: sessionType,
           notes: notes,
         });
