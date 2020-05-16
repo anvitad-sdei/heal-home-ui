@@ -47,14 +47,15 @@ class Home extends React.Component {
 
     const viewPagerData = upcomingSessionData.length
       ? upcomingSessionData.map((item, i) => {
+          let sessionStartIn = moment(item.start).format();
           return (
             <CardView
               title={item.title}
               time={
                 'Session start' +
                 ' ' +
-                moment(item.start)
-                  .endOf(item.start)
+                moment(sessionStartIn)
+                  .endOf('days')
                   .fromNow()
               }
             />
