@@ -6,9 +6,21 @@ import normalize from '../../helpers/ResponsiveFont';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import ViewPager from '@react-native-community/viewpager';
 import CustomRadioButton from '../../components/CustomRadioButton.js';
+import OptYesNo from '../../components/OptYesNo';
 
 class AlcoholTest extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      q2Status: false,
+    };
+  }
+  q2Handler = () => {
+    const {q2Status} = this.state;
+    this.setState({q2Status: !q2Status});
+  };
   render() {
+    const {q2Status} = this.state;
     return (
       <MasterLayout
         leftIcon={require('../../assets/backArrow.png')}
@@ -45,8 +57,10 @@ class AlcoholTest extends Component {
                     night before and found that you could not remember a part of
                     the evening?
                   </Text>
-                  <Text style={styles.selected}>Yes</Text>
-                  <CustomRadioButton />
+                  <OptYesNo
+                    status={q2Status}
+                    handler={() => this.q2Handler()}
+                  />
                   <View style={styles.borderColorBottom} />
                   <Text style={styles.textQuestion}>
                     Does any near relative or close friend every worry or
