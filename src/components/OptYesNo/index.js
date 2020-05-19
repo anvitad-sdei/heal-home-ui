@@ -1,5 +1,5 @@
 import React from 'react';
-
+import normalize from '../../helpers/ResponsiveFont';
 import {View, StyleSheet} from 'react-native';
 import CustomRadioButton from '../CustomRadioButton.js';
 
@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '50%',
+    paddingVertical: normalize(20),
   },
 });
 
