@@ -25,27 +25,15 @@ class Assessment extends Component {
   render() {
     const {data} = this.props;
     console.log(data, '------------------');
-    const assessmentData = [
-      {
-        id: 1,
-        name: 'Michigan Alcohol Test',
-        view: 'VIEW',
-        status: 'SUBMITTED',
-      },
-      {
-        id: 1,
-        name: 'AUDIT (Alcohol Use Disorder Identification Test)',
-        view: 'LOG NOW',
-        status: 'PENDING',
-      },
-    ];
 
     const assessmentDataJSX = data.length
       ? data.map((item, i) => {
           return (
-            <View style={styles.listView}>
+            <View style={styles.listView} key={i}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('AlcoholTest')}>
+                onPress={() =>
+                  this.props.navigation.navigate('AlcoholTest', {id: item.id})
+                }>
                 <View
                   style={{
                     flexDirection: 'row',

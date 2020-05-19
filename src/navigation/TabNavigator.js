@@ -27,10 +27,20 @@ const RootStackHome = createStackNavigator(
     JournalQuestion: JournalQuestion,
     Sessions: Sessions,
     TherapistsList: TherapistsList,
-    AlcoholTest: AlcoholTest,
   },
   {
     initialRouteName: 'Home',
+    headerMode: false,
+  },
+);
+
+const AssessmentStackNavigator = createStackNavigator(
+  {
+    Assessment: Assessment,
+    AlcoholTest: AlcoholTest,
+  },
+  {
+    initialRouteName: 'Assessment',
     headerMode: false,
   },
 );
@@ -53,7 +63,7 @@ const TabNavigator = createBottomTabNavigator(
         },
       },
     },
-    Handouts: {
+    Library: {
       screen: Handouts,
       navigationOptions: {
         // tabBarIcon: ({tintColor}) => (
@@ -61,7 +71,7 @@ const TabNavigator = createBottomTabNavigator(
         // ),
         tabBarIcon: ({focused}) => {
           let url = focused
-            ? require('../assets/files.png')
+            ? require('../assets/files-focused.png')
             : require('../assets/files.png');
           return (
             <Avatar
@@ -73,7 +83,7 @@ const TabNavigator = createBottomTabNavigator(
       },
     },
     Assessments: {
-      screen: Assessment,
+      screen: AssessmentStackNavigator,
       navigationOptions: {
         tabBarIcon: ({focused}) => {
           let url = focused

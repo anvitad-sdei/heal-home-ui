@@ -281,7 +281,7 @@ export const getAllHandouts = () => async dispatch => {
   }
 };
 
-/*************************GET ALL HANDOUTS SUCCESS ********************** */
+/*************************GET ALL ASSESSMENT SUCCESS ********************** */
 export const getAllAssessment = () => async dispatch => {
   try {
     dispatch(loadingHandler(true));
@@ -292,6 +292,28 @@ export const getAllAssessment = () => async dispatch => {
       dispatch(
         successResponseHandler(
           constants.GET_ALL_ASSESSMENT_SUCCESS,
+          res.data.response,
+        ),
+      );
+    }
+  } catch (err) {
+    console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
+
+/*************************GET ALL ASSESSMENT BY ID SUCCESS ********************** */
+export const getAssessmentById = id => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios(`${apiUrls.BASE_URL}/forms/${id}`);
+    if (res) {
+      console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.GET_ASSESSMENT_BY_ID_SUCCESS,
           res.data.response,
         ),
       );

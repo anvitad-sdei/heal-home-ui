@@ -3,7 +3,6 @@ import {Text, View, ScrollView, StyleSheet, Linking, Image} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
-import ViewWithCircle from '../../components/ViewWithCircle';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import {getAllHandouts} from '../../redux/actions';
@@ -51,12 +50,11 @@ class Handouts extends Component {
     return (
       <MasterLayout
         leftIcon={require('../../assets/menu.png')}
-        centerTitle="Handouts"
+        centerTitle="Library"
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.openDrawer()}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
-        {/* <ViewWithCircle sourceCircle={require('../../assets/handouts.png')} /> */}
         <View style={styles.shadowView}>
           <View style={styles.circleViewImage}>
             <Image

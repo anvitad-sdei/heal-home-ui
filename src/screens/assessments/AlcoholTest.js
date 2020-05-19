@@ -5,11 +5,14 @@ import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import OptYesNo from '../../components/OptYesNo';
-
+import {getAssessmentById} from '../../redux/actions';
+import {connect} from 'react-redux';
 class AlcoholTest extends Component {
   constructor(props) {
     super(props);
+    const {navigation} = this.props;
     this.state = {
+      id: navigation.getParam('id'),
       q2Status: false,
       q1Status: false,
       q3Status: false,
@@ -129,6 +132,10 @@ class AlcoholTest extends Component {
     this.setState({q23Status: !q23Status});
   };
 
+  componentDidMount() {
+    this.props.getAssessmentById(this.state.id);
+  }
+
   render() {
     const {
       q1Status,
@@ -155,7 +162,38 @@ class AlcoholTest extends Component {
       q22Status,
       q23Status,
     } = this.state;
+    const {getAssessmentDataById} = this.props;
+    console.log(
+      'getAssessmentDataById===============',
+      Object.keys(getAssessmentDataById),
+    );
+    console.log(
+      'getAssessmentDataById===============',
+      getAssessmentDataById.qList,
+    );
     console.log(this.state);
+    // const getDataByIdJSX = getAssessmentDataById.length
+    //   ? getAssessmentDataById.map((item, i) => {
+    //       return (
+    //         <View
+    //           style={{
+    //             paddingBottom: normalize(20),
+    //             borderBottomWidth: 1,
+    //             borderBottomColor: colors.COLOR_29,
+    //             // borderWidth: 1,
+    //             // width: '100%',
+    //             width: '90%',
+    //             marginLeft: 'auto',
+    //             marginRight: 'auto',
+    //           }}>
+    //           <Text style={styles.textQuestion}>{item.question}</Text>
+    //           <OptYesNo status={q1Status} handler={() => this.q1Handler()} />
+    //           <View style={styles.borderColorBottom} />
+    //         </View>
+    //       );
+    //     })
+    //   : null;
+
     return (
       <MasterLayout
         leftIcon={require('../../assets/backArrow.png')}
@@ -180,192 +218,10 @@ class AlcoholTest extends Component {
           <View style={{marginTop: normalize(90)}}>
             <ScrollView contentContainerStyle={styles.scrollView}>
               <View style={styles.innerWrapperView}>
-                <View>
-                  <Text style={styles.heading}>Michigan Alcohol Test</Text>
-                  <Text style={styles.textQuestion}>
-                    Do you feel you are a normal drinker?
-                  </Text>
-                  <OptYesNo
-                    status={q1Status}
-                    handler={() => this.q1Handler()}
-                  />
-                  <View style={styles.borderColorBottom} />
-                  <Text style={styles.textQuestion}>
-                    Have you ever awakened the morning after some drinking the
-                    night before and found that you could not remember a part of
-                    the evening?
-                  </Text>
-                  <OptYesNo
-                    status={q2Status}
-                    handler={() => this.q2Handler()}
-                  />
-                  <View style={styles.borderColorBottom} />
-                  <Text style={styles.textQuestion}>
-                    Does any near relative or close friend every worry or
-                    complain about your drinking?
-                  </Text>
-                  <OptYesNo
-                    status={q3Status}
-                    handler={() => this.q3Handler()}
-                  />
-                  <View style={styles.borderColorBottom} />
-                </View>
-
-                <Text style={styles.textQuestion}>
-                  Can you stop drinking without difficulty after one or two
-                  drinks?
-                </Text>
-                <OptYesNo status={q4Status} handler={() => this.q4Handler()} />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Do you ever feel guilty about your drinking?
-                </Text>
-                <OptYesNo status={q5Status} handler={() => this.q5Handler()} />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you ever attended a meeting of Alcoholics Anonymous(AA)?
-                </Text>
-                <OptYesNo status={q6Status} handler={() => this.q6Handler()} />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you ever gotten into physical fights when drinking?
-                </Text>
-                <OptYesNo status={q7Status} handler={() => this.q7Handler()} />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Has drinking ever created problems between you and a near
-                  relative or close friend?
-                </Text>
-                <OptYesNo status={q8Status} handler={() => this.q8Handler()} />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Has any family member or close friend gone to anyone for help
-                  about your drinking?
-                </Text>
-                <OptYesNo status={q9Status} handler={() => this.q9Handler()} />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you ever lost friends because of your drinking?{' '}
-                </Text>
-                <OptYesNo
-                  status={q10Status}
-                  handler={() => this.q10Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you ever gotten into trouble at work because of drinking?
-                </Text>
-                <OptYesNo
-                  status={q11Status}
-                  handler={() => this.q11Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you ever lost a job because of drinking?
-                </Text>
-                <OptYesNo
-                  status={q12Status}
-                  handler={() => this.q12Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you ever neglected your obligations, your family, or your
-                  work for two or more days in a row because you were drinking?
-                </Text>
-                <OptYesNo
-                  status={q13Status}
-                  handler={() => this.q13Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Do you drink before noon fairly often?
-                </Text>
-                <OptYesNo
-                  status={q14Status}
-                  handler={() => this.q14Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you ever been told you have liver trouble such as
-                  cirrhosis?
-                </Text>
-                <OptYesNo
-                  status={q15Status}
-                  handler={() => this.q15Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  After heavy drinking have you ever had delirium
-                  tremens(D.T's), severe shaking, visual or auditory (hearing)
-                  hallucinations?
-                </Text>
-                <OptYesNo
-                  status={q16Status}
-                  handler={() => this.q16Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you ever gone to anyone for help about your drinking?
-                </Text>
-                <OptYesNo
-                  status={q17Status}
-                  handler={() => this.q17Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you ever been hospitalized because of drinking?
-                </Text>
-                <OptYesNo
-                  status={q18Status}
-                  handler={() => this.q18Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Has your drinking ever resulted in your being hospitalized in
-                  a psychiatric ward?
-                </Text>
-                <OptYesNo
-                  status={q19Status}
-                  handler={() => this.q19Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you ever gone to doctor,social worker, clergyman or
-                  mental health clinic for help with any emotional problem in
-                  which drinking was part of the problem?
-                </Text>
-                <OptYesNo
-                  status={q20Status}
-                  handler={() => this.q20Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you been arrested more than once for driving under the
-                  influence of alcohol?
-                </Text>
-                <OptYesNo
-                  status={q21Status}
-                  handler={() => this.q21Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  Have you ever been arrested, even for a few hours because of
-                  other behaviour while drinking?
-                </Text>
-                <OptYesNo
-                  status={q22Status}
-                  handler={() => this.q22Handler()}
-                />
-                <View style={styles.borderColorBottom} />
-                <Text style={styles.textQuestion}>
-                  After heavy drinking have you ever had D.T.'s, severe shaking,
-                  visual or auditory (hearing) hallucinations?
-                </Text>
-                <OptYesNo
-                  status={q23Status}
-                  handler={() => this.q23Handler()}
-                />
-                <View style={styles.borderColorBottom} />
+                {/* <Text style={styles.heading}>
+                  {getAssessmentDataById.groupName}
+                </Text> */}
+                {/* {getDataByIdJSX} */}
               </View>
             </ScrollView>
           </View>
@@ -375,7 +231,6 @@ class AlcoholTest extends Component {
   }
 }
 
-export default AlcoholTest;
 const styles = StyleSheet.create({
   headerStyle: {
     flexDirection: 'row',
@@ -405,7 +260,7 @@ const styles = StyleSheet.create({
     top: normalize(-100),
   },
   scrollView: {
-    paddingBottom: hp(100),
+    paddingBottom: hp(50),
   },
 
   innerWrapperView: {
@@ -442,7 +297,7 @@ const styles = StyleSheet.create({
     fontSize: normalize(12),
     fontFamily: 'Poppins-Regular',
     color: colors.DARK_TEXT_BLUE,
-    paddingTop: normalize(20),
+    // paddingTop: normalize(20),
   },
   selected: {paddingVertical: normalize(20)},
   borderColorBottom: {
@@ -450,3 +305,17 @@ const styles = StyleSheet.create({
     borderColor: colors.COLOR_29,
   },
 });
+
+const mapStateToProps = ({assessment}) => {
+  const {assessmentById} = assessment;
+  return {
+    getAssessmentDataById: assessmentById,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    getAssessmentById,
+  },
+)(AlcoholTest);
