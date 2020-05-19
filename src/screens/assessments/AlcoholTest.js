@@ -4,7 +4,6 @@ import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import ViewPager from '@react-native-community/viewpager';
 import CustomRadioButton from '../../components/CustomRadioButton.js';
 
 class AlcoholTest extends Component {
@@ -14,7 +13,7 @@ class AlcoholTest extends Component {
         leftIcon={require('../../assets/backArrow.png')}
         centerTitle="My Assessment"
         rightIcon={require('../../assets/bell.png')}
-        leftIconPress={() => this.props.navigation.navigate('Journaling')}
+        leftIconPress={() => this.props.navigation.navigate('Assessment')}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
         <View style={styles.shadowView}>
@@ -45,8 +44,10 @@ class AlcoholTest extends Component {
                     night before and found that you could not remember a part of
                     the evening?
                   </Text>
-                  <Text style={styles.selected}>Yes</Text>
-                  <CustomRadioButton />
+
+                  <View style={styles.selected}>
+                    <CustomRadioButton />
+                  </View>
                   <View style={styles.borderColorBottom} />
                   <Text style={styles.textQuestion}>
                     Does any near relative or close friend every worry or
@@ -67,6 +68,86 @@ class AlcoholTest extends Component {
                 <View style={styles.borderColorBottom} />
                 <Text style={styles.textQuestion}>
                   Have you ever attended a meeting of Alcoholics Anonymous(AA)?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Have you ever gotten into physical fights when drinking?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Has drinking ever created problems between you and a near
+                  relative or close friend?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Has any family member or close friend gone to anyone for help
+                  about your drinking?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Have you ever lost friends because of your drinking?{' '}
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Have you ever gotten into trouble at work because of drinking?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Have you ever lost a job because of drinking?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Have you ever neglected your obligations, your family, or your
+                  work for two or more days in a row because you were drinking?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Do you drink before noon fairly often?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Have you ever been told you have liver trouble such as
+                  cirrhosis?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  After heavy drinking have you ever had delirium
+                  tremens(D.T's), severe shaking, visual or auditory (hearing)
+                  hallucinations?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Have you ever gone to anyone for help about your drinking?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Have you ever been hospitalized because of drinking?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Has your drinking ever resulted in your being hospitalized in
+                  a psychiatric ward?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Have you ever gone to doctor,social worker, clergyman or
+                  mental health clinic for help with any emotional problem in
+                  which drinking was part of the problem?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Have you been arrested more than once for driving under the
+                  influence of alcohol?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  Have you ever been arrested, even for a few hours because of
+                  other behaviour while drinking?
+                </Text>
+                <View style={styles.borderColorBottom} />
+                <Text style={styles.textQuestion}>
+                  After heavy drinking have you ever had D.T.'s, severe shaking,
+                  visual or auditory (hearing) hallucinations?
                 </Text>
                 <View style={styles.borderColorBottom} />
               </View>

@@ -29,7 +29,7 @@ const CustomRadioButton = () => {
           />
         </View>
       </TouchableOpacity>
-      {/* <Text>Yes</Text> */}
+      <Text>Yes</Text>
     </View>
   );
 };
