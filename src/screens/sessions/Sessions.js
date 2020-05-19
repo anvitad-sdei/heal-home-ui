@@ -352,70 +352,73 @@ class Sessions extends Component {
               />
             </View>
           </View>
-          <View style={styles.topButtonView}>
-            {active === 1 ? (
-              <>
-                <TouchableOpacity
-                  onPress={() => {
-                    update ? this.backHandler() : this.setState({active: 1});
-                  }}>
-                  <View
-                    style={{
-                      ...styles.newSession,
-                      backgroundColor: active === 1 ? colors.BLUE : null,
+          <View
+            style={{width: '100%', marginLeft: 'auto', marginRight: 'auto'}}>
+            <View style={styles.topButtonView}>
+              {active === 1 ? (
+                <>
+                  <TouchableOpacity
+                    onPress={() => {
+                      update ? this.backHandler() : this.setState({active: 1});
                     }}>
-                    <Text
+                    <View
                       style={{
-                        ...styles.textStyle,
-                        color: active === 1 ? colors.WHITE : colors.BLUE,
+                        ...styles.newSession,
+                        backgroundColor: active === 1 ? colors.BLUE : null,
                       }}>
-                      {update ? 'Back' : 'New Session'}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.setState({active: 2})}>
-                  <View style={styles.requestedSession}>
-                    <Text
+                      <Text
+                        style={{
+                          ...styles.textStyle,
+                          color: active === 1 ? colors.WHITE : colors.BLUE,
+                        }}>
+                        {update ? 'Back' : 'New Session'}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.setState({active: 2})}>
+                    <View style={styles.requestedSession}>
+                      <Text
+                        style={{
+                          ...styles.textStyle,
+                          color: active === 1 ? colors.BLUE : colors.WHITE,
+                        }}>
+                        Requested Session
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              ) : null}
+              {active === 2 ? (
+                <>
+                  <TouchableOpacity onPress={() => this.setState({active: 1})}>
+                    <View style={styles.newSession}>
+                      <Text
+                        style={{
+                          ...styles.textStyle,
+                          color: active === 2 ? colors.BLUE : colors.WHITE,
+                        }}>
+                        New Session
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.setState({active: 2})}>
+                    <View
                       style={{
-                        ...styles.textStyle,
-                        color: active === 1 ? colors.BLUE : colors.WHITE,
+                        ...styles.requestedSession,
+                        backgroundColor: active === 2 ? colors.BLUE : null,
                       }}>
-                      Requested Session
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </>
-            ) : null}
-            {active === 2 ? (
-              <>
-                <TouchableOpacity onPress={() => this.setState({active: 1})}>
-                  <View style={styles.newSession}>
-                    <Text
-                      style={{
-                        ...styles.textStyle,
-                        color: active === 2 ? colors.BLUE : colors.WHITE,
-                      }}>
-                      New Session
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.setState({active: 2})}>
-                  <View
-                    style={{
-                      ...styles.requestedSession,
-                      backgroundColor: active === 2 ? colors.BLUE : null,
-                    }}>
-                    <Text
-                      style={{
-                        ...styles.textStyle,
-                        color: active === 2 ? colors.WHITE : BLUE,
-                      }}>
-                      Requested Session
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </>
-            ) : null}
+                      <Text
+                        style={{
+                          ...styles.textStyle,
+                          color: active === 2 ? colors.WHITE : BLUE,
+                        }}>
+                        Requested Session
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              ) : null}
+            </View>
           </View>
 
           <ScrollView contentContainerStyle={styles.scrollView}>
@@ -623,19 +626,24 @@ const styles = StyleSheet.create({
     borderRadius: normalize(20),
     borderColor: colors.BLUE,
     width: normalize(260),
+    // width: '90%',
+    // marginLeft: 'auto',
+    // marginRight: 'auto',
     alignSelf: 'center',
     marginTop: normalize(90),
     marginBottom: normalize(30),
   },
   newSession: {
     height: normalize(35),
-    width: normalize(115),
+    width: normalize(115), //115
+
     borderRadius: normalize(20),
     paddingTop: normalize(8),
   },
   requestedSession: {
     height: normalize(35),
-    width: normalize(145),
+    width: normalize(145), //145
+
     borderRadius: normalize(20),
     paddingTop: normalize(8),
   },

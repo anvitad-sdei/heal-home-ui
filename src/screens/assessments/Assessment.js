@@ -1,12 +1,30 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, ScrollView, Image} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
-import ViewWithCircle from '../../components/ViewWithCircle';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
-export default class Assessment extends Component {
+import {getAllAssessment} from '../../redux/actions';
+import {connect} from 'react-redux';
+class Assessment extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.props.getAllAssessment();
+  }
+
   render() {
+    const {data} = this.props;
+    console.log(data, '------------------');
     const assessmentData = [
       {
         id: 1,
@@ -22,42 +40,42 @@ export default class Assessment extends Component {
       },
     ];
 
-    const assessmentDataJSX = assessmentData.length
-      ? assessmentData.map((item, i) => {
+    const assessmentDataJSX = data.length
+      ? data.map((item, i) => {
           return (
             <View style={styles.listView}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
-                <View style={{width: '70%'}}>
-                  <Text
-                    style={{...styles.headingStyle, color: colors.GRAY_FIVE}}>
-                    {item.name}
-                  </Text>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('AlcoholTest')}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={{width: '70%'}}>
+                    <Text
+                      style={{...styles.headingStyle, color: colors.GRAY_FIVE}}>
+                      {item.groupName}
+                    </Text>
+                  </View>
+                  <View style={{width: '30%'}}>
+                    <Text
+                      style={{
+                        ...styles.headingStyle,
+                        color: colors.BLUE,
+                        textAlign: 'right',
+                      }}>
+                      {item.filled == true ? 'VIEW' : 'LOG NOW'}
+                    </Text>
+                  </View>
                 </View>
-                <View style={{width: '30%'}}>
-                  <Text
-                    style={{
-                      ...styles.headingStyle,
-                      color: colors.BLUE,
-                      textAlign: 'right',
-                    }}>
-                    {item.view}
-                  </Text>
-                </View>
-              </View>
-
+              </TouchableOpacity>
               <Text
                 style={{
                   ...styles.statusStyle,
                   color:
-                    item.status === 'SUBMITTED'
-                      ? colors.GREEN
-                      : colors.ORANGE_FOUR,
+                    item.filled === true ? colors.GREEN : colors.ORANGE_FOUR,
                 }}>
-                {item.status}
+                {item.filled == true ? 'SUBMITTED' : 'PENDING'}
               </Text>
             </View>
           );
@@ -71,10 +89,6 @@ export default class Assessment extends Component {
         leftIconPress={() => this.props.navigation.openDrawer()}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
-        {/* <ViewWithCircle
-          sourceCircle={require('../../assets/circle.png')}
-          source={require('../../assets/myAssessment.png')}
-        /> */}
         <View style={styles.shadowView}>
           <View style={styles.circleViewImage}>
             <Image
@@ -115,7 +129,6 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     backgroundColor: colors.WHITE,
-    // marginTop: normalize(10),
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -125,19 +138,14 @@ const styles = StyleSheet.create({
     shadowRadius: 1.0,
     elevation: 1,
     marginBottom: normalize(310), //310
-    // borderBottomLeftRadius: normalize(20),
-    // borderBottomRightRadius: normalize(20),
     borderRadius: normalize(20),
     top: normalize(-100),
   },
   scrollView: {
     paddingBottom: hp(100),
-    // marginTop: normalize(80),
   },
 
   innerWrapperView: {
-    // paddingTop: normalize(-10),
-    // borderWidth: 1,
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -177,3 +185,19 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 });
+
+//export default Assessment;
+
+const mapStateToProps = ({assessment}) => {
+  const {assessmentData} = assessment;
+  return {
+    data: assessmentData,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    getAllAssessment,
+  },
+)(Assessment);

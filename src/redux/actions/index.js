@@ -281,6 +281,28 @@ export const getAllHandouts = () => async dispatch => {
   }
 };
 
+/*************************GET ALL HANDOUTS SUCCESS ********************** */
+export const getAllAssessment = () => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios(`${apiUrls.BASE_URL}/forms`);
+    if (res) {
+      console.log(res);
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(
+          constants.GET_ALL_ASSESSMENT_SUCCESS,
+          res.data.response,
+        ),
+      );
+    }
+  } catch (err) {
+    console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
+
 /*************************CLEAR SESSION BY ID8*************************** */
 
 export const clearSessionById = () => dispatch => {

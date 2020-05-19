@@ -14,6 +14,7 @@ import DrinkingLogs from '../screens/drinkingLogs/DrinkingLogs';
 import Sessions from '../screens/sessions/Sessions';
 import TherapistsList from '../screens/therapists/TherapistsList';
 import TherapistsReview from '../screens/therapists/TherapistsReview';
+import AlcoholTest from '../screens/assessments/AlcoholTest';
 const TabBarComponent = props => {
   return <BottomTabBar {...props} />;
 };
@@ -26,6 +27,7 @@ const RootStackHome = createStackNavigator(
     JournalQuestion: JournalQuestion,
     Sessions: Sessions,
     TherapistsList: TherapistsList,
+    AlcoholTest: AlcoholTest,
   },
   {
     initialRouteName: 'Home',
