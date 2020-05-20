@@ -1,7 +1,7 @@
 import constants from '../constants';
 const iState = {
   allTherapists: [],
-  therapistsReview: {},
+  therapistsReview: {drinkingLogReviewList: [], childList: []},
 };
 const therapist = (state = iState, action) => {
   switch (action.type) {

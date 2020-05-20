@@ -98,8 +98,8 @@ const TabNavigator = createBottomTabNavigator(
         },
       },
     },
-    Profile: {
-      screen: TherapistsReview,
+    'My Therapists': {
+      screen: TherapistsList,
       navigationOptions: {
         tabBarIcon: ({focused}) => {
           let url = focused

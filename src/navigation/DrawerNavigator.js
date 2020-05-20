@@ -16,6 +16,7 @@ import {
 import Handouts from '../screens/handouts/Handouts';
 import Assessment from '../screens/assessments/Assessment';
 import TabNavigator from '../navigation/TabNavigator';
+import TherapistsReview from '../screens/therapists/TherapistsReview';
 const DashBoardItems = ({handler, title}) => {
   return (
     <TouchableOpacity onPress={handler}>
@@ -62,6 +63,13 @@ const CustomDrawerComponent = props => {
             props.navigation.navigate('Profile');
           }}
           title={'Profile'}
+        />
+        <DashBoardItems
+          handler={() => {
+            props.navigation.toggleDrawer();
+            props.navigation.navigate('TherapistsReview');
+          }}
+          title={'Therapists Review'}
         />
       </ScrollView>
     </SafeAreaView>

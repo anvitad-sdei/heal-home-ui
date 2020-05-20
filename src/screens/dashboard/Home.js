@@ -103,12 +103,12 @@ class Home extends React.Component {
           />
           <GradientButton
             colors={[colors.LIGHT_BLUE_ONE, colors.LIGHT_BLUE_SECOND]}
-            title="My Therapists"
+            title="Request Sessions"
             source={require('../../assets/people.png')}
             imageView={{width: normalize(24), height: normalize(27)}}
             titleStyle={{color: colors.DARK_TEXT_BLUE}}
             iconColor={colors.BLACK}
-            onPress={() => this.props.navigation.navigate('TherapistsList')}
+            onPress={() => this.props.navigation.navigate('Sessions')}
           />
 
           <View style={styles.upcomingSessionView}>

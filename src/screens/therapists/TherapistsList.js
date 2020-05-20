@@ -43,10 +43,10 @@ class TherapistsList extends Component {
       : null;
     return (
       <MasterLayout
-        leftIcon={require('../../assets/backArrow.png')}
+        leftIcon={require('../../assets/menu.png')}
         centerTitle="Therapist Listing"
         rightIcon={require('../../assets/bell.png')}
-        leftIconPress={() => this.props.navigation.navigate('Home')}
+        leftIconPress={() => this.props.navigation.openDrawer()}
         rightIconPress={() => alert('right')}>
         <View style={styles.outerShadowView}>
           <ScrollView contentContainerStyle={{paddingBottom: hp(80)}}>

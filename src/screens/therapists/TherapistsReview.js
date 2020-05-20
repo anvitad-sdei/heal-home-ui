@@ -8,6 +8,7 @@ import RoundedButton from '../../components/Buttons/RoundedButton';
 import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 import {getAllTherapistsReview} from '../../redux/actions';
 import {connect} from 'react-redux';
+import moment from 'moment';
 class TherapistsReview extends Component {
   constructor(props) {
     super(props);
@@ -31,17 +32,57 @@ class TherapistsReview extends Component {
     const {active, reply} = this.state;
     const {data} = this.props;
     console.log('data===============review', data);
-    const reviewListData = data.length
-      ? data.map((item, i) => {
+    const childList = data.drinkingLogReviewList.childList
+      ? data.drinkingLogReviewList.childList.map((item, i) => (
+          <>
+            <Text style={styles.replyText}>{item.createdBy}</Text>
+
+            {active === 1 ? (
+              <RoundedButton
+                title="Reply"
+                buttonStyle={styles.buttonStyle}
+                titleStyle={styles.titleStyle}
+                value={reply}
+                onChangeText={() => this.onChangeReply()}
+                onPress={() => this.onReply()}
+              />
+            ) : null}
+
+            {active === 2 ? (
+              <View>
+                <CustomTextArea
+                  placeholder=" "
+                  textAreaView={{padding: 0}}
+                  titleStyle={{marginTop: 0}}
+                />
+                <RoundedButton
+                  title="Submit"
+                  buttonStyle={styles.submitButtonStyle}
+                  titleStyle={styles.submitTitleStyle}
+                />
+              </View>
+            ) : null}
+          </>
+        ))
+      : null;
+
+    const reviewListData = data.drinkingLogReviewList.length
+      ? data.drinkingLogReviewList.map((item, i) => {
           return (
             <View style={styles.innerWrapperView}>
-              <Text style={styles.dateHeading}>{item.createdDate}</Text>
-              <Text style={styles.subTitle}>
-                Please fill this log regularly.
+              <Text style={styles.dateHeading}>
+                {moment(item.createdDate).format('dddd') +
+                  ', ' +
+                  moment(item.createdDate).format('MMMM Do YYYY')}
               </Text>
+              <Text style={styles.subTitle}>{item.comment}</Text>
               <View style={styles.borderBottomStyle} />
-              <Text style={styles.heading}>Alcohol Management commented</Text>
-              <Text style={styles.replyText}>Lorem ipsum dolor sit amet</Text>
+              <Text style={styles.heading}>
+                {item.createdBy + ' ' + 'commented'}
+              </Text>
+              {childList}
+              {/* <Text style={styles.replyText}>Lorem ipsum dolor sit amet</Text>
+
               {active === 1 ? (
                 <RoundedButton
                   title="Reply"
@@ -66,7 +107,7 @@ class TherapistsReview extends Component {
                     titleStyle={styles.submitTitleStyle}
                   />
                 </View>
-              ) : null}
+              ) : null} */}
             </View>
           );
         })
@@ -81,9 +122,16 @@ class TherapistsReview extends Component {
         headerStyle={styles.headerStyle}>
         <View style={styles.shadowView}>
           <ScrollView contentContainerStyle={styles.scrollView}>
-            {/* {reviewListData} */}
+            {/* <Text style={styles.dateHeading}>
+              {moment(data.drinkingLogReviewList.createdDate).format('dddd') +
+                ', ' +
+                moment(data.drinkingLogReviewList.createdDate).format(
+                  'MMMM Do YYYY',
+                )}
+            </Text> */}
+            {reviewListData}
             <View style={styles.innerWrapperView}>
-              <Text style={styles.dateHeading}>Tuesday, May 12th 2020</Text>
+              {/* <Text style={styles.dateHeading}>Tuesday, May 12th 2020</Text>
               <Text style={styles.subTitle}>
                 Please fill this log regularly.
               </Text>
@@ -114,7 +162,7 @@ class TherapistsReview extends Component {
                     titleStyle={styles.submitTitleStyle}
                   />
                 </View>
-              ) : null}
+              ) : null} */}
             </View>
           </ScrollView>
         </View>
