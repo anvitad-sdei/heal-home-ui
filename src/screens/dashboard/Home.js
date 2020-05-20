@@ -45,23 +45,27 @@ class Home extends React.Component {
     const {dateModal, date} = this.state;
     const {upcomingSessionData} = this.props;
 
-    const viewPagerData = upcomingSessionData.length
-      ? upcomingSessionData.map((item, i) => {
-          let sessionStartIn = moment(item.start).format();
-          return (
-            <CardView
-              title={item.title}
-              time={
-                'Session start' +
-                ' ' +
-                moment(sessionStartIn)
-                  .endOf('days')
-                  .fromNow()
-              }
-            />
-          );
-        })
-      : null;
+    const viewPagerData = upcomingSessionData.length ? (
+      upcomingSessionData.map((item, i) => {
+        let sessionStartIn = moment(item.start).format();
+        return (
+          <CardView
+            title={item.title}
+            time={
+              'Session start' +
+              ' ' +
+              moment(sessionStartIn)
+                .endOf('days')
+                .fromNow()
+            }
+          />
+        );
+      })
+    ) : (
+      <Text style={{textAlign: 'center', alignItems: 'center'}}>
+        No upcoming Sessions
+      </Text>
+    );
 
     return (
       <MasterLayout
