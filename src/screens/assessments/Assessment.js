@@ -24,7 +24,7 @@ class Assessment extends Component {
 
   render() {
     const {data} = this.props;
-    console.log(data, '------------------');
+    //console.log(data, '------------------');
 
     const assessmentDataJSX = data.length
       ? data.map((item, i) => {
@@ -32,7 +32,10 @@ class Assessment extends Component {
             <View style={styles.listView} key={i}>
               <TouchableOpacity
                 onPress={() =>
-                  this.props.navigation.navigate('AlcoholTest', {id: item.id})
+                  this.props.navigation.navigate('AlcoholTest', {
+                    id: item.id,
+                    groupId: item.groupId,
+                  })
                 }>
                 <View
                   style={{
@@ -130,7 +133,7 @@ const styles = StyleSheet.create({
     top: normalize(-100),
   },
   scrollView: {
-    paddingBottom: hp(100),
+    paddingBottom: hp(40),
   },
 
   innerWrapperView: {
