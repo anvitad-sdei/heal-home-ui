@@ -222,7 +222,6 @@ export const getAllTherapists = () => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios(`${apiUrls.BASE_URL}/question/mytherapists`);
     if (res) {
-      //console.log(res);
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(
@@ -232,7 +231,6 @@ export const getAllTherapists = () => async dispatch => {
       );
     }
   } catch (err) {
-    // console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
     errorResHandler(err);
   }
@@ -244,7 +242,6 @@ export const getAllTherapistsReview = () => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios(`${apiUrls.BASE_URL}/review`);
     if (res) {
-      console.log(res);
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(
@@ -254,7 +251,6 @@ export const getAllTherapistsReview = () => async dispatch => {
       );
     }
   } catch (err) {
-    console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
     errorResHandler(err);
   }
@@ -287,7 +283,6 @@ export const getAllAssessment = () => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios(`${apiUrls.BASE_URL}/forms`);
     if (res) {
-      console.log(res);
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(
@@ -297,7 +292,6 @@ export const getAllAssessment = () => async dispatch => {
       );
     }
   } catch (err) {
-    console.log(JSON.stringify(err.response));
     dispatch(loadingHandler(false));
     errorResHandler(err);
   }
@@ -309,7 +303,6 @@ export const getAssessmentById = id => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios(`${apiUrls.BASE_URL}/forms/${id}`);
     if (res) {
-      console.log(res);
       dispatch(loadingHandler(false));
       dispatch(
         successResponseHandler(
@@ -319,7 +312,24 @@ export const getAssessmentById = id => async dispatch => {
       );
     }
   } catch (err) {
-    console.log(JSON.stringify(err.response));
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
+
+/**********************************POST ASSESSMENT SESSION API ***********************/
+export const saveAssessment = data => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios.post(`${apiUrls.BASE_URL}/forms`, {...data});
+    if (res) {
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(constants.SAVE_ASSESSMENT_SUCCESS, res.data),
+      );
+      successResHandler('Submit successfully', 'Assessment');
+    }
+  } catch (err) {
     dispatch(loadingHandler(false));
     errorResHandler(err);
   }

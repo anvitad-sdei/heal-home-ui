@@ -1,7 +1,8 @@
 import constants from '../constants';
 const iState = {
   assessmentData: [],
-  assessmentById: {qList: []},
+  assessmentById: {qlist: []},
+  saveAssessmentData: {},
 };
 const assessment = (state = iState, action) => {
   switch (action.type) {
@@ -15,6 +16,11 @@ const assessment = (state = iState, action) => {
       return {
         ...state,
         assessmentById: action.payload,
+      };
+    case constants.SAVE_ASSESSMENT_SUCCESS:
+      return {
+        ...state,
+        saveAssessmentData: action.payload,
       };
     default:
       return state;
