@@ -66,22 +66,22 @@ class TherapistsReview extends Component {
         ))
       : null;
 
-    const reviewListData = data.drinkingLogReviewList.length
-      ? data.drinkingLogReviewList.map((item, i) => {
-          return (
-            <View style={styles.innerWrapperView}>
-              <Text style={styles.dateHeading}>
-                {moment(item.createdDate).format('dddd') +
-                  ', ' +
-                  moment(item.createdDate).format('MMMM Do YYYY')}
-              </Text>
-              <Text style={styles.subTitle}>{item.comment}</Text>
-              <View style={styles.borderBottomStyle} />
-              <Text style={styles.heading}>
-                {item.createdBy + ' ' + 'commented'}
-              </Text>
-              {childList}
-              {/* <Text style={styles.replyText}>Lorem ipsum dolor sit amet</Text>
+    const reviewListData = data.drinkingLogReviewList.length ? (
+      data.drinkingLogReviewList.map((item, i) => {
+        return (
+          <View style={styles.innerWrapperView}>
+            <Text style={styles.dateHeading}>
+              {moment(item.createdDate).format('dddd') +
+                ', ' +
+                moment(item.createdDate).format('MMMM Do YYYY')}
+            </Text>
+            <Text style={styles.subTitle}>{item.comment}</Text>
+            <View style={styles.borderBottomStyle} />
+            <Text style={styles.heading}>
+              {item.createdBy + ' ' + 'commented'}
+            </Text>
+            {childList}
+            {/* <Text style={styles.replyText}>Lorem ipsum dolor sit amet</Text>
 
               {active === 1 ? (
                 <RoundedButton
@@ -108,10 +108,12 @@ class TherapistsReview extends Component {
                   />
                 </View>
               ) : null} */}
-            </View>
-          );
-        })
-      : null;
+          </View>
+        );
+      })
+    ) : (
+      <Text style={styles.noDataText}>No Review Data found</Text>
+    );
     return (
       <MasterLayout
         leftIcon={require('../../assets/menu.png')}
@@ -184,7 +186,7 @@ export default connect(
     getAllTherapistsReview,
   },
 )(TherapistsReview);
-//export default TherapistsReview;
+
 const styles = StyleSheet.create({
   headerStyle: {
     flexDirection: 'row',
@@ -276,5 +278,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     fontSize: normalize(12),
     color: colors.BLUE,
+  },
+  noDataText: {
+    textAlign: 'center',
+    fontFamily: 'Poppins-Bold',
+    fontSize: normalize(14),
+    color: colors.GRAY_FIVE,
+    paddingTop: normalize(30),
   },
 });
