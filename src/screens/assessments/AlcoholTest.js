@@ -45,13 +45,39 @@ class AlcoholTest extends Component {
       qId: '',
       questionId: '',
       questionType: '',
+      qStatus: [],
     };
   }
-  q1Handler = () => {
-    const {q1Status} = this.state;
-    this.setState({
-      q1Status: !q1Status,
-    });
+  q1Handler = data => {
+    const {id, questionId, questionType, booleanAnswer} = data;
+    const {qList, qStatus} = this.state;
+    const setData = {
+      id: id,
+      questionId: questionId,
+      questionType: questionType,
+      booleanAnswer: booleanAnswer,
+    };
+    if (qStatus.length) {
+      let checkExistance = qStatus.find(item => {
+        return item === data.questionId ? item : false;
+      });
+      if (checkExistance) {
+        this.setState({
+          qList: qList.filter(item => item.questionId !== checkExistance),
+          qStatus: qStatus.filter(item => item !== checkExistance),
+        });
+      } else {
+        this.setState({
+          qList: [...qList, setData],
+          qStatus: [...qStatus, questionId],
+        });
+      }
+    } else {
+      this.setState({
+        qList: [...qList, setData],
+        qStatus: [...qStatus, questionId],
+      });
+    }
   };
 
   // q2Handler = () => {
@@ -153,14 +179,19 @@ class AlcoholTest extends Component {
   };
 
   onSaveAssessmentData = () => {
-    const {id, groupId} = this.state;
-    console.log('group id===========', id, groupId, '-----------');
+    const {id, groupId, qList} = this.state;
     const data = {
       id: id,
       groupId: groupId,
-      qlist: [],
+      qlist: qList,
     };
-    console.log(data);
+    console.log(data); //data is comming for yes_no only working fine hit api here
+  };
+  statusHandler = id => {
+    const {qStatus} = this.state;
+    return qStatus.length
+      ? qStatus.find(item => (item === id ? true : false))
+      : false;
   };
 
   render() {
@@ -191,8 +222,7 @@ class AlcoholTest extends Component {
       assessmentAnswer,
     } = this.state;
     const {getAssessmentDataById} = this.props;
-
-    console.log('group id===========', this.state, '-----------');
+    console.log(this.state.qList);
     const getDataByIdJSX = getAssessmentDataById.qlist.length
       ? getAssessmentDataById.qlist.map((item, i) => {
           return (
@@ -203,14 +233,17 @@ class AlcoholTest extends Component {
               <Text>{item.questionType}</Text>
 
               {item.questionType === 'Yes_no' ? (
-                <OptYesNo status={q1Status} handler={() => this.q1Handler()} />
+                <OptYesNo
+                  status={this.statusHandler(item.questionId)}
+                  handler={() => this.q1Handler(item)}
+                />
               ) : null}
               {item.questionType === 'Multi_Select' ? (
                 <MultiSelectOptions status={q1Status} />
               ) : null}
               {item.questionType === 'Text' ? (
                 <CustomTextArea
-                  onChange={() => onHandleAssessment()}
+                  onChange={() => this.onHandleAssessment()}
                   value={assessmentAnswer}
                   textAreaView={{paddingBottom: normalize(10), paddingTop: 0}}
                   titleStyle={{marginTop: 0}}
