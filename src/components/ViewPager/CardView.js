@@ -38,11 +38,20 @@ const CardView = props => {
             </View>
           </View>
         </View> */}
-        <View style={{width: '60%', borderWidth: 1}}>
-          <Text>{title}</Text>
-          <Text>{time}</Text>
+        <View style={{width: '60%'}}>
+          <Text style={{fontFamily: 'Poppins-Medium', fontSize: normalize(14)}}>
+            {title}
+          </Text>
+          <Text
+            style={{
+              fontFamily: 'Poppins-Regular',
+              fontSize: normalize(10),
+              color: colors.GRAY_PLACE_COLOR,
+            }}>
+            {time}
+          </Text>
         </View>
-        <View style={{width: '40%', borderWidth: 1}}>
+        <View style={{width: '30%'}}>
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity onPress={() => alert('message')}>
               <Image
@@ -67,7 +76,7 @@ export default CardView;
 
 const styles = StyleSheet.create({
   sliderView: {
-    borderRadius: normalize(5),
+    borderRadius: normalize(10),
     backgroundColor: colors.WHITE,
     shadowColor: '#000',
     shadowOffset: {
@@ -77,11 +86,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: 'red',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginVertical: normalize(10),
+    padding: normalize(10),
   },
   socialImage: {width: normalize(36), height: normalize(36)},
   socialImageVideo: {

@@ -74,55 +74,44 @@ class Home extends React.Component {
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => this.props.navigation.openDrawer()}
         rightIconPress={() => alert('right')}>
+        <View style={styles.dateView}>
+          <Text style={styles.dateText}>Choose Date for Upcoming Session</Text>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text
+              style={styles.datePick}
+              onPress={() => this.dateModalHandler(true)}>
+              {moment(date).format('L')}
+            </Text>
+          </View>
+        </View>
+        <GradientButton
+          colors={[colors.LIGHT_PINK, colors.PINK]}
+          title="Drinking Log"
+          source={require('../../assets/drinks.png')}
+          imageView={{height: normalize(22), width: normalize(22)}}
+          onPress={() => this.props.navigation.navigate('DrinkingLogs')}
+          iconColor={colors.WHITE}
+        />
+        <GradientButton
+          colors={[colors.LIGHT_BLUE, colors.LIGHT_BLUE_THIRD]}
+          title="Journaling"
+          source={require('../../assets/interface.png')}
+          imageView={{width: normalize(24), height: normalize(21)}}
+          onPress={() => this.props.navigation.navigate('Journaling')}
+          iconColor={colors.WHITE}
+        />
+        <GradientButton
+          colors={[colors.LIGHT_BLUE_ONE, colors.LIGHT_BLUE_SECOND]}
+          title="Request Sessions"
+          source={require('../../assets/people.png')}
+          imageView={{width: normalize(24), height: normalize(27)}}
+          titleStyle={{color: colors.DARK_TEXT_BLUE}}
+          iconColor={colors.BLACK}
+          onPress={() => this.props.navigation.navigate('Sessions')}
+        />
+        <Text style={styles.sessionTitle}>Upcoming Sessions</Text>
         <ScrollView contentContainerStyle={{paddingBottom: hp(35)}}>
-          <View style={styles.dateView}>
-            <Text style={styles.dateText}>Pick the Date</Text>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text
-                style={styles.datePick}
-                onPress={() => this.dateModalHandler(true)}>
-                {moment(date).format('L')}
-              </Text>
-            </View>
-          </View>
-          <GradientButton
-            colors={[colors.LIGHT_PINK, colors.PINK]}
-            title="Drinking Log"
-            source={require('../../assets/drinks.png')}
-            imageView={{height: normalize(22), width: normalize(22)}}
-            onPress={() => this.props.navigation.navigate('DrinkingLogs')}
-            iconColor={colors.WHITE}
-          />
-          <GradientButton
-            colors={[colors.LIGHT_BLUE, colors.LIGHT_BLUE_THIRD]}
-            title="Journaling"
-            source={require('../../assets/interface.png')}
-            imageView={{width: normalize(24), height: normalize(21)}}
-            onPress={() => this.props.navigation.navigate('Journaling')}
-            iconColor={colors.WHITE}
-          />
-          <GradientButton
-            colors={[colors.LIGHT_BLUE_ONE, colors.LIGHT_BLUE_SECOND]}
-            title="Request Sessions"
-            source={require('../../assets/people.png')}
-            imageView={{width: normalize(24), height: normalize(27)}}
-            titleStyle={{color: colors.DARK_TEXT_BLUE}}
-            iconColor={colors.BLACK}
-            onPress={() => this.props.navigation.navigate('Sessions')}
-          />
-
-          <View style={styles.upcomingSessionView}>
-            <Text style={styles.sessionTitle}>Upcoming Sessions</Text>
-            <ViewPager
-              initialPage={0}
-              pageMargin={10}
-              style={{
-                height: normalize(100),
-              }}
-              showPageIndicator={true}>
-              {viewPagerData}
-            </ViewPager>
-          </View>
+          <View style={styles.upcomingSessionView}>{viewPagerData}</View>
 
           {dateModal ? (
             <CustomModal
@@ -151,13 +140,13 @@ const styles = StyleSheet.create({
   },
   calendarButtonText: {color: colors.WHITE, fontFamily: 'Poppins-Regular'},
   dateView: {
-    marginVertical: hp(1),
+    marginVertical: hp(2),
     alignSelf: 'center',
   },
   dateText: {
-    fontSize: normalize(19),
+    fontSize: normalize(15),
     color: colors.DARK_TEXT_BLUE,
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Poppins-Bold',
   },
   datePick: {
     textAlign: 'center',
@@ -173,6 +162,9 @@ const styles = StyleSheet.create({
     color: colors.DARK_TEXT_BLUE,
     marginTop: normalize(12),
     marginBottom: normalize(8),
+    width: '85%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   upcomingSessionView: {
     width: '85%',
