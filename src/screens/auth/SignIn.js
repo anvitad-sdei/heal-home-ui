@@ -28,8 +28,8 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'alcohol@healathome.co',
-      password: '@Heal12',
+      email: 'james@healathome.co',
+      password: 'Heal12',
       validEmail: true,
       validPassword: true,
     };
@@ -221,14 +221,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexDirection: 'row',
   },
-  // textStyle: {
-  //   fontSize: normalize(15),
-  // },
-  // textFontFamily: {
-  //   fontFamily: 'Poppins-Regular',
-  // },
-  // boldFamily: {
-  //   fontFamily: 'Poppins-Bold',
-  //   color: colors.BLUE,
-  // },
 });
