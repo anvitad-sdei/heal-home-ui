@@ -12,7 +12,6 @@ import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import ViewWithCircle from '../../components/ViewWithCircle';
 import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 import RoundedButton from '../../components/Buttons/RoundedButton';
 import {Input} from 'react-native-elements';
@@ -47,7 +46,7 @@ class Sessions extends Component {
       startDate: new Date(),
       startTime: Date.now(),
       endDate: Date.now(),
-      endTime: Date.now(),
+      endTime: moment(Date.now()).add(1, 'hours'),
       dateModal: false,
       timeModal: false,
       defaultDate: Date.now(),
@@ -58,6 +57,7 @@ class Sessions extends Component {
       isLoading: false,
       show: false,
       timeShow: false,
+      activeTime: 1,
     };
     this.backHandler();
   }
@@ -136,7 +136,7 @@ class Sessions extends Component {
     if (type === 'dismissed') {
       return;
     } else {
-      this.setState({endTime: time, timeShow: false});
+      this.setState({endTime: moment(time), timeShow: false});
     }
   };
   startTimeHandler = (event, time) => {
@@ -144,7 +144,11 @@ class Sessions extends Component {
     if (type === 'dismissed') {
       return;
     } else {
-      this.setState({startTime: time, timeShow: false});
+      this.setState({
+        startTime: time,
+        timeShow: false,
+        endTime: moment(time).add(1, 'hours'),
+      });
     }
   };
 
@@ -257,6 +261,7 @@ class Sessions extends Component {
       update,
       show,
       timeShow,
+      activeTime,
     } = this.state;
     const {mySession, getBySessionId} = this.props;
 
@@ -460,6 +465,7 @@ class Sessions extends Component {
                       getBySessionId.moment(endDate).format('L')
                     }
                   />
+
                   <InputFieldDateTime
                     source={require('../../assets/time.png')}
                     onPress={() => this.timeModalHandler(false)}
