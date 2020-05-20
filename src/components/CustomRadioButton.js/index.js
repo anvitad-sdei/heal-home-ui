@@ -1,17 +1,13 @@
 import React from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import normalize from '../../helpers/ResponsiveFont';
 import colors from '../../constants/colors';
 
 const CustomRadioButton = props => {
-  const {handler, title, status} = props;
+  const {handler, title, status, radioButtonStyle} = props;
   return (
     <TouchableOpacity onPress={handler}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'baseline',
-        }}>
+      <View style={{...styles.wrapper, ...radioButtonStyle}}>
         <TouchableOpacity onPress={handler}>
           <View
             style={{
@@ -43,3 +39,10 @@ const CustomRadioButton = props => {
 };
 
 export default CustomRadioButton;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+  },
+});
