@@ -120,7 +120,7 @@ export const requestSession = data => async dispatch => {
       dispatch(
         successResponseHandler(constants.REQUEST_SESSION_SUCCESS, res.data),
       );
-      successResHandler('Data save successfully', 'TherapistsList');
+      successResHandler('Data save successfully', 'Home');
     }
   } catch (err) {
     dispatch(loadingHandler(false));

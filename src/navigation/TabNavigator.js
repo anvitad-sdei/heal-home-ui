@@ -99,16 +99,16 @@ const TabNavigator = createBottomTabNavigator(
       },
     },
     'My Therapists': {
-      screen: TherapistsList,
+      screen: TherapistsReview,
       navigationOptions: {
         tabBarIcon: ({focused}) => {
           let url = focused
-            ? require('../assets/setting.png')
-            : require('../assets/setting.png');
+            ? require('../assets/listing.png')
+            : require('../assets/listing.png');
           return (
             <Avatar
               source={url}
-              containerStyle={{width: normalize(13), height: normalize(13)}}
+              containerStyle={{width: normalize(19), height: normalize(13)}}
             />
           );
         },
