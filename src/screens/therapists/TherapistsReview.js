@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   },
   noDataText: {
     textAlign: 'center',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Medium',
     fontSize: normalize(14),
     color: colors.GRAY_FIVE,
     paddingTop: normalize(30),

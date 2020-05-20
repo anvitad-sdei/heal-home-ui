@@ -22,30 +22,32 @@ class Handouts extends Component {
     const {data} = this.props;
     // console.log(data, '-----------------------');
 
-    const handoutDataJSX = data.length
-      ? data.map((item, i) => {
-          return (
-            <View style={styles.listView}>
-              <Text style={styles.fileNameStyle}>{item.fileName}</Text>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={styles.subHeadingText}>
-                  {'By' + ' ' + item.createdBy + ','}
-                </Text>
-                <Text
-                  style={{...styles.subHeadingText, paddingLeft: normalize(5)}}>
-                  {moment(item.modifiedDate).format('lll')}
-                </Text>
-              </View>
-              <RoundedButton
-                title="Download"
-                buttonStyle={styles.buttonStyle}
-                titleStyle={styles.titleStyle}
-                onPress={() => Linking.openURL(item.serverPath)}
-              />
+    const handoutDataJSX = data.length ? (
+      data.map((item, i) => {
+        return (
+          <View style={styles.listView}>
+            <Text style={styles.fileNameStyle}>{item.fileName}</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.subHeadingText}>
+                {'By' + ' ' + item.createdBy + ','}
+              </Text>
+              <Text
+                style={{...styles.subHeadingText, paddingLeft: normalize(5)}}>
+                {moment(item.modifiedDate).format('lll')}
+              </Text>
             </View>
-          );
-        })
-      : null;
+            <RoundedButton
+              title="Download"
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.titleStyle}
+              onPress={() => Linking.openURL(item.serverPath)}
+            />
+          </View>
+        );
+      })
+    ) : (
+      <Text style={styles.noDataText}>No Documents</Text>
+    );
 
     return (
       <MasterLayout
@@ -156,6 +158,13 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: '100%',
     height: '100%',
+  },
+  noDataText: {
+    textAlign: 'center',
+    fontFamily: 'Poppins-Medium',
+    fontSize: normalize(14),
+    color: colors.GRAY_FIVE,
+    paddingTop: normalize(30),
   },
 });
 

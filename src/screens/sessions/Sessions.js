@@ -199,6 +199,7 @@ class Sessions extends Component {
       sessionType: sessionType,
       notes: notes,
     };
+    // alert('request');
     this.props.requestSession(data);
   };
 
@@ -226,6 +227,7 @@ class Sessions extends Component {
       sessionType: sessionType || getBySessionId.sessionType,
       notes: notes || getBySessionId.notes,
     };
+    // alert('update');
     this.props.updateRequestSession(updateData);
   };
   backHandler = () => {
@@ -281,53 +283,53 @@ class Sessions extends Component {
           onPress={() => this.onUpdateRequestSession()}
         />
       );
-    const requestedSessionJSX = mySession.length
-      ? mySession.map((item, i) => {
-          return (
-            <View style={styles.sessionViewWrapper} key={i}>
-              <TouchableOpacity
-                onPress={() =>
-                  this.editSession(item.id, true, item.startDate, item.endDate)
-                }>
-                <View style={styles.requestedSessionView}>
-                  <View style={{width: '90%'}}>
-                    <Text style={styles.sessionHeading}>
-                      {item.sessionType}
-                    </Text>
+    const requestedSessionJSX = mySession.length ? (
+      mySession.map((item, i) => {
+        return (
+          <View style={styles.sessionViewWrapper} key={i}>
+            <TouchableOpacity
+              onPress={() =>
+                this.editSession(item.id, true, item.startDate, item.endDate)
+              }>
+              <View style={styles.requestedSessionView}>
+                <View style={{width: '90%'}}>
+                  <Text style={styles.sessionHeading}>{item.sessionType}</Text>
 
-                    <Text style={{...styles.dateStyle, color: colors.BLUE}}>
-                      {moment(item.startDate).format('lll') +
-                        '-' +
-                        moment(item.endDate).format('LT')}
-                    </Text>
-                  </View>
-
-                  <View style={styles.editImageView}>
-                    <Image
-                      source={require('../../assets/edit.png')}
-                      style={{width: '100%', height: '100%'}}
-                    />
-                  </View>
+                  <Text style={{...styles.dateStyle, color: colors.BLUE}}>
+                    {moment(item.startDate).format('lll') +
+                      '-' +
+                      moment(item.endDate).format('LT')}
+                  </Text>
                 </View>
-              </TouchableOpacity>
-              <View style={{flexDirection: 'row'}}>
-                <View style={styles.orangeCircleView} />
-                <Text style={{...styles.dateStyle, color: colors.ORANGE_FOUR}}>
-                  {item.requestStatus}
-                </Text>
+
+                <View style={styles.editImageView}>
+                  <Image
+                    source={require('../../assets/edit.png')}
+                    style={{width: '100%', height: '100%'}}
+                  />
+                </View>
               </View>
-              <Text style={{fontSize: normalize(12)}}>
-                <Text style={{color: colors.BLUE}}>Modified by :</Text>{' '}
-                {item.lastModifiedBy}
-              </Text>
-              <Text style={{fontSize: normalize(12)}}>
-                <Text style={{color: colors.BLUE}}>Last Modified :</Text>{' '}
-                {moment(item.modifiedDate).format('lll')}
+            </TouchableOpacity>
+            <View style={{flexDirection: 'row'}}>
+              <View style={styles.orangeCircleView} />
+              <Text style={{...styles.dateStyle, color: colors.ORANGE_FOUR}}>
+                {item.requestStatus}
               </Text>
             </View>
-          );
-        })
-      : null;
+            <Text style={{fontSize: normalize(12)}}>
+              <Text style={{color: colors.BLUE}}>Modified by :</Text>{' '}
+              {item.lastModifiedBy}
+            </Text>
+            <Text style={{fontSize: normalize(12)}}>
+              <Text style={{color: colors.BLUE}}>Last Modified :</Text>{' '}
+              {moment(item.modifiedDate).format('lll')}
+            </Text>
+          </View>
+        );
+      })
+    ) : (
+      <Text style={styles.noDataText}>No Requested Sessions</Text>
+    );
 
     return (
       <MasterLayout
@@ -335,15 +337,11 @@ class Sessions extends Component {
         centerTitle="Request Session"
         rightIcon={require('../../assets/bell.png')}
         leftIconPress={() => {
-          this.props.navigation.navigate('TherapistsList');
+          this.props.navigation.navigate('Home');
           this.props.clearSessionById();
         }}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
-        {/* <ViewWithCircle
-          sourceCircle={require('../../assets/circle.png')}
-          source={require('../../assets/communication.png')}
-        /> */}
         <View style={styles.shadowView}>
           <View style={styles.circleViewImage}>
             <Image
@@ -649,7 +647,6 @@ const styles = StyleSheet.create({
   requestedSession: {
     height: normalize(35),
     width: normalize(145), //145
-
     borderRadius: normalize(20),
     paddingTop: normalize(8),
   },
@@ -735,7 +732,7 @@ const styles = StyleSheet.create({
     // borderBottomRightRadius: normalize(20),
   },
   scrollView: {
-    paddingBottom: hp(100),
+    paddingBottom: hp(130),
   },
   allRequestedSessionView: {
     width: '90%',
@@ -782,6 +779,13 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: '100%',
     height: '100%',
+  },
+  noDataText: {
+    textAlign: 'center',
+    fontFamily: 'Poppins-Medium',
+    fontSize: normalize(14),
+    color: colors.GRAY_FIVE,
+    paddingTop: normalize(30),
   },
 });
 const mapStateToProps = ({sessions}) => {
