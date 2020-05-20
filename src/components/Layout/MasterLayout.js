@@ -21,7 +21,7 @@ class MasterLayout extends Component {
     } = this.props;
     return (
       <SafeAreaView style={{...styles.container, ...masterStyle}}>
-        {/* <StatusBar barStyle="dark-content" /> */}
+        <StatusBar barStyle="dark-content" />
         <View>
           {leftIcon || rightIcon ? (
             <View style={styles.topView}>
