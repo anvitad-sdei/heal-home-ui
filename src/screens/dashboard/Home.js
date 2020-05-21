@@ -90,7 +90,8 @@ class Home extends React.Component {
           source={require('../../assets/drinks.png')}
           imageView={{height: normalize(22), width: normalize(22)}}
           onPress={() => this.props.navigation.navigate('DrinkingLogs')}
-          iconColor={colors.WHITE}
+          iconColor={colors.BLACK}
+          titleStyle={{color: colors.DARK_TEXT_BLUE}}
         />
         <GradientButton
           colors={[colors.LIGHT_BLUE, colors.LIGHT_BLUE_THIRD]}
