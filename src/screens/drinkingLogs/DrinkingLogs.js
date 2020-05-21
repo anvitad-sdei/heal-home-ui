@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, Dimensions} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
 import CustomDrinkingView from '../../components/CustomDrinkingView.js';
@@ -190,6 +186,7 @@ class DrinkingLogs extends Component {
               verticalLabelRotation={110}
               segments={5}
               bezier
+              spacing={0.8}
               style={{
                 marginTop: 20,
                 marginRight: 10,
@@ -204,7 +201,16 @@ class DrinkingLogs extends Component {
                 color: colors.BLUE,
                 padding: normalize(15),
               }}>
-              Total Drinks:<Text style={{color: colors.BLACK}}> 7</Text>
+              Total Drinks:
+              <Text style={{color: colors.BLACK}}>
+                {' '}
+                7
+                {/* {mapList.drinks.length
+                  ? mapList.drinks.map(item => {
+                      item.loggedDate;
+                    })
+                  : null} */}
+              </Text>
             </Text>
           </View>
           <View style={styles.drinkViewBox}>

@@ -17,6 +17,7 @@ import Handouts from '../screens/handouts/Handouts';
 import Assessment from '../screens/assessments/Assessment';
 import TabNavigator from '../navigation/TabNavigator';
 import TherapistsReview from '../screens/therapists/TherapistsReview';
+import colors from '../constants/colors';
 const DashBoardItems = ({handler, title}) => {
   return (
     <TouchableOpacity onPress={handler}>
@@ -81,13 +82,14 @@ const DrawerNavigator = createDrawerNavigator(
     Handouts: Handouts,
     Assessments: Assessment,
     Profile: Profile,
+    TherapistsReview: TherapistsReview,
     // Logout: Logout,
   },
   {contentComponent: CustomDrawerComponent},
 );
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {flex: 1, backgroundColor: colors.BLUE},
   avatarContainer: {
     alignItems: 'center',
     justifyContent: 'center',
