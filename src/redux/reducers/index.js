@@ -7,6 +7,7 @@ import auth from './auth';
 import therapist from './therapist';
 import handouts from './handouts';
 import assessment from './assessment';
+import drinking from './drinking';
 export default combineReducers({
   auth: auth,
   loading: loading,
@@ -16,4 +17,5 @@ export default combineReducers({
   therapist: therapist,
   handouts: handouts,
   assessment: assessment,
+  drinking: drinking,
 });

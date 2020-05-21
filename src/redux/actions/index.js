@@ -335,6 +335,45 @@ export const saveAssessment = data => async dispatch => {
   }
 };
 
+// /*************************GET ALL DRINKING LOG SUCCESS ********************** */
+// export const getAllDrinkingLog = () => async dispatch => {
+//   try {
+//     dispatch(loadingHandler(true));
+//     let res = await axios(`${apiUrls.BASE_URL}/drinkinglog/2020-05-22`);
+//     if (res) {
+//       console.log(res);
+//       dispatch(loadingHandler(false));
+//       dispatch(
+//         successResponseHandler(
+//           constants.GET_ALL_DRINKING_LOG_SUCCESS,
+//           res.data.response,
+//         ),
+//       );
+//     }
+//   } catch (err) {
+//     console.log(JSON.stringify(err.response));
+//     dispatch(loadingHandler(false));
+//     errorResHandler(err);
+//   }
+// };
+
+/**********************************SAVE DRINKING LOG SESSION API ***********************/
+export const saveDrinkingLog = data => async dispatch => {
+  try {
+    dispatch(loadingHandler(true));
+    let res = await axios.post(`${apiUrls.BASE_URL}/drinkinglog`, {...data});
+    if (res) {
+      dispatch(loadingHandler(false));
+      dispatch(
+        successResponseHandler(constants.SAVE_DRINKING_LOG_SUCCESS, res.data),
+      );
+      successResHandler('Save successfully', 'Home');
+    }
+  } catch (err) {
+    dispatch(loadingHandler(false));
+    errorResHandler(err);
+  }
+};
 /*************************CLEAR SESSION BY ID8*************************** */
 
 export const clearSessionById = () => dispatch => {

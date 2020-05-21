@@ -5,7 +5,7 @@ import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import OptYesNo from '../../components/OptYesNo';
-import {getAssessmentById} from '../../redux/actions';
+import {getAssessmentById, saveAssessment} from '../../redux/actions';
 import {connect} from 'react-redux';
 import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 import MultiSelectOptions from '../../components/MultiSelectOptions';
@@ -18,29 +18,6 @@ class AlcoholTest extends Component {
       id: navigation.getParam('id'),
       groupId: navigation.getParam('groupId'),
       qList: [],
-      // q2Status: false,
-      // q1Status: false,
-      // q3Status: false,
-      // q4Status: false,
-      // q5Status: false,
-      // q6Status: false,
-      // q7Status: false,
-      // q8Status: false,
-      // q9Status: false,
-      // q10Status: false,
-      // q11Status: false,
-      // q12Status: false,
-      // q13Status: false,
-      // q14Status: false,
-      // q15Status: false,
-      // q16Status: false,
-      // q17Status: false,
-      // q18Status: false,
-      // q19Status: false,
-      // q20Status: false,
-      // q21Status: false,
-      // q22Status: false,
-      // q23Status: false,
       assessmentAnswer: '',
       qId: '',
       questionId: '',
@@ -80,96 +57,6 @@ class AlcoholTest extends Component {
     }
   };
 
-  // q2Handler = () => {
-  //   const {q2Status} = this.state;
-  //   this.setState({q2Status: !q2Status});
-  // };
-  // q3Handler = () => {
-  //   const {q3Status} = this.state;
-  //   this.setState({q3Status: !q3Status});
-  // };
-  // q4Handler = () => {
-  //   const {q4Status} = this.state;
-  //   this.setState({q4Status: !q4Status});
-  // };
-  // q5Handler = () => {
-  //   const {q5Status} = this.state;
-  //   this.setState({q5Status: !q5Status});
-  // };
-  // q6Handler = () => {
-  //   const {q6Status} = this.state;
-  //   this.setState({q6Status: !q6Status});
-  // };
-  // q7Handler = () => {
-  //   const {q7Status} = this.state;
-  //   this.setState({q7Status: !q7Status});
-  // };
-  // q8Handler = () => {
-  //   const {q8Status} = this.state;
-  //   this.setState({q8Status: !q8Status});
-  // };
-  // q9Handler = () => {
-  //   const {q9Status} = this.state;
-  //   this.setState({q9Status: !q9Status});
-  // };
-  // q10Handler = () => {
-  //   const {q10Status} = this.state;
-  //   this.setState({q10Status: !q10Status});
-  // };
-  // q11Handler = () => {
-  //   const {q11Status} = this.state;
-  //   this.setState({q11Status: !q11Status});
-  // };
-  // q12Handler = () => {
-  //   const {q12Status} = this.state;
-  //   this.setState({q12Status: !q12Status});
-  // };
-  // q13Handler = () => {
-  //   const {q13Status} = this.state;
-  //   this.setState({q13Status: !q13Status});
-  // };
-  // q14Handler = () => {
-  //   const {q14Status} = this.state;
-  //   this.setState({q14Status: !q14Status});
-  // };
-  // q15Handler = () => {
-  //   const {q15Status} = this.state;
-  //   this.setState({q15Status: !q15Status});
-  // };
-  // q16Handler = () => {
-  //   const {q16Status} = this.state;
-  //   this.setState({q16Status: !q16Status});
-  // };
-  // q17Handler = () => {
-  //   const {q17Status} = this.state;
-  //   this.setState({q17Status: !q17Status});
-  // };
-  // q18Handler = () => {
-  //   const {q18Status} = this.state;
-  //   this.setState({q18Status: !q18Status});
-  // };
-  // q19Handler = () => {
-  //   const {q19Status} = this.state;
-  //   this.setState({q19Status: !q19Status});
-  // };
-
-  // q20Handler = () => {
-  //   const {q20Status} = this.state;
-  //   this.setState({q20Status: !q20Status});
-  // };
-  // q21Handler = () => {
-  //   const {q21Status} = this.state;
-  //   this.setState({q21Status: !q21Status});
-  // };
-  // q22Handler = () => {
-  //   const {q22Status} = this.state;
-  //   this.setState({q22Status: !q22Status});
-  // };
-  // q23Handler = () => {
-  //   const {q23Status} = this.state;
-  //   this.setState({q23Status: !q23Status});
-  // };
-
   componentDidMount() {
     this.props.getAssessmentById(this.state.id);
   }
@@ -185,7 +72,7 @@ class AlcoholTest extends Component {
       groupId: groupId,
       qlist: qList,
     };
-    console.log(data); //data is comming for yes_no only working fine hit api here
+    console.log('data==============', data); //data is comming for yes_no only working fine hit api here
   };
   statusHandler = id => {
     const {qStatus} = this.state;
@@ -195,32 +82,7 @@ class AlcoholTest extends Component {
   };
 
   render() {
-    const {
-      q1Status,
-      // q2Status,
-      // q3Status,
-      // q4Status,
-      // q5Status,
-      // q6Status,
-      // q7Status,
-      // q8Status,
-      // q9Status,
-      // q10Status,
-      // q11Status,
-      // q12Status,
-      // q13Status,
-      // q14Status,
-      // q15Status,
-      // q16Status,
-      // q17Status,
-      // q18Status,
-      // q19Status,
-      // q20Status,
-      // q21Status,
-      // q22Status,
-      // q23Status,
-      assessmentAnswer,
-    } = this.state;
+    const {q1Status, assessmentAnswer} = this.state;
     const {getAssessmentDataById} = this.props;
     console.log(this.state.qList);
     const getDataByIdJSX = getAssessmentDataById.qlist.length
@@ -228,7 +90,7 @@ class AlcoholTest extends Component {
           return (
             <View key={i}>
               <Text style={styles.textQuestion}>{item.question}</Text>
-
+              <Text>{item.id}</Text>
               <Text>{item.questionId}</Text>
               <Text>{item.questionType}</Text>
 
@@ -386,9 +248,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({assessment}) => {
-  const {assessmentById} = assessment;
+  const {assessmentById, saveAssessmentData} = assessment;
   return {
     getAssessmentDataById: assessmentById,
+    data: saveAssessmentData,
   };
 };
 
@@ -396,5 +259,6 @@ export default connect(
   mapStateToProps,
   {
     getAssessmentById,
+    saveAssessment,
   },
 )(AlcoholTest);

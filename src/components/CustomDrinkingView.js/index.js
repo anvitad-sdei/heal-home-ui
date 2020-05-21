@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import normalize from '../../helpers/ResponsiveFont';
 import {
   widthPercentageToDP as wp,
@@ -7,23 +7,37 @@ import {
 } from 'react-native-responsive-screen';
 import colors from '../../constants/colors';
 import RoundedButton from '../Buttons/RoundedButton';
-const CustomDrinkingView = () => {
+const CustomDrinkingView = props => {
+  const {date, day, drinks, decrement, increment, onPress} = props;
+  console.log('drinks', drinks);
   return (
     <View style={styles.wrapper}>
       <View style={styles.textView}>
-        <Text style={styles.textStyle}>09-03.2020</Text>
-        <Text style={styles.textStyle}>Monday</Text>
+        <Text style={styles.textStyle}>{date}</Text>
+        <Text style={styles.textStyle}>{day}</Text>
       </View>
       <View style={styles.textView}>
         <Text style={styles.drinkTitle}>No. of Drinks</Text>
         <View style={styles.countView}>
-          <Text style={styles.iconText}>-</Text>
-          <Text style={styles.midText}>1</Text>
-          <Text style={styles.iconText}>+</Text>
+          <TouchableOpacity onPress={decrement}>
+            <Text style={styles.iconText} onPress={decrement}>
+              -
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.midText}>{drinks}</Text>
+          <TouchableOpacity onPress={increment}>
+            <Text style={styles.iconText} onPress={increment}>
+              +
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View>
-        <RoundedButton title={'Save'} buttonStyle={styles.buttonStyle} />
+        <RoundedButton
+          title={'Save'}
+          buttonStyle={styles.buttonStyle}
+          onPress={onPress}
+        />
       </View>
     </View>
   );
