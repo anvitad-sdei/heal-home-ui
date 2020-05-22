@@ -35,6 +35,7 @@ class Assessment extends Component {
                   this.props.navigation.navigate('AlcoholTest', {
                     id: item.id,
                     groupId: item.groupId,
+                    filledStatus: item.filled,
                   })
                 }>
                 <View

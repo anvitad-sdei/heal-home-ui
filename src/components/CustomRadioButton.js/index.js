@@ -31,7 +31,9 @@ const CustomRadioButton = props => {
           </View>
         </TouchableOpacity>
         <View>
-          <Text style={{color: colors.BLUE}}>{title}</Text>
+          <Text style={{fontSize: normalize(13), color: colors.BLUE}}>
+            {title}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

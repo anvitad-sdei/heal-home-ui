@@ -17,6 +17,7 @@ class AlcoholTest extends Component {
     this.state = {
       id: navigation.getParam('id'),
       groupId: navigation.getParam('groupId'),
+      filledStatus: navigation.getParam('filledStatus'),
       qList: [],
       assessmentAnswer: '',
       qId: '',
@@ -79,6 +80,7 @@ class AlcoholTest extends Component {
       qlist: qList,
     };
     console.log('data==============', data); //data is comming for yes_no only working fine hit api here
+    //this.props.saveAssessment();
   };
   statusHandler = id => {
     const {qStatus} = this.state;
@@ -93,30 +95,30 @@ class AlcoholTest extends Component {
       ? mq1.find(item => (item.qId === id ? true : false))
       : false;
   };
-  mq2StatusHandler = id => {
-    const {mq2} = this.state;
-    return mq2.length
-      ? mq2.find(item => (item.qId === id ? true : false))
-      : false;
-  };
-  mq3StatusHandler = id => {
-    const {mq3} = this.state;
-    return mq3.length
-      ? mq3.find(item => (item.qId === id ? true : false))
-      : false;
-  };
-  mq4StatusHandler = id => {
-    const {mq4} = this.state;
-    return mq4.length
-      ? mq4.find(item => (item.qId === id ? true : false))
-      : false;
-  };
-  mq5StatusHandler = id => {
-    const {mq5} = this.state;
-    return mq5.length
-      ? mq5.find(item => (item.qId === id ? true : false))
-      : false;
-  };
+  // mq2StatusHandler = id => {
+  //   const {mq2} = this.state;
+  //   return mq2.length
+  //     ? mq2.find(item => (item.qId === id ? true : false))
+  //     : false;
+  // };
+  // mq3StatusHandler = id => {
+  //   const {mq3} = this.state;
+  //   return mq3.length
+  //     ? mq3.find(item => (item.qId === id ? true : false))
+  //     : false;
+  // };
+  // mq4StatusHandler = id => {
+  //   const {mq4} = this.state;
+  //   return mq4.length
+  //     ? mq4.find(item => (item.qId === id ? true : false))
+  //     : false;
+  // };
+  // mq5StatusHandler = id => {
+  //   const {mq5} = this.state;
+  //   return mq5.length
+  //     ? mq5.find(item => (item.qId === id ? true : false))
+  //     : false;
+  // };
   mq1Handler = (data, ans) => {
     const {questionId} = data;
     const {mq1} = this.state;
@@ -268,15 +270,12 @@ class AlcoholTest extends Component {
   render() {
     const {q1Status, assessmentAnswer, qList} = this.state;
     const {getAssessmentDataById} = this.props;
-
+    console.log('status============', this.state.filledStatus);
     const getDataByIdJSX = getAssessmentDataById.qlist.length
       ? getAssessmentDataById.qlist.map((item, i) => {
           return (
             <View key={i}>
               <Text style={styles.textQuestion}>{item.question}</Text>
-              <Text>{item.id}</Text>
-              <Text>{item.questionId}</Text>
-              <Text>{item.questionType}</Text>
 
               {item.questionType === 'Yes_no' ? (
                 <OptYesNo
@@ -292,7 +291,12 @@ class AlcoholTest extends Component {
                   handler={() => this.q1Handler(item)}
                 />
               ) : null}
-              {item.questionType === 'Multi_Select' ? (
+              {item.questionType === 'Multi_Select'
+                ? item.originalMultiselectAnswerList.map(item => (
+                    <MultiSelectOptions title={item} />
+                  ))
+                : null}
+              {/* {item.questionType === 'Multi_Select' ? (
                 <MultiSelectOptions
                   // status={q1Status}
                   mq1={
@@ -326,7 +330,7 @@ class AlcoholTest extends Component {
                   mq5Handler={() => this.mq5Handler(item, 5)}
                   // mqHandler={() => this.mqHandler()}
                 />
-              ) : null}
+              ) : null} */}
               {item.questionType === 'Text' ? (
                 <CustomTextArea
                   onChange={() => this.onHandleAssessment()}
@@ -460,6 +464,7 @@ const styles = StyleSheet.create({
   },
   selected: {paddingVertical: normalize(20)},
   borderColorBottom: {
+    paddingTop: normalize(10),
     borderBottomWidth: 1,
     borderColor: colors.COLOR_29,
   },

@@ -10,21 +10,22 @@ const MultiSelectOptions = ({
   mq3,
   mq4,
   mq5,
-  mq1Handler,
+  mqHandler,
   mq2Handler,
   mq3Handler,
   mq4Handler,
   mq5Handler,
+  title,
 }) => {
   return (
     <View style={styles.container}>
       <CustomRadioButton
-        title="Never"
+        title={title}
         status={mq1 || false}
-        handler={mq1Handler}
+        handler={mqHandler}
         radioButtonStyle={styles.radioButtonStyle}
       />
-      <CustomRadioButton
+      {/* <CustomRadioButton
         title="Monthly or Less"
         status={mq2 || false}
         handler={mq2Handler}
@@ -47,15 +48,15 @@ const MultiSelectOptions = ({
         status={mq5 || false}
         handler={mq5Handler}
         radioButtonStyle={styles.radioButtonStyle}
-      />
+      /> */}
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: normalize(20),
+    paddingVertical: normalize(8),
   },
-  radioButtonStyle: {paddingVertical: normalize(5)},
+  //radioButtonStyle: {paddingVertical: normalize(5)},
 });
 
 export default MultiSelectOptions;
