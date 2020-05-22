@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Dimensions} from 'react-native';
+import {Text, View, StyleSheet, Dimensions, Alert} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
@@ -33,6 +33,7 @@ class DrinkingLogs extends Component {
       weekNo: '',
       drinkId: '',
     };
+    this.log = [0, 0, 0, 0, 0, 0, 0];
   }
 
   componentDidMount() {
@@ -45,23 +46,24 @@ class DrinkingLogs extends Component {
   weekHandler = value => {
     this.setState({defaultWeek: value});
   };
-  onPressDecrement = () => {
-    const {initialDrinks} = this.state;
-    this.setState({initialDrinks: initialDrinks - 1});
+  onPressDecrement = (id, i) => {
+    this.setState({drinkId: id});
+    if (this.log[i] > 0) {
+      this.log[i] = this.log[i] - 1;
+    } else {
+      Alert.alert('Reached at minimum');
+    }
   };
-  onPressIncrement = id => {
-    const {initialDrinks} = this.state;
-    this.setState({drinkId: id, initialDrinks: initialDrinks + 1});
+  onPressIncrement = (id, i) => {
+    this.setState({drinkId: id});
+    this.log[i] = this.log[i] + 1;
   };
-  onSaveDrinkingLog = (id, drinks) => {
-    alert(id);
+  onSaveDrinkingLog = (id, i) => {
+    // alert(id + 'cc' + this.log[i]);
 
-    // const data = {
-    //   // id: id,
-    //   // drinks: drinks,
-    // };
-    // console.log(data, '--------data----------');
-    //this.props.saveDrinkingLog(data);
+    let data = {[id]: this.log[i]};
+
+    this.props.saveDrinkingLog(data);
   };
 
   getAllDrinkingLog = async () => {
@@ -95,6 +97,7 @@ class DrinkingLogs extends Component {
                 };
               })
             : [],
+
           isLoading: false,
         });
       }
@@ -116,14 +119,24 @@ class DrinkingLogs extends Component {
       drinkLoggedDate,
       weekNo,
       drinkId,
+      log,
     } = this.state;
-    console.log(this.state);
+
     const week =
       mapList && Object.keys(mapList).length
         ? Object.values(mapList).filter((item, i) => {
             return i === defaultWeek - 1;
           })
         : [];
+
+    // this.log =
+    //   mapList && Object.keys(mapList).length
+    //     ? Object.values(mapList).filter((item, i) => {
+    //         return i === defaultWeek - 1;
+    //       })
+    //     : [];
+
+    // console.log('heyyyy====>', this.log);
 
     const chartConfig = {
       backgroundGradientFrom: colors.WHITE,
@@ -218,16 +231,15 @@ class DrinkingLogs extends Component {
               {week.length
                 ? week.map((value, index) => {
                     return value.map((item, i) => {
+                      console.log(item);
                       return (
                         <CustomDrinkingView
                           day={item.day_no}
                           date={moment(item.loggedDate).format('L')}
-                          drinks={item.drinks || initialDrinks}
-                          decrement={() => this.onPressDecrement(item.id)}
-                          increment={() => this.onPressIncrement(item.id)}
-                          onPress={() =>
-                            this.onSaveDrinkingLog(item.id, item.drinks)
-                          }
+                          drinks={this.log[i]}
+                          decrement={() => this.onPressDecrement(item.id, i)}
+                          increment={() => this.onPressIncrement(item.id, i)}
+                          onPress={() => this.onSaveDrinkingLog(item.id, i)}
                         />
                       );
                     });
