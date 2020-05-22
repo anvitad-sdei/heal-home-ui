@@ -39,6 +39,7 @@ const colors = {
   GRAY_PLACE_COLOR: '#898A8F',
   ORANGE_FOUR: '#F99C32',
   COLOR_29: '#00000029',
+  DARK_BLUE: '#4953DB',
 };
 
 export default colors;

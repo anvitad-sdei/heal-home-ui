@@ -12,23 +12,28 @@ import {
   ScrollView,
   SafeAreaView,
   StyleSheet,
+  Image,
 } from 'react-native';
 import Handouts from '../screens/handouts/Handouts';
 import Assessment from '../screens/assessments/Assessment';
 import TabNavigator from '../navigation/TabNavigator';
 import TherapistsReview from '../screens/therapists/TherapistsReview';
 import colors from '../constants/colors';
-const DashBoardItems = ({handler, title}) => {
+import normalize from '../helpers/ResponsiveFont';
+
+const DashBoardItems = ({handler, title, source, imageStyle}) => {
   return (
     <TouchableOpacity onPress={handler}>
       <View style={styles.menuItem}>
-        <Text style={styles.menu} t>
-          {title}
-        </Text>
+        <View style={{...styles.imageView, ...imageStyle}}>
+          <Image source={source} style={{width: '100%', height: '100%'}} />
+        </View>
+        <Text style={styles.menu}>{title}</Text>
       </View>
     </TouchableOpacity>
   );
 };
+
 const CustomDrawerComponent = props => {
   return (
     <SafeAreaView style={styles.container}>
@@ -58,19 +63,23 @@ const CustomDrawerComponent = props => {
           }}
           title={'Assessments'}
         />
-        <DashBoardItems
-          handler={() => {
-            props.navigation.toggleDrawer();
-            props.navigation.navigate('Profile');
-          }}
-          title={'Profile'}
-        />
+
         <DashBoardItems
           handler={() => {
             props.navigation.toggleDrawer();
             props.navigation.navigate('TherapistsReview');
           }}
-          title={'Therapists Review'}
+          title={'Therapists Reviews'}
+          source={require('../assets/review.png')}
+        />
+        <DashBoardItems
+          handler={() => {
+            props.navigation.toggleDrawer();
+            props.navigation.navigate('Profile');
+          }}
+          title={'Logout'}
+          source={require('../assets/logout.png')}
+          imageStyle={{width: normalize(20), height: normalize(19)}}
         />
       </ScrollView>
     </SafeAreaView>
@@ -89,29 +98,37 @@ const DrawerNavigator = createDrawerNavigator(
 );
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.BLUE},
-  avatarContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomColor: 'black',
-    borderBottomWidth: 0.5,
-    marginTop: hp(2),
+  container: {
+    flex: 1,
+    backgroundColor: colors.DARK_BLUE,
   },
-  avatar: {width: 100, height: 100, borderRadius: 100},
-  name: {fontWeight: '700', marginVertical: 5},
+
   menuItem: {
-    borderBottomWidth: 0.5,
+    flexDirection: 'row',
     padding: '3%',
-    borderBottomColor: 'black',
-    borderTopColor: 'red',
+    paddingTop: normalize(20),
   },
   menu: {
-    fontWeight: '400',
-    color: 'black',
-    fontSize: 20,
-    // fontFamily: 'FuturaPT-Heavy',
+    //  fontWeight: '400',
+    marginLeft: normalize(10),
+    color: colors.WHITE,
+    fontSize: normalize(13),
+    fontFamily: 'Poppins-Regular',
   },
-  scrollView: {height: '100%', marginTop: hp(2)},
+  scrollView: {
+    height: '100%',
+    marginTop: normalize(100),
+    borderTopWidth: 1,
+    borderTopColor: colors.WHITE,
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  imageView: {
+    width: normalize(21.3),
+    height: normalize(15),
+    alignSelf: 'center',
+  },
 });
 
 export default DrawerNavigator;

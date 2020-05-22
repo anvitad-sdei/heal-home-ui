@@ -32,6 +32,7 @@ class DrinkingLogs extends Component {
       initialDrinks: 0,
       weekNo: '',
       drinkId: '',
+      totalDrinks: 0,
     };
   }
 
@@ -116,6 +117,7 @@ class DrinkingLogs extends Component {
       drinkLoggedDate,
       weekNo,
       drinkId,
+      totalDrinks,
     } = this.state;
     console.log(this.state);
     const week =
@@ -202,15 +204,7 @@ class DrinkingLogs extends Component {
                 padding: normalize(15),
               }}>
               Total Drinks:
-              <Text style={{color: colors.BLACK}}>
-                {' '}
-                7
-                {/* {mapList.drinks.length
-                  ? mapList.drinks.map(item => {
-                      item.loggedDate;
-                    })
-                  : null} */}
-              </Text>
+              <Text style={{color: colors.BLACK}} />
             </Text>
           </View>
           <View style={styles.drinkViewBox}>
@@ -219,16 +213,18 @@ class DrinkingLogs extends Component {
                 ? week.map((value, index) => {
                     return value.map((item, i) => {
                       return (
-                        <CustomDrinkingView
-                          day={item.day_no}
-                          date={moment(item.loggedDate).format('L')}
-                          drinks={item.drinks || initialDrinks}
-                          decrement={() => this.onPressDecrement(item.id)}
-                          increment={() => this.onPressIncrement(item.id)}
-                          onPress={() =>
-                            this.onSaveDrinkingLog(item.id, item.drinks)
-                          }
-                        />
+                        <>
+                          <CustomDrinkingView
+                            day={item.day_no}
+                            date={moment(item.loggedDate).format('L')}
+                            drinks={item.drinks || initialDrinks}
+                            decrement={() => this.onPressDecrement(item.id)}
+                            increment={() => this.onPressIncrement(item.id)}
+                            onPress={() =>
+                              this.onSaveDrinkingLog(item.id, item.drinks)
+                            }
+                          />
+                        </>
                       );
                     });
                   })
