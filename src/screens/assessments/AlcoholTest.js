@@ -23,6 +23,12 @@ class AlcoholTest extends Component {
       questionId: '',
       questionType: '',
       qStatus: [],
+      mq: [],
+      mq1: [],
+      mq2: [],
+      mq3: [],
+      mq4: [],
+      mq5: [],
     };
   }
   q1Handler = data => {
@@ -80,11 +86,189 @@ class AlcoholTest extends Component {
       ? qStatus.find(item => (item === id ? true : false))
       : false;
   };
+  // mqHandler = data => {};
+  mq1StatusHandler = id => {
+    const {mq1} = this.state;
+    return mq1.length
+      ? mq1.find(item => (item.qId === id ? true : false))
+      : false;
+  };
+  mq2StatusHandler = id => {
+    const {mq2} = this.state;
+    return mq2.length
+      ? mq2.find(item => (item.qId === id ? true : false))
+      : false;
+  };
+  mq3StatusHandler = id => {
+    const {mq3} = this.state;
+    return mq3.length
+      ? mq3.find(item => (item.qId === id ? true : false))
+      : false;
+  };
+  mq4StatusHandler = id => {
+    const {mq4} = this.state;
+    return mq4.length
+      ? mq4.find(item => (item.qId === id ? true : false))
+      : false;
+  };
+  mq5StatusHandler = id => {
+    const {mq5} = this.state;
+    return mq5.length
+      ? mq5.find(item => (item.qId === id ? true : false))
+      : false;
+  };
+  mq1Handler = (data, ans) => {
+    const {questionId} = data;
+    const {mq1} = this.state;
+    if (mq1.length) {
+      let qExists = mq1.find(item => {
+        return item.qId === questionId ? true : false;
+      });
+      if (qExists) {
+        this.setState({
+          mq1: mq1.filter(item => item.qId !== questionId),
+        });
+      } else {
+        this.setState({mq1: [...mq1, {qId: questionId, ans: ans}]});
+      }
+    } else {
+      this.setState({mq1: [...mq1, {qId: questionId, ans: ans}]});
+    }
+
+    const sendData = {
+      id: null,
+      questionId: questionId,
+      multiselectAnswerList: mq1.length
+        ? mq1.filter(item => item.qId === questionId)
+        : [],
+      questionType: 'Multi_Select',
+    };
+    // this.saveMq(sendData);
+  };
+  mq2Handler = (data, ans) => {
+    const {questionId} = data;
+    const {mq2} = this.state;
+    if (mq2.length) {
+      let qExists = mq2.find(item => {
+        return item.qId === questionId ? true : false;
+      });
+      if (qExists) {
+        this.setState({
+          mq2: mq2.filter(item => item.qId !== questionId),
+        });
+      } else {
+        this.setState({mq2: [...mq2, {qId: questionId, ans: ans}]});
+      }
+    } else {
+      this.setState({mq2: [...mq2, {qId: questionId, ans: ans}]});
+    }
+    const sendData = {
+      id: null,
+      questionId: questionId,
+      multiselectAnswerList: mq2.length
+        ? mq2.filter(item => item.qId === questionId)
+        : [],
+      questionType: 'Multi_Select',
+    };
+    // this.saveMq(sendData);
+  };
+  mq3Handler = (data, ans) => {
+    const {questionId} = data;
+    const {mq3} = this.state;
+    if (mq3.length) {
+      let qExists = mq3.find(item => {
+        return item.qId === questionId ? true : false;
+      });
+      if (qExists) {
+        this.setState({
+          mq3: mq3.filter(item => item.qId !== questionId),
+        });
+      } else {
+        this.setState({mq3: [...mq3, {qId: questionId, ans: ans}]});
+      }
+    } else {
+      this.setState({mq3: [...mq3, {qId: questionId, ans: ans}]});
+    }
+  };
+  mq4Handler = (data, ans) => {
+    const {questionId} = data;
+    const {mq4} = this.state;
+    if (mq4.length) {
+      let qExists = mq4.find(item => {
+        return item.qId === questionId ? true : false;
+      });
+      if (qExists) {
+        this.setState({
+          mq4: mq4.filter(item => item.qId !== questionId),
+        });
+      } else {
+        this.setState({mq4: [...mq4, {qId: questionId, ans: ans}]});
+      }
+    } else {
+      this.setState({mq4: [...mq4, {qId: questionId, ans: ans}]});
+    }
+  };
+  mq5Handler = (data, ans) => {
+    const {questionId} = data;
+    const {mq5} = this.state;
+    if (mq5.length) {
+      let qExists = mq5.find(item => {
+        return item.qId === questionId ? true : false;
+      });
+      if (qExists) {
+        this.setState({
+          mq5: mq5.filter(item => item.qId !== questionId),
+        });
+      } else {
+        this.setState({mq5: [...mq5, {qId: questionId, ans: ans}]});
+      }
+    } else {
+      this.setState({mq5: [...mq5, {qId: questionId, ans: ans}]});
+    }
+  };
+  saveMq = data => {
+    const {qList} = this.state;
+    const {questionId} = data;
+    if (qList.length) {
+      let checkex = qList.findIndex(item => {
+        return item.questionId === questionId;
+      });
+      console.log('hey===>', checkex);
+      if (checkex || checkex === 0) {
+        this.setState({
+          qList: qList.find(item =>
+            item.questionId === data.questionId ? true : false,
+          )
+            ? [
+                ...qList,
+                {
+                  multiselectAnswerList:
+                    qList.multiselectAnswerList &&
+                    qList.multiselectAnswerList.find(item => {
+                      return data.multiselectAnswerList.find(check =>
+                        check === item ? true : false,
+                      );
+                    })
+                      ? qList.multiselectAnswerList.filter(
+                          (item, i) => item !== data.multiselectAnswerList[i],
+                        )
+                      : [],
+                },
+              ]
+            : [],
+        });
+      } else {
+        this.setState({qList: [...qList, data]});
+      }
+    } else {
+      this.setState({qList: [...qList, data]});
+    }
+  };
 
   render() {
     const {q1Status, assessmentAnswer} = this.state;
     const {getAssessmentDataById} = this.props;
-    console.log(this.state.qList);
+    console.log(this.state);
     const getDataByIdJSX = getAssessmentDataById.qlist.length
       ? getAssessmentDataById.qlist.map((item, i) => {
           return (
@@ -101,7 +285,20 @@ class AlcoholTest extends Component {
                 />
               ) : null}
               {item.questionType === 'Multi_Select' ? (
-                <MultiSelectOptions status={q1Status} />
+                <MultiSelectOptions
+                  // status={q1Status}
+                  mq1={this.mq1StatusHandler(item.questionId)}
+                  mq2={this.mq2StatusHandler(item.questionId)}
+                  mq3={this.mq3StatusHandler(item.questionId)}
+                  mq4={this.mq4StatusHandler(item.questionId)}
+                  mq5={this.mq5StatusHandler(item.questionId)}
+                  mq1Handler={() => this.mq1Handler(item, 1)}
+                  mq2Handler={() => this.mq2Handler(item, 2)}
+                  mq3Handler={() => this.mq3Handler(item, 3)}
+                  mq4Handler={() => this.mq4Handler(item, 4)}
+                  mq5Handler={() => this.mq5Handler(item, 5)}
+                  // mqHandler={() => this.mqHandler()}
+                />
               ) : null}
               {item.questionType === 'Text' ? (
                 <CustomTextArea
