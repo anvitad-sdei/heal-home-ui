@@ -20,7 +20,7 @@ import TabNavigator from '../navigation/TabNavigator';
 import TherapistsReview from '../screens/therapists/TherapistsReview';
 import colors from '../constants/colors';
 import normalize from '../helpers/ResponsiveFont';
-
+import AsyncStorage from '@react-native-community/async-storage';
 const DashBoardItems = ({handler, title, source, imageStyle}) => {
   return (
     <TouchableOpacity onPress={handler}>
@@ -42,7 +42,7 @@ const CustomDrawerComponent = props => {
         contentContainerStyle={{
           paddingBottom: hp('20%'),
         }}>
-        <DashBoardItems
+        {/* <DashBoardItems
           handler={() => {
             props.navigation.toggleDrawer();
             props.navigation.navigate('Dashboard');
@@ -62,7 +62,7 @@ const CustomDrawerComponent = props => {
             props.navigation.navigate('Assessments');
           }}
           title={'Assessments'}
-        />
+        /> */}
 
         <DashBoardItems
           handler={() => {
@@ -73,9 +73,13 @@ const CustomDrawerComponent = props => {
           source={require('../assets/review.png')}
         />
         <DashBoardItems
+          // handler={() => {
+          //   props.navigation.toggleDrawer();
+          //   props.navigation.navigate('Profile');
+          // }}
           handler={() => {
-            props.navigation.toggleDrawer();
-            props.navigation.navigate('Profile');
+            AsyncStorage.clear();
+            props.navigation.navigate('Auth');
           }}
           title={'Logout'}
           source={require('../assets/logout.png')}
@@ -91,7 +95,7 @@ const DrawerNavigator = createDrawerNavigator(
     Handouts: Handouts,
     Assessments: Assessment,
     Profile: Profile,
-    TherapistsReview: TherapistsReview,
+    TherapistsReview: TabNavigator,
     // Logout: Logout,
   },
   {contentComponent: CustomDrawerComponent},

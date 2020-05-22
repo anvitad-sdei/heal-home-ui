@@ -116,10 +116,11 @@ class TherapistsReview extends Component {
     );
     return (
       <MasterLayout
-        leftIcon={require('../../assets/menu.png')}
+        leftIcon={require('../../assets/backArrow.png')}
         centerTitle="Therapist Review"
         rightIcon={require('../../assets/bell.png')}
-        leftIconPress={() => this.props.navigation.openDrawer()}
+        //leftIconPress={() => this.props.navigation.openDrawer()}
+        leftIconPress={() => this.props.navigation.navigate('TherapistsList')}
         rightIconPress={() => alert('right')}
         headerStyle={styles.headerStyle}>
         <View style={styles.shadowView}>

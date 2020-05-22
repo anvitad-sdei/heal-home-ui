@@ -45,6 +45,17 @@ const AssessmentStackNavigator = createStackNavigator(
   },
 );
 
+const TherapistsStackNavigator = createStackNavigator(
+  {
+    TherapistsList: TherapistsList,
+    TherapistsReview: TherapistsReview,
+  },
+  {
+    initialRouteName: 'TherapistsList',
+    headerMode: false,
+  },
+);
+
 const TabNavigator = createBottomTabNavigator(
   {
     Dashboard: {
@@ -99,7 +110,7 @@ const TabNavigator = createBottomTabNavigator(
       },
     },
     'My Therapists': {
-      screen: TherapistsReview,
+      screen: TherapistsStackNavigator,
       navigationOptions: {
         tabBarIcon: ({focused}) => {
           let url = focused

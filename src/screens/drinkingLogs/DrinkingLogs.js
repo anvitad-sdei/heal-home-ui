@@ -60,10 +60,7 @@ class DrinkingLogs extends Component {
     this.log[i] = this.log[i] + 1;
   };
   onSaveDrinkingLog = (id, i) => {
-    // alert(id + 'cc' + this.log[i]);
-
     let data = {[id]: this.log[i]};
-
     this.props.saveDrinkingLog(data);
   };
 
@@ -72,9 +69,7 @@ class DrinkingLogs extends Component {
       this.setState({isLoading: true});
       let res = await Axios(`${apiUrls.BASE_URL}/drinkinglog/${todayDate}`);
       if (res) {
-        // console.log('response===========', res.data.response);
         const {latest14, mapList, todayLog} = res.data.response;
-
         this.setState({
           latestDrinks: latest14.length
             ? latest14.map((item, i) => {
@@ -87,18 +82,6 @@ class DrinkingLogs extends Component {
               })
             : [],
           mapList: mapList,
-          mapListDrinks: mapList.length
-            ? mapList.map((item, i) => {
-                return {
-                  // drinkId: item.id,
-                  // drinkDay: item.day,
-                  // drinkLoggedDate: item.loggedDate,
-                  initialDrinks: item.drinks,
-                  //weekNo: item.week,
-                };
-              })
-            : [],
-
           isLoading: false,
         });
       }
@@ -208,7 +191,7 @@ class DrinkingLogs extends Component {
               }}
             />
           </View>
-          <View style={styles.drinkViewBox}>
+          {/* <View style={styles.drinkViewBox}>
             <Text
               style={{
                 fontFamily: 'Poppins-Medium',
@@ -219,7 +202,7 @@ class DrinkingLogs extends Component {
               Total Drinks:
               <Text style={{color: colors.BLACK}} />
             </Text>
-          </View>
+          </View> */}
           <View style={styles.drinkViewBox}>
             <View style={styles.weekView}>
               {week.length
@@ -230,7 +213,7 @@ class DrinkingLogs extends Component {
                         <CustomDrinkingView
                           day={item.day_no}
                           date={moment(item.loggedDate).format('L')}
-                          drinks={this.log[i]}
+                          drinks={this.log[i] || item.drinks}
                           decrement={() => this.onPressDecrement(item.id, i)}
                           increment={() => this.onPressIncrement(item.id, i)}
                           onPress={() => this.onSaveDrinkingLog(item.id, i)}

@@ -81,7 +81,7 @@ class SignIn extends React.Component {
       <MasterLayout>
         <ScrollView
           style={styles.wrapperView}
-          contentContainerStyle={{paddingBottom: hp(20)}}>
+          contentContainerStyle={{paddingBottom: hp(50)}}>
           <View style={styles.topView}>
             <View style={styles.healHomeImageView}>
               <CustomImage source={require('../../assets/healhome.png')} />
@@ -98,7 +98,7 @@ class SignIn extends React.Component {
 
           <View style={styles.inputView}>
             <InputField
-              placeholder="johndoe@mail.com"
+              placeholder="james@healathome.co"
               onChangeText={this.onChangeEmail}
               source={require('../../assets/name3X.png')}
               containerStyle={styles.containerStyle}
@@ -107,7 +107,7 @@ class SignIn extends React.Component {
               value={email}
             />
             <InputField
-              placeholder="anvi"
+              placeholder="Heal12"
               onChangeText={this.onChangePassword}
               source={require('../../assets/lock3X.png')}
               containerStyle={styles.containerStyle}
