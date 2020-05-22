@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Image, ScrollView} from 'react-native';
+import {Text, StyleSheet, View, Image, ScrollView, Alert} from 'react-native';
 import MasterLayout from '../../components/Layout/MasterLayout';
 import colors from '../../constants/colors';
 import normalize from '../../helpers/ResponsiveFont';
@@ -38,7 +38,7 @@ class AlcoholTest extends Component {
       id: id,
       questionId: questionId,
       questionType: questionType,
-      booleanAnswer: booleanAnswer,
+      booleanAnswer: id ? true : false,
     };
     if (qStatus.length) {
       let checkExistance = qStatus.find(item => {
@@ -266,9 +266,9 @@ class AlcoholTest extends Component {
   };
 
   render() {
-    const {q1Status, assessmentAnswer} = this.state;
+    const {q1Status, assessmentAnswer, qList} = this.state;
     const {getAssessmentDataById} = this.props;
-    console.log(this.state);
+
     const getDataByIdJSX = getAssessmentDataById.qlist.length
       ? getAssessmentDataById.qlist.map((item, i) => {
           return (
@@ -280,19 +280,46 @@ class AlcoholTest extends Component {
 
               {item.questionType === 'Yes_no' ? (
                 <OptYesNo
-                  status={this.statusHandler(item.questionId)}
+                  status={
+                    getAssessmentDataById.qlist.length
+                      ? getAssessmentDataById.qlist.find(check => {
+                          return check.questionId === item.questionId
+                            ? true
+                            : false;
+                        })
+                      : this.statusHandler(item.questionId)
+                  }
                   handler={() => this.q1Handler(item)}
                 />
               ) : null}
               {item.questionType === 'Multi_Select' ? (
                 <MultiSelectOptions
                   // status={q1Status}
-                  mq1={this.mq1StatusHandler(item.questionId)}
-                  mq2={this.mq2StatusHandler(item.questionId)}
-                  mq3={this.mq3StatusHandler(item.questionId)}
-                  mq4={this.mq4StatusHandler(item.questionId)}
-                  mq5={this.mq5StatusHandler(item.questionId)}
-                  mq1Handler={() => this.mq1Handler(item, 1)}
+                  mq1={
+                    item.multiselectAnswerList[0] ||
+                    this.mq1StatusHandler(item.questionId)
+                  }
+                  mq2={
+                    item.multiselectAnswerList[1] ||
+                    this.mq2StatusHandler(item.questionId)
+                  }
+                  mq3={
+                    item.multiselectAnswerList[2] ||
+                    this.mq3StatusHandler(item.questionId)
+                  }
+                  mq4={
+                    item.multiselectAnswerList[3] ||
+                    this.mq4StatusHandler(item.questionId)
+                  }
+                  mq5={
+                    item.multiselectAnswerList[4] ||
+                    this.mq5StatusHandler(item.questionId)
+                  }
+                  mq1Handler={() =>
+                    item.multiselectAnswerList[0]
+                      ? null
+                      : this.mq1Handler(item, 1)
+                  }
                   mq2Handler={() => this.mq2Handler(item, 2)}
                   mq3Handler={() => this.mq3Handler(item, 3)}
                   mq4Handler={() => this.mq4Handler(item, 4)}
@@ -304,7 +331,10 @@ class AlcoholTest extends Component {
                 <CustomTextArea
                   onChange={() => this.onHandleAssessment()}
                   value={assessmentAnswer}
-                  textAreaView={{paddingBottom: normalize(10), paddingTop: 0}}
+                  textAreaView={{
+                    paddingBottom: normalize(10),
+                    paddingTop: 0,
+                  }}
                   titleStyle={{marginTop: 0}}
                 />
               ) : null}
@@ -343,12 +373,14 @@ class AlcoholTest extends Component {
                   {getAssessmentDataById.groupName}
                 </Text>
                 {getDataByIdJSX}
-                <RoundedButton
-                  title="Submit"
-                  buttonStyle={styles.buttonStyle}
-                  titleStyle={styles.titleStyle}
-                  onPress={() => this.onSaveAssessmentData()}
-                />
+                {getAssessmentDataById.qlist.length ? null : (
+                  <RoundedButton
+                    title="Submit"
+                    buttonStyle={styles.buttonStyle}
+                    titleStyle={styles.titleStyle}
+                    onPress={() => this.onSaveAssessmentData()}
+                  />
+                )}
               </View>
             </ScrollView>
           </View>
