@@ -39,7 +39,13 @@ class AlcoholTest extends Component {
       id: id,
       questionId: questionId,
       questionType: questionType,
-      booleanAnswer: id ? true : false,
+      booleanAnswer: !booleanAnswer,
+      // booleanAnswer: qStatus.length
+      //   ? qStatus.find(item => {
+      //       console.log(item === questionId ? true : false, item, questionId);
+      //       return item === questionId ? true : false;
+      //     })
+      //   : false,
     };
     if (qStatus.length) {
       let checkExistance = qStatus.find(item => {
@@ -80,7 +86,7 @@ class AlcoholTest extends Component {
       qlist: qList,
     };
     console.log('data==============', data); //data is comming for yes_no only working fine hit api here
-    //this.props.saveAssessment();
+    this.props.saveAssessment(data);
   };
   statusHandler = id => {
     const {qStatus} = this.state;
@@ -270,7 +276,6 @@ class AlcoholTest extends Component {
   render() {
     const {q1Status, assessmentAnswer, qList} = this.state;
     const {getAssessmentDataById} = this.props;
-    console.log('status============', this.state.filledStatus);
     const getDataByIdJSX = getAssessmentDataById.qlist.length
       ? getAssessmentDataById.qlist.map((item, i) => {
           return (
@@ -279,23 +284,31 @@ class AlcoholTest extends Component {
 
               {item.questionType === 'Yes_no' ? (
                 <OptYesNo
+                  // status={
+                  //   getAssessmentDataById.qlist.length
+                  //     ? getAssessmentDataById.qlist.find(check => {
+                  //         return check.questionId === item.questionId
+                  //           ? true
+                  //           : false;
+                  //       })
+                  //     : this.statusHandler(item.questionId)
+                  // }
                   status={
-                    getAssessmentDataById.qlist.length
-                      ? getAssessmentDataById.qlist.find(check => {
-                          return check.questionId === item.questionId
-                            ? true
-                            : false;
-                        })
-                      : this.statusHandler(item.questionId)
+                    item.booleanAnswer || this.statusHandler(item.questionId)
                   }
                   handler={() => this.q1Handler(item)}
                 />
               ) : null}
-              {item.questionType === 'Multi_Select'
-                ? item.originalMultiselectAnswerList.map(item => (
+
+              {item.questionType === 'Multi_Select' &&
+              this.state.filledStatus === true
+                ? item.multiselectAnswerList.map(item => (
                     <MultiSelectOptions title={item} />
                   ))
-                : null}
+                : item.originalMultiselectAnswerList.map(item => (
+                    <MultiSelectOptions title={item} />
+                  ))}
+
               {/* {item.questionType === 'Multi_Select' ? (
                 <MultiSelectOptions
                   // status={q1Status}
@@ -333,7 +346,7 @@ class AlcoholTest extends Component {
               ) : null} */}
               {item.questionType === 'Text' ? (
                 <CustomTextArea
-                  onChange={() => this.onHandleAssessment()}
+                  onChangeText={text => this.onHandleAssessment(text)}
                   value={assessmentAnswer}
                   textAreaView={{
                     paddingBottom: normalize(10),
@@ -377,7 +390,15 @@ class AlcoholTest extends Component {
                   {getAssessmentDataById.groupName}
                 </Text>
                 {getDataByIdJSX}
-                {getAssessmentDataById.qlist.length ? null : (
+                {/* {getAssessmentDataById.qlist.length ? null : (
+                  <RoundedButton
+                    title="Submit"
+                    buttonStyle={styles.buttonStyle}
+                    titleStyle={styles.titleStyle}
+                    onPress={() => this.onSaveAssessmentData()}
+                  />
+                )} */}
+                {this.state.filledStatus === true ? null : (
                   <RoundedButton
                     title="Submit"
                     buttonStyle={styles.buttonStyle}
