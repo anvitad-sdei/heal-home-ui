@@ -32,39 +32,6 @@ class TherapistsReview extends Component {
     const {active, reply} = this.state;
     const {data} = this.props;
     console.log('data===============review', data);
-    const childList = data.drinkingLogReviewList.childList
-      ? data.drinkingLogReviewList.childList.map((item, i) => (
-          <>
-            <Text style={styles.replyText}>{item.createdBy}</Text>
-
-            {active === 1 ? (
-              <RoundedButton
-                title="Reply"
-                buttonStyle={styles.buttonStyle}
-                titleStyle={styles.titleStyle}
-                value={reply}
-                onChangeText={() => this.onChangeReply()}
-                onPress={() => this.onReply()}
-              />
-            ) : null}
-
-            {active === 2 ? (
-              <View>
-                <CustomTextArea
-                  placeholder=" "
-                  textAreaView={{padding: 0}}
-                  titleStyle={{marginTop: 0}}
-                />
-                <RoundedButton
-                  title="Submit"
-                  buttonStyle={styles.submitButtonStyle}
-                  titleStyle={styles.submitTitleStyle}
-                />
-              </View>
-            ) : null}
-          </>
-        ))
-      : null;
 
     const reviewListData = data.drinkingLogReviewList.length ? (
       data.drinkingLogReviewList.map((item, i) => {
@@ -75,39 +42,60 @@ class TherapistsReview extends Component {
                 ', ' +
                 moment(item.createdDate).format('MMMM Do YYYY')}
             </Text>
-            <Text style={styles.subTitle}>{item.comment}</Text>
+
             <View style={styles.borderBottomStyle} />
             <Text style={styles.heading}>
               {item.createdBy + ' ' + 'commented'}
             </Text>
-            {childList}
-            {/* <Text style={styles.replyText}>Lorem ipsum dolor sit amet</Text>
+            <Text style={styles.subTitle}>{item.comment}</Text>
 
-              {active === 1 ? (
-                <RoundedButton
-                  title="Reply"
-                  buttonStyle={styles.buttonStyle}
-                  titleStyle={styles.titleStyle}
-                  value={reply}
-                  onChangeText={() => this.onChangeReply()}
-                  onPress={() => this.onReply()}
-                />
-              ) : null}
-
-              {active === 2 ? (
-                <View>
-                  <CustomTextArea
-                    placeholder=" "
-                    textAreaView={{padding: 0}}
-                    titleStyle={{marginTop: 0}}
-                  />
-                  <RoundedButton
-                    title="Submit"
-                    buttonStyle={styles.submitButtonStyle}
-                    titleStyle={styles.submitTitleStyle}
-                  />
-                </View>
-              ) : null} */}
+            <Text
+              style={{
+                color: colors.GRAY_PLACE,
+                fontSize: normalize(10),
+                paddingTop: normalize(5),
+              }}>
+              {moment(item.createdDate)
+                .startOf('day')
+                .fromNow()}
+            </Text>
+            {item.childList.length
+              ? item.childList.map((item, i) => {
+                  return (
+                    <>
+                      <Text
+                        style={{...styles.heading, paddingTop: normalize(20)}}>
+                        {item.createdBy}
+                      </Text>
+                      <Text style={styles.replyText}>{item.comment}</Text>
+                      {active === 1 ? (
+                        <RoundedButton
+                          title="Reply"
+                          buttonStyle={styles.buttonStyle}
+                          titleStyle={styles.titleStyle}
+                          value={reply}
+                          onChangeText={() => this.onChangeReply()}
+                          onPress={() => this.onReply()}
+                        />
+                      ) : null}
+                      {active === 2 ? (
+                        <View>
+                          <CustomTextArea
+                            placeholder=" "
+                            // textAreaView={{padding: 0}}
+                            titleStyle={{marginTop: 0}}
+                          />
+                          <RoundedButton
+                            title="Submit"
+                            buttonStyle={styles.submitButtonStyle}
+                            titleStyle={styles.submitTitleStyle}
+                          />
+                        </View>
+                      ) : null}
+                    </>
+                  );
+                })
+              : null}
           </View>
         );
       })
@@ -125,48 +113,7 @@ class TherapistsReview extends Component {
         headerStyle={styles.headerStyle}>
         <View style={styles.shadowView}>
           <ScrollView contentContainerStyle={styles.scrollView}>
-            {/* <Text style={styles.dateHeading}>
-              {moment(data.drinkingLogReviewList.createdDate).format('dddd') +
-                ', ' +
-                moment(data.drinkingLogReviewList.createdDate).format(
-                  'MMMM Do YYYY',
-                )}
-            </Text> */}
-            {reviewListData}
-            <View style={styles.innerWrapperView}>
-              {/* <Text style={styles.dateHeading}>Tuesday, May 12th 2020</Text>
-              <Text style={styles.subTitle}>
-                Please fill this log regularly.
-              </Text>
-              <View style={styles.borderBottomStyle} />
-              <Text style={styles.heading}>Alcohol Management commented</Text>
-              <Text style={styles.replyText}>Lorem ipsum dolor sit amet</Text>
-              {active === 1 ? (
-                <RoundedButton
-                  title="Reply"
-                  buttonStyle={styles.buttonStyle}
-                  titleStyle={styles.titleStyle}
-                  value={reply}
-                  onChangeText={() => this.onChangeReply()}
-                  onPress={() => this.onReply()}
-                />
-              ) : null}
-
-              {active === 2 ? (
-                <View>
-                  <CustomTextArea
-                    placeholder=" "
-                    // textAreaView={{padding: 0}}
-                    titleStyle={{marginTop: 0}}
-                  />
-                  <RoundedButton
-                    title="Submit"
-                    buttonStyle={styles.submitButtonStyle}
-                    titleStyle={styles.submitTitleStyle}
-                  />
-                </View>
-              ) : null} */}
-            </View>
+            <View style={styles.innerWrapperView}>{reviewListData}</View>
           </ScrollView>
         </View>
       </MasterLayout>
@@ -230,7 +177,7 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
   },
   buttonStyle: {
-    marginTop: normalize(20),
+    marginTop: normalize(10),
     borderRadius: normalize(20),
     backgroundColor: colors.BLUE,
     width: normalize(100),
@@ -255,7 +202,7 @@ const styles = StyleSheet.create({
   replyText: {
     fontFamily: 'Poppins-Regular',
     fontSize: normalize(12),
-    paddingTop: normalize(20),
+    paddingTop: normalize(10),
     color: colors.GRAY_FIVE,
   },
   dateHeading: {
