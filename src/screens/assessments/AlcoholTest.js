@@ -10,62 +10,45 @@ import {connect} from 'react-redux';
 import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
 import MultiSelectOptions from '../../components/MultiSelectOptions';
 import RoundedButton from '../../components/Buttons/RoundedButton';
+import Axios from 'axios';
+import {apiUrls} from '../../redux/api/constants';
+import Loader from '../../components/Loader';
 class AlcoholTest extends Component {
   constructor(props) {
     super(props);
     const {navigation} = this.props;
     this.state = {
-      id: navigation.getParam('id'),
+      aId: navigation.getParam('id'),
       groupId: navigation.getParam('groupId'),
       filledStatus: navigation.getParam('filledStatus'),
       qList: [],
-      assessmentAnswer: '',
       qId: '',
-      questionId: '',
-      questionType: '',
-      qStatus: [],
-      mq: [],
-      mq1: [],
-      mq2: [],
-      mq3: [],
-      mq4: [],
-      mq5: [],
+      isLoading: false,
     };
   }
-  q1Handler = data => {
-    const {id, questionId, questionType, booleanAnswer} = data;
-    const {qList, qStatus} = this.state;
-    const setData = {
-      id: id,
-      questionId: questionId,
-      questionType: questionType,
-      booleanAnswer: id ? true : false,
-    };
-    if (qStatus.length) {
-      let checkExistance = qStatus.find(item => {
-        return item === data.questionId ? item : false;
-      });
-      if (checkExistance) {
+  getAssessmentDataByIdLocal = async () => {
+    const {aId} = this.state;
+    try {
+      this.setState({isLoading: true});
+      let res = await Axios(`${apiUrls.BASE_URL}/forms/${aId}`);
+      if (res) {
+        const {id, groupId, groupName, qlist} = res.data.response;
         this.setState({
-          qList: qList.filter(item => item.questionId !== checkExistance),
-          qStatus: qStatus.filter(item => item !== checkExistance),
+          qList: qlist,
+          id: id,
+          groupId: groupId,
+          groupName: groupName,
         });
-      } else {
-        this.setState({
-          qList: [...qList, setData],
-          qStatus: [...qStatus, questionId],
-        });
+        this.setState({isLoading: false});
       }
-    } else {
-      this.setState({
-        qList: [...qList, setData],
-        qStatus: [...qStatus, questionId],
-      });
+    } catch (err) {
+      this.setState({isLoading: false});
+      Alert.alert('Process Failed');
     }
   };
 
   componentDidMount() {
-    this.props.getAssessmentById(this.state.id);
+    this.getAssessmentDataByIdLocal();
   }
 
   onHandleAssessment = assessmentAnswer => {
@@ -73,268 +56,103 @@ class AlcoholTest extends Component {
   };
 
   onSaveAssessmentData = () => {
-    const {id, groupId, qList} = this.state;
+    const {id, groupId, qList, filledStatus} = this.state;
     const data = {
       id: id,
       groupId: groupId,
       qlist: qList,
+      filled: filledStatus,
     };
-    console.log('data==============', data); //data is comming for yes_no only working fine hit api here
-    //this.props.saveAssessment();
-  };
-  statusHandler = id => {
-    const {qStatus} = this.state;
-    return qStatus.length
-      ? qStatus.find(item => (item === id ? true : false))
-      : false;
-  };
-  // mqHandler = data => {};
-  mq1StatusHandler = id => {
-    const {mq1} = this.state;
-    return mq1.length
-      ? mq1.find(item => (item.qId === id ? true : false))
-      : false;
-  };
-  // mq2StatusHandler = id => {
-  //   const {mq2} = this.state;
-  //   return mq2.length
-  //     ? mq2.find(item => (item.qId === id ? true : false))
-  //     : false;
-  // };
-  // mq3StatusHandler = id => {
-  //   const {mq3} = this.state;
-  //   return mq3.length
-  //     ? mq3.find(item => (item.qId === id ? true : false))
-  //     : false;
-  // };
-  // mq4StatusHandler = id => {
-  //   const {mq4} = this.state;
-  //   return mq4.length
-  //     ? mq4.find(item => (item.qId === id ? true : false))
-  //     : false;
-  // };
-  // mq5StatusHandler = id => {
-  //   const {mq5} = this.state;
-  //   return mq5.length
-  //     ? mq5.find(item => (item.qId === id ? true : false))
-  //     : false;
-  // };
-  mq1Handler = (data, ans) => {
-    const {questionId} = data;
-    const {mq1} = this.state;
-    if (mq1.length) {
-      let qExists = mq1.find(item => {
-        return item.qId === questionId ? true : false;
-      });
-      if (qExists) {
-        this.setState({
-          mq1: mq1.filter(item => item.qId !== questionId),
-        });
-      } else {
-        this.setState({mq1: [...mq1, {qId: questionId, ans: ans}]});
-      }
-    } else {
-      this.setState({mq1: [...mq1, {qId: questionId, ans: ans}]});
-    }
-
-    const sendData = {
-      id: null,
-      questionId: questionId,
-      multiselectAnswerList: mq1.length
-        ? mq1.filter(item => item.qId === questionId)
-        : [],
-      questionType: 'Multi_Select',
-    };
-    // this.saveMq(sendData);
-  };
-  mq2Handler = (data, ans) => {
-    const {questionId} = data;
-    const {mq2} = this.state;
-    if (mq2.length) {
-      let qExists = mq2.find(item => {
-        return item.qId === questionId ? true : false;
-      });
-      if (qExists) {
-        this.setState({
-          mq2: mq2.filter(item => item.qId !== questionId),
-        });
-      } else {
-        this.setState({mq2: [...mq2, {qId: questionId, ans: ans}]});
-      }
-    } else {
-      this.setState({mq2: [...mq2, {qId: questionId, ans: ans}]});
-    }
-    const sendData = {
-      id: null,
-      questionId: questionId,
-      multiselectAnswerList: mq2.length
-        ? mq2.filter(item => item.qId === questionId)
-        : [],
-      questionType: 'Multi_Select',
-    };
-    // this.saveMq(sendData);
-  };
-  mq3Handler = (data, ans) => {
-    const {questionId} = data;
-    const {mq3} = this.state;
-    if (mq3.length) {
-      let qExists = mq3.find(item => {
-        return item.qId === questionId ? true : false;
-      });
-      if (qExists) {
-        this.setState({
-          mq3: mq3.filter(item => item.qId !== questionId),
-        });
-      } else {
-        this.setState({mq3: [...mq3, {qId: questionId, ans: ans}]});
-      }
-    } else {
-      this.setState({mq3: [...mq3, {qId: questionId, ans: ans}]});
-    }
-  };
-  mq4Handler = (data, ans) => {
-    const {questionId} = data;
-    const {mq4} = this.state;
-    if (mq4.length) {
-      let qExists = mq4.find(item => {
-        return item.qId === questionId ? true : false;
-      });
-      if (qExists) {
-        this.setState({
-          mq4: mq4.filter(item => item.qId !== questionId),
-        });
-      } else {
-        this.setState({mq4: [...mq4, {qId: questionId, ans: ans}]});
-      }
-    } else {
-      this.setState({mq4: [...mq4, {qId: questionId, ans: ans}]});
-    }
-  };
-  mq5Handler = (data, ans) => {
-    const {questionId} = data;
-    const {mq5} = this.state;
-    if (mq5.length) {
-      let qExists = mq5.find(item => {
-        return item.qId === questionId ? true : false;
-      });
-      if (qExists) {
-        this.setState({
-          mq5: mq5.filter(item => item.qId !== questionId),
-        });
-      } else {
-        this.setState({mq5: [...mq5, {qId: questionId, ans: ans}]});
-      }
-    } else {
-      this.setState({mq5: [...mq5, {qId: questionId, ans: ans}]});
-    }
-  };
-  saveMq = data => {
-    const {qList} = this.state;
-    const {questionId} = data;
-    if (qList.length) {
-      let checkex = qList.findIndex(item => {
-        return item.questionId === questionId;
-      });
-      console.log('hey===>', checkex);
-      if (checkex || checkex === 0) {
-        this.setState({
-          qList: qList.find(item =>
-            item.questionId === data.questionId ? true : false,
-          )
-            ? [
-                ...qList,
-                {
-                  multiselectAnswerList:
-                    qList.multiselectAnswerList &&
-                    qList.multiselectAnswerList.find(item => {
-                      return data.multiselectAnswerList.find(check =>
-                        check === item ? true : false,
-                      );
-                    })
-                      ? qList.multiselectAnswerList.filter(
-                          (item, i) => item !== data.multiselectAnswerList[i],
-                        )
-                      : [],
-                },
-              ]
-            : [],
-        });
-      } else {
-        this.setState({qList: [...qList, data]});
-      }
-    } else {
-      this.setState({qList: [...qList, data]});
-    }
+    this.props.saveAssessment(data);
   };
 
+  yesnohandler = (i, item) => {
+    const {qList, filledStatus} = this.state;
+    if (filledStatus) {
+      return;
+    } else {
+      let data = qList;
+      data[i].booleanAnswer = !item.booleanAnswer;
+      this.setState({qList: data});
+    }
+  };
+  multiqaHandler = (i, qi, value) => {
+    const {qList, filledStatus} = this.state;
+    if (filledStatus) {
+      return;
+    } else {
+      const data = qList;
+      if (data[i].multiselectAnswerList.length) {
+        let x = data[i].multiselectAnswerList.find(item =>
+          item === value ? true : false,
+        );
+        if (x) {
+          let checkIndex = data[i].multiselectAnswerList.findIndex(
+            item => item === value,
+          );
+          data[i].multiselectAnswerList.splice(checkIndex, 1);
+          this.setState({list: data});
+        } else {
+          data[i].multiselectAnswerList.push(value);
+          this.setState({list: data});
+        }
+      } else {
+        data[i].multiselectAnswerList.push(value);
+        this.setState({qList: data});
+      }
+    }
+  };
+  inputTypeHandler = (value, i) => {
+    const {qList, filledStatus} = this.state;
+    if (filledStatus) {
+      return;
+    } else {
+      let data = qList;
+      data[i].textAnswer = value;
+      console.log(data[i].textAnswer);
+      this.setState({qList: data});
+    }
+  };
   render() {
-    const {q1Status, assessmentAnswer, qList} = this.state;
-    const {getAssessmentDataById} = this.props;
-    console.log('status============', this.state.filledStatus);
-    const getDataByIdJSX = getAssessmentDataById.qlist.length
-      ? getAssessmentDataById.qlist.map((item, i) => {
+    const {qList, groupName, filledStatus} = this.state;
+    const getDataByIdJSX = qList.length
+      ? qList.map((item, i) => {
           return (
             <View key={i}>
               <Text style={styles.textQuestion}>{item.question}</Text>
 
               {item.questionType === 'Yes_no' ? (
                 <OptYesNo
-                  status={
-                    getAssessmentDataById.qlist.length
-                      ? getAssessmentDataById.qlist.find(check => {
-                          return check.questionId === item.questionId
-                            ? true
-                            : false;
-                        })
-                      : this.statusHandler(item.questionId)
-                  }
-                  handler={() => this.q1Handler(item)}
+                  status={item.booleanAnswer}
+                  handler={() => this.yesnohandler(i, item)}
                 />
               ) : null}
               {item.questionType === 'Multi_Select'
-                ? item.originalMultiselectAnswerList.map(item => (
-                    <MultiSelectOptions title={item} />
-                  ))
+                ? item.originalMultiselectAnswerList.map((qa, qi) => {
+                    let status = item.multiselectAnswerList.length
+                      ? item.multiselectAnswerList.find(item => {
+                          return item === qa ? true : false;
+                        })
+                      : false;
+                    return (
+                      <MultiSelectOptions
+                        title={qa}
+                        status={status}
+                        handler={() => {
+                          this.multiqaHandler(
+                            i,
+                            qi,
+                            item.originalMultiselectAnswerList[qi],
+                          );
+                        }}
+                      />
+                    );
+                  })
                 : null}
-              {/* {item.questionType === 'Multi_Select' ? (
-                <MultiSelectOptions
-                  // status={q1Status}
-                  mq1={
-                    item.multiselectAnswerList[0] ||
-                    this.mq1StatusHandler(item.questionId)
-                  }
-                  mq2={
-                    item.multiselectAnswerList[1] ||
-                    this.mq2StatusHandler(item.questionId)
-                  }
-                  mq3={
-                    item.multiselectAnswerList[2] ||
-                    this.mq3StatusHandler(item.questionId)
-                  }
-                  mq4={
-                    item.multiselectAnswerList[3] ||
-                    this.mq4StatusHandler(item.questionId)
-                  }
-                  mq5={
-                    item.multiselectAnswerList[4] ||
-                    this.mq5StatusHandler(item.questionId)
-                  }
-                  mq1Handler={() =>
-                    item.multiselectAnswerList[0]
-                      ? null
-                      : this.mq1Handler(item, 1)
-                  }
-                  mq2Handler={() => this.mq2Handler(item, 2)}
-                  mq3Handler={() => this.mq3Handler(item, 3)}
-                  mq4Handler={() => this.mq4Handler(item, 4)}
-                  mq5Handler={() => this.mq5Handler(item, 5)}
-                  // mqHandler={() => this.mqHandler()}
-                />
-              ) : null} */}
               {item.questionType === 'Text' ? (
                 <CustomTextArea
-                  onChange={() => this.onHandleAssessment()}
-                  value={assessmentAnswer}
+                  onChangeText={value => this.inputTypeHandler(value, i)}
+                  value={item.textAnswer}
                   textAreaView={{
                     paddingBottom: normalize(10),
                     paddingTop: 0,
@@ -373,11 +191,9 @@ class AlcoholTest extends Component {
           <View style={{marginTop: normalize(90)}}>
             <ScrollView contentContainerStyle={styles.scrollView}>
               <View style={styles.innerWrapperView}>
-                <Text style={styles.heading}>
-                  {getAssessmentDataById.groupName}
-                </Text>
+                <Text style={styles.heading}>{groupName}</Text>
                 {getDataByIdJSX}
-                {getAssessmentDataById.qlist.length ? null : (
+                {filledStatus ? null : (
                   <RoundedButton
                     title="Submit"
                     buttonStyle={styles.buttonStyle}
@@ -387,6 +203,7 @@ class AlcoholTest extends Component {
                 )}
               </View>
             </ScrollView>
+            <Loader isLoading={this.state.isLoading} />
           </View>
         </View>
       </MasterLayout>
