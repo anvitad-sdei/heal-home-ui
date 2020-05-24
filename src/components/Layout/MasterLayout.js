@@ -1,12 +1,20 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, StyleSheet, StatusBar} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  StatusBar,
+  Platform,
+} from 'react-native';
 import {connect} from 'react-redux';
 import colors from '../../constants/colors';
 import Loader from '../Loader';
 import HeaderComponent from '../HeaderComponent';
 import CustomTabBar from '../WeekTabbar';
 import normalize from '../../helpers/ResponsiveFont';
-
+import GeneralStatusBarColor from '../StatusBarColor/GeneralStatusBarColor';
+const isIOS = Platform.OS === 'ios' ? true : false;
 class MasterLayout extends Component {
   render() {
     const {
@@ -18,10 +26,17 @@ class MasterLayout extends Component {
       centerTitle,
       masterStyle,
       headerStyle,
+      statusBackgroundColor,
     } = this.props;
     return (
       <SafeAreaView style={{...styles.container, ...masterStyle}}>
-        <StatusBar barStyle="dark-content" />
+        {/* <StatusBar barStyle="dark-content" /> */}
+        {isIOS ? null : (
+          <GeneralStatusBarColor
+            backgroundColor={colors.BLUE}
+            barStyle="dark-content"
+          />
+        )}
         <View>
           {leftIcon || rightIcon ? (
             <View style={styles.topView}>

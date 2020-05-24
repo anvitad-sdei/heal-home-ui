@@ -11,6 +11,7 @@ import {
 } from 'react-native-responsive-screen';
 import {Icon} from 'react-native-elements';
 import Images from '../../components/IntroImages';
+import GeneralStatusBarColor from '../../components/StatusBarColor/GeneralStatusBarColor';
 const isIOS = Platform.OS === 'ios' ? true : false;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 class Welcome extends Component {

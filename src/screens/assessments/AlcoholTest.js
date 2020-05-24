@@ -26,6 +26,9 @@ class AlcoholTest extends Component {
       isLoading: false,
     };
   }
+  componentDidMount() {
+    this.getAssessmentDataByIdLocal();
+  }
   getAssessmentDataByIdLocal = async () => {
     const {aId} = this.state;
     try {
@@ -46,10 +49,6 @@ class AlcoholTest extends Component {
       Alert.alert('Process Failed');
     }
   };
-
-  componentDidMount() {
-    this.getAssessmentDataByIdLocal();
-  }
 
   onHandleAssessment = assessmentAnswer => {
     this.setState({assessmentAnswer: assessmentAnswer});

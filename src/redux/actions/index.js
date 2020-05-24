@@ -3,7 +3,7 @@ import constants from '../constants';
 import axios from 'axios';
 import {apiUrls} from '../api/constants';
 import {Alert} from 'react-native';
-
+import {storeData} from '../utility/index';
 const errorHandling = error => {
   if (error.response) {
     return error.response.data.message || 'Response not found';
@@ -37,6 +37,8 @@ export const login = data => async dispatch => {
     dispatch(loadingHandler(true));
     let res = await axios.post(`${apiUrls.BASE_URL}/access/login`, {...data});
     if (res) {
+      console.log('res=======', res.data.response.userId);
+      await storeData('userId', res.data.response.sessionId);
       dispatch(loadingHandler(false));
       dispatch(successResponseHandler(constants.LOGIN_SUCCESS, res.data));
       dispatch(() => navigateToRoute('App', {data: res.data}));
