@@ -15,6 +15,8 @@ class TherapistsReview extends Component {
     this.state = {
       active: 1,
       reply: '',
+      activeIndex: 0,
+      comment: '',
     };
   }
   componentDidMount() {
@@ -24,12 +26,22 @@ class TherapistsReview extends Component {
   onChangeReply = reply => {
     this.setState({reply: reply});
   };
-  onReply = () => {
-    this.setState({active: 2});
+  onReply = id => {
+    this.setState({active: 2, activeIndex: id});
+  };
+  comment = (pid, did) => {
+    const {reply} = this.state;
+    let data = {
+      parentId: pid,
+      comment: reply,
+      drinkingLogId: did,
+    };
+    this.setState({active: 1, activeIndex: 0});
+    console.log('final data====?', data); //hit api here
   };
 
   render() {
-    const {active, reply} = this.state;
+    const {active, reply, activeIndex} = this.state;
     const {data} = this.props;
     console.log('data===============review', data);
 
@@ -59,39 +71,44 @@ class TherapistsReview extends Component {
                 .startOf('day')
                 .fromNow()}
             </Text>
+            {active === 1 ? (
+              <RoundedButton
+                title="Reply"
+                buttonStyle={styles.buttonStyle}
+                titleStyle={styles.titleStyle}
+                value={reply}
+                onChangeText={() => this.onChangeReply()}
+                onPress={() => this.onReply(item.id)}
+              />
+            ) : null}
+            {active === 2 && activeIndex === item.id ? (
+              <View>
+                <CustomTextArea
+                  placeholder=" "
+                  onChangeText={this.onChangeReply}
+                  // textAreaView={{padding: 0}}
+                  titleStyle={{marginTop: 0}}
+                />
+                <RoundedButton
+                  title="Submit"
+                  buttonStyle={styles.submitButtonStyle}
+                  titleStyle={styles.submitTitleStyle}
+                  onPress={() => this.comment(item.id, item.drinkingLogId)}
+                />
+              </View>
+            ) : null}
             {item.childList.length
               ? item.childList.map((item, i) => {
                   return (
                     <>
                       <Text
-                        style={{...styles.heading, paddingTop: normalize(20)}}>
+                        style={{
+                          ...styles.heading,
+                          paddingTop: normalize(20),
+                        }}>
                         {item.createdBy}
                       </Text>
                       <Text style={styles.replyText}>{item.comment}</Text>
-                      {active === 1 ? (
-                        <RoundedButton
-                          title="Reply"
-                          buttonStyle={styles.buttonStyle}
-                          titleStyle={styles.titleStyle}
-                          value={reply}
-                          onChangeText={() => this.onChangeReply()}
-                          onPress={() => this.onReply()}
-                        />
-                      ) : null}
-                      {active === 2 ? (
-                        <View>
-                          <CustomTextArea
-                            placeholder=" "
-                            // textAreaView={{padding: 0}}
-                            titleStyle={{marginTop: 0}}
-                          />
-                          <RoundedButton
-                            title="Submit"
-                            buttonStyle={styles.submitButtonStyle}
-                            titleStyle={styles.submitTitleStyle}
-                          />
-                        </View>
-                      ) : null}
                     </>
                   );
                 })
