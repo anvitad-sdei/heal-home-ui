@@ -1,0 +1,117 @@
+import React from 'react';
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import normalize from '../../helpers/ResponsiveFont';
+import colors from '../../constants/colors';
+const CustomModal = props => {
+  const {handler, visible, content} = props;
+  return (
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={visible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+        }}>
+        <View style={styles.modalView}>
+          <View
+            style={{
+              width: '90%',
+              paddingHorizontal: normalize(5),
+            }}>
+            {content}
+          </View>
+
+          <View style={styles.calendarView}>
+            <TouchableOpacity onPress={handler}>
+              <View
+                style={{
+                  ...styles.calendarButton,
+                  backgroundColor: '#95B4FD',
+                }}>
+                <Text style={styles.calendarButtonText}>CANCEL</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={handler}>
+              <View
+                style={{
+                  ...styles.calendarButton,
+                  backgroundColor: '#6E78F7',
+                }}>
+                <Text style={styles.calendarButtonText}>SET</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  centeredView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  modalView: {
+    marginHorizontal: normalize(20),
+    backgroundColor: 'white',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    height: '50%', //modal height
+    marginTop: normalize(150),
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  buttonView: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  datePick: {
+    textAlign: 'center',
+    marginTop: normalize(5),
+    fontSize: normalize(15),
+    fontFamily: 'Poppins-Regular',
+    color: colors.BLUE,
+  },
+  calendarView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+  },
+  calendarButton: {
+    width: normalize(100),
+    height: normalize(35),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: normalize(100),
+  },
+  calendarButtonText: {color: colors.WHITE, fontFamily: 'Poppins-Regular'},
+});
+
+export default CustomModal;
